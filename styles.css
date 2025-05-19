@@ -1,0 +1,49 @@
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+  color: #333;
+}
+header {
+  background: linear-gradient(to right, #8dc63f, #006838);
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+.logo {
+  max-width: 100px;
+}
+.services, .contact {
+  padding: 20px;
+  background: white;
+  margin: 10px;
+  border-radius: 8px;
+}
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #222;
+  color: white;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+}
+form input, form textarea {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+}
+.banner-slider {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+}
+.banner-slide {
+  display: none;
+  width: 100%;
+}

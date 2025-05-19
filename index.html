@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CRD Transport</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="banner-slider">
+      <img src="https://via.placeholder.com/900x300?text=CRD+Transport+Banner+1" class="banner-slide" />
+      <img src="https://via.placeholder.com/900x300?text=Vận+chuyển+quốc+tế+2" class="banner-slide" />
+    </div>
+    <h1>CRD Transport</h1>
+    <p>Cung cấp dịch vụ vận chuyển quốc tế hai chiều</p>
+  </header>
+
+  <section class="services">
+    <h2>Dịch vụ</h2>
+    <ul>
+      <li>Mua hộ hàng hoá từ Anh, Mỹ, Nhật, Hàn, Tây Ban Nha...</li>
+      <li>Gửi hàng hai chiều từ Việt Nam đi quốc tế và ngược lại</li>
+      <li>Giao nhận nhanh, hỗ trợ thủ tục hải quan</li>
+    </ul>
+  </section>
+
+  <section class="quote">
+    <h2>Ước tính chi phí</h2>
+    <label>Khối lượng (kg): <input type="number" id="weightInput" /></label>
+    <button onclick="calculateShipping()">Tính phí</button>
+    <p id="shippingResult"></p>
+  </section>
+
+  <section class="contact">
+    <h2>Gửi yêu cầu tư vấn</h2>
+    <form id="contactForm">
+      <input type="text" name="name" placeholder="Họ tên" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <textarea name="message" placeholder="Nội dung yêu cầu" required></textarea>
+      <button type="submit">Gửi yêu cầu</button>
+    </form>
+    <p id="formStatus" class="success-message"></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 CRD Transport. All rights reserved.</p>
+  </footer>
+
+  <!-- Chat Messenger -->
+  <div id="fb-root"></div>
+  <div id="fb-customer-chat" class="fb-customerchat"></div>
+  <script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "YOUR_PAGE_ID_HERE");
+    chatbox.setAttribute("attribution", "biz_inbox");
+    window.fbAsyncInit = function() {
+      FB.init({ xfbml: true, version: 'v18.0' });
+    };
+    (function(d, s, id) {
+      if (d.getElementById(id)) return;
+      var js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
+      d.body.appendChild(js);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>
