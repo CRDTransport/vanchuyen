@@ -4,67 +4,207 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CRD Transport</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #f5f5f5; }
+    header { background: linear-gradient(to right, #66bb6a, #00695c); color: white; text-align: center; padding: 40px 20px 20px; }
+    header img { height: 60px; margin-bottom: 10px; }
+    main { padding: 20px; }
+    .section { background-color: white; padding: 20px; margin-bottom: 20px; border-radius: 6px; }
+    input, button, select { padding: 8px; margin-top: 10px; width: 100%; max-width: 300px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #c8e6c9; }
+    .center-link { text-align: center; margin: 30px 0; }
+    .center-link button { font-size: 18px; font-weight: bold; color: #2e7d32; background: none; border: none; cursor: pointer; }
+    .center-link button:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="banner-slider">
-      <img src="https://via.placeholder.com/900x300?text=CRD+Transport+Banner+1" class="banner-slide" />
-      <img src="https://via.placeholder.com/900x300?text=Vận+chuyển+quốc+tế+2" class="banner-slide" />
-    </div>
-    <h1>CRD Transport</h1>
-    <p>Cung cấp dịch vụ vận chuyển quốc tế hai chiều</p>
-  </header>
 
-  <section class="services">
+<header>
+  <img src="pictures/logo.jpg" alt="CRD Logo" />
+  <h1>CRD Transport</h1>
+  <p>Cung cấp dịch vụ vận chuyển quốc tế hai chiều</p>
+</header>
+
+<main id="main-content">
+  <div class="section">
     <h2>Dịch vụ</h2>
     <ul>
-      <li>Mua hộ hàng hoá từ Anh, Mỹ, Nhật, Hàn, Tây Ban Nha...</li>
+      <li>Mua hộ hàng hóa từ Anh, Mỹ, Nhật, Hàn, Tây Ban Nha...</li>
       <li>Gửi hàng hai chiều từ Việt Nam đi quốc tế và ngược lại</li>
       <li>Giao nhận nhanh, hỗ trợ thủ tục hải quan</li>
     </ul>
-  </section>
+  </div>
 
-  <section class="quote">
-    <h2>Ước tính chi phí</h2>
-    <label>Khối lượng (kg): <input type="number" id="weightInput" /></label>
-    <button onclick="calculateShipping()">Tính phí</button>
-    <p id="shippingResult"></p>
-  </section>
+  <div class="section">
+    <h2>Giá vận chuyển</h2>
+    <label for="route">Tuyến vận chuyển:</label>
+    <select id="route">
+      <option value="japan">Nhật Bản</option>
+      <option value="uk">UK</option>
+      <option value="spain">Tây Ban Nha</option>
+    </select><br /><br />
 
-  <section class="contact">
+    <label for="type">Loại hàng:</label>
+    <select id="type">
+      <option value="normal">Hàng thường</option>
+      <option value="valuable">Hàng giá trị cao</option>
+      <option value="fragile">Hàng dễ vỡ</option>
+      <option value="liquid">Chất lỏng (nước hoa)</option>
+    </select><br /><br />
+
+    <label for="weight">Khối lượng (kg):</label>
+    <input type="number" id="weight" placeholder="Nhập khối lượng" />
+    <button onclick="calculateFee()">Tính phí</button>
+
+    <p id="result"></p>
+  </div>
+
+  <div class="center-link">
+    <button onclick="showPricing()">🔍 Xem bảng giá chi tiết</button>
+  </div>
+
+  <div class="section">
     <h2>Gửi yêu cầu tư vấn</h2>
-    <form id="contactForm">
-      <input type="text" name="name" placeholder="Họ tên" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <textarea name="message" placeholder="Nội dung yêu cầu" required></textarea>
-      <button type="submit">Gửi yêu cầu</button>
-    </form>
-    <p id="formStatus" class="success-message"></p>
-  </section>
+    <input type="text" placeholder="Họ tên" />
+    <input type="email" placeholder="Email" />
+    <input type="text" placeholder="Nội dung" />
+    <button>Gửi</button>
+  </div>
+</main>
 
-  <footer>
+<div id="pricing-section" style="display: none; padding: 20px;">
+  <div class="section">
+    <h2 style="color: #2e7d32; text-align: center;">📦 BẢNG GIÁ VẬN CHUYỂN</h2>
+
+    <h3>🇯🇵 Nhật Bản - Việt Nam</h3>
+    <table>
+      <tr><th>Loại hàng</th><th>≤ 5kg</th><th>> 5kg</th><th>Phụ thu</th></tr>
+      <tr><td>Hàng thường</td><td>195.000₫</td><td>195.000₫/kg</td><td>---</td></tr>
+      <tr><td>Giá trị cao</td><td>195.000₫</td><td>195.000₫/kg</td><td>+2%</td></tr>
+      <tr><td>Dễ vỡ</td><td>195.000₫</td><td>195.000₫/kg</td><td>+5%</td></tr>
+      <tr><td>Nước hoa</td><td>195.000₫</td><td>195.000₫/kg</td><td>+50.000₫/chai</td></tr>
+    </table>
+
+    <h3>🇪🇸 Tây Ban Nha - Việt Nam</h3>
+    <table>
+      <tr><th>Loại hàng</th><th>≤ 5kg</th><th>> 5kg</th><th>Phụ thu</th></tr>
+      <tr><td>Hàng thường</td><td>235.000₫</td><td>230.000₫/kg</td><td>---</td></tr>
+      <tr><td>Giá trị cao</td><td>235.000₫</td><td>250.000₫/kg</td><td>+2%</td></tr>
+      <tr><td>Dễ vỡ</td><td>235.000₫</td><td>230.000₫/kg</td><td>+5%</td></tr>
+      <tr><td>Nước hoa</td><td>235.000₫</td><td>230.000₫/kg</td><td>+50.000₫/chai</td></tr>
+    </table>
+
+    <h3>🇬🇧 UK - Việt Nam</h3>
+    <table>
+      <tr><th>Loại hàng</th><th>≤ 5kg</th><th>> 5kg</th><th>Phụ thu</th></tr>
+      <tr><td>Hàng thường</td><td>£7.2</td><td>£6.8/kg</td><td>---</td></tr>
+      <tr><td>Giá trị cao</td><td>£7.2</td><td>£8/kg</td><td>+2%</td></tr>
+      <tr><td>Dễ vỡ</td><td>£7.2</td><td>£6.8/kg</td><td>+5%</td></tr>
+      <tr><td>Nước hoa</td><td>£7.2</td><td>£6.8/kg</td><td>+2£/chai</td></tr>
+    </table>
+
+    <br />
+    <div style="text-align: center;">
+      <button onclick="hidePricing()">⬅ Quay lại</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function calculateFee() {
+  const route = document.getElementById("route").value;
+  const type = document.getElementById("type").value;
+  const weight = parseFloat(document.getElementById("weight").value);
+  const result = document.getElementById("result");
+
+  if (isNaN(weight) || weight <= 0) {
+    result.innerText = "Vui lòng nhập khối lượng hợp lệ.";
+    return;
+  }
+
+  let price = 0, surcharge = 0, total = 0;
+
+  if (route === "japan") {
+    price = weight <= 5 ? 195000 : 195000 * weight;
+    if (type === "valuable") surcharge = price * 0.02;
+    else if (type === "fragile") surcharge = price * 0.05;
+    else if (type === "liquid") surcharge = 50000 * Math.ceil(weight);
+    total = price + surcharge;
+    result.innerText = `Chi phí ước tính: ${total.toLocaleString()} VND`;
+
+  } else if (route === "spain") {
+    price = weight <= 5 ? 235000 : 230000 * weight;
+    if (type === "valuable") {
+      price = 250000 * weight;
+      surcharge = price * 0.02;
+    } else if (type === "fragile") surcharge = price * 0.05;
+    else if (type === "liquid") surcharge = 50000 * Math.ceil(weight);
+    total = price + surcharge;
+    result.innerText = `Chi phí ước tính: ${total.toLocaleString()} VND`;
+
+  } else if (route === "uk") {
+    price = weight <= 5 ? 7.2 : 6.8 * weight;
+    if (type === "valuable") price = 8.0 * weight, surcharge = price * 0.02;
+    else if (type === "fragile") surcharge = price * 0.05;
+    else if (type === "liquid") surcharge = 2 * Math.ceil(weight);
+    total = price + surcharge;
+    result.innerText = `Chi phí ước tính: £${total.toFixed(2)}`;
+  }
+}
+
+function showPricing() {
+  document.getElementById("main-content").style.display = "none";
+  document.getElementById("pricing-section").style.display = "block";
+}
+
+function hidePricing() {
+  document.getElementById("main-content").style.display = "block";
+  document.getElementById("pricing-section").style.display = "none";
+}
+</script>
+<footer class="footer">
+  <div class="footer-content">
     <p>&copy; 2025 CRD Transport. All rights reserved.</p>
-  </footer>
+    <p>Liên hệ: 
+      <a href="mailto:crd.transport@gmail.com">crdtransport@gmail.com</a> | 
+      📞 <a href="tel:0912597313">0912597313</a>
+    </p>
+    <div class="social-links">
+      <a href="#">Facebook</a> |
+      <a href="#">Zalo</a> |
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+</footer>
 
-  <!-- Chat Messenger -->
-  <div id="fb-root"></div>
-  <div id="fb-customer-chat" class="fb-customerchat"></div>
-  <script>
-    var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "YOUR_PAGE_ID_HERE");
-    chatbox.setAttribute("attribution", "biz_inbox");
-    window.fbAsyncInit = function() {
-      FB.init({ xfbml: true, version: 'v18.0' });
-    };
-    (function(d, s, id) {
-      if (d.getElementById(id)) return;
-      var js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
-      d.body.appendChild(js);
-    }(document, 'script', 'facebook-jssdk'));
-  </script>
+<style>
+.footer {
+  background-color: #2e7d32;
+  color: white;
+  text-align: center;
+  padding: 20px 10px;
+  margin-top: 40px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+}
+.footer a {
+  color: #bbdefb;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footer a:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+.footer-content p {
+  margin: 5px 0;
+}
+.social-links {
+  margin-top: 10px;
+}
+</style>
 
-  <script src="app.js"></script>
 </body>
 </html>
