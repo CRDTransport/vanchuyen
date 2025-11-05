@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đăng nhập - CRD TRANSPORT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><strong>CRD TRANSPORT</strong></div>
+        <nav>
+          <a href="index.html">Trang chủ</a>
+          <a href="about.html">Về chúng tôi</a>
+          <a href="pricing.html">Bảng giá</a>
+          <a href="service.html">Dịch vụ</a>
+          <a href="contact.html">Liên hệ</a>
+        </nav>
+        <div class="header-actions">
+          <a href="login.html" class="btn-header active">Đăng nhập</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" style="max-width:480px;margin:40px auto" data-aos="fade-up">
+      <h1>Đăng nhập bằng</h1>
+      <p class="muted">Sử dụng tài khoản Google hoặc Facebook để đăng nhập.</p>
+
+      <div class="card" style="text-align:center;padding:28px">
+        <button id="google-login" class="social-btn google">Đăng nhập với Google</button>
+        <button id="facebook-login" class="social-btn facebook">Đăng nhập với Facebook</button>
+
+        <div id="login-msg" style="margin-top:14px;color:#2e7d32;font-weight:600"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer-simple">
+    <div class="container">
+      <div class="footer-inner">
+        <p>© 2025 CRD TRANSPORT</p>
+        <nav class="footer-links">
+          <a href="terms.html">Điều khoản sử dụng</a>
+          <a href="privacy.html">Chính sách quyền riêng tư</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Replace these with your real app IDs
+    const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
+    const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID';
+
+    const redirectUri = window.location.origin + '/auth_callback.html';
+
+    function randState() {
+      return Math.random().toString(36).slice(2);
+    }
+
+    function openOAuthPopup(url, name='oauth', w=600, h=700) {
+      const left = (screen.width/2)-(w/2);
+      const top = (screen.height/2)-(h/2);
+      return window.open(url, name, `width=${w},height=${h},top=${top},left=${left}`);
+    }
+
+    document.getElementById('google-login').addEventListener('click', () => {
+      if (!GOOGLE_CLIENT_ID) {
+        alert('Thêm GOOGLE_CLIENT_ID vào trang login.html trước khi sử dụng.');
+        return;
+      }
+      const state = randState();
+      const scope = encodeURIComponent('openid email profile');
+      const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scope}&state=${state}&prompt=select_account`;
+      const popup = openOAuthPopup(url, 'google_oauth');
+      // listen for message
+    });
+
+    document.getElementById('facebook-login').addEventListener('click', () => {
+      if (!FACEBOOK_APP_ID) {
+        alert('Thêm FACEBOOK_APP_ID vào trang login.html trước khi sử dụng.');
+        return;
+      }
+      const state = randState();
+      const scope = encodeURIComponent('email,public_profile');
+      const url = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${encodeURIComponent(FACEBOOK_APP_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&state=${state}&scope=${scope}`;
+      const popup = openOAuthPopup(url, 'facebook_oauth');
+    });
+
+    // receive callback from auth_callback.html
+    window.addEventListener('message', (ev) => {
+      // For security, you may check ev.origin === window.location.origin
+      const data = ev.data || {};
+      if (data && data.type === 'oauth_callback') {
+        // data: { provider, code, state }
+        document.getElementById('login-msg').textContent = `Đăng nhập thành công (${data.provider}). Code: ${data.code || '—'}`;
+        // simulate logged-in state: redirect or fetch token from server
+        setTimeout(() => window.location.href = 'index.html', 900);
+      }
+    });
+  </script>
+</body>
+</html>

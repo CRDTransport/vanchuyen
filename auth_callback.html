@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OAuth callback</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding:24px; text-align:center; }
+    .box { max-width:640px; margin:40px auto; padding:18px; border-radius:8px; background:#f7f7f7; }
+    .ok { color: #2e7d32; font-weight:700; }
+    .err { color: #c62828; font-weight:700; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Hoàn tất xác thực</h2>
+    <p id="msg">Đang xử lý...</p>
+    <p><small>Nếu cửa sổ không đóng tự động, bạn có thể đóng thủ công.</small></p>
+  </div>
+
+  <script>
+    // ----- CONFIG: set your backend token-exchange URL here -----
+    const BACKEND_TOKEN_EXCHANGE_URL = 'https://your-backend.example.com/auth/exchange';
+    // ------------------------------------------------------------
+
+    function parseQuery() {
+      const q = location.search.replace(/^\?/, '');
+      return Object.fromEntries(q.split('&').filter(Boolean).map(s => {
+        const [k,v] = s.split('=');
+        return [decodeURIComponent(k), decodeURIComponent(v||'')];
+      }));
+    }
+
+    function show(msg, cls) {
+      const el = document.getElementById('msg');
+      el.textContent = msg;
+      el.className = cls || '';
+    }
+
+    (async function() {
+      const params = parseQuery();
+      const code = params.code || null;
+      const state = params.state || null;
+      // try to detect provider from params or referrer
+      const provider = params.provider || (document.referrer.includes('google') ? 'google' : (document.referrer.includes('facebook') ? 'facebook' : 'unknown'));
+
+      if (!code) {
+        // if provider returned error in query
+        const error = params.error || 'Không có mã xác thực (code).';
+        show('Lỗi xác thực: ' + error, 'err');
+        // notify opener of error
+        try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success: false, error, provider, state }, window.location.origin); } catch(e) {}
+        return;
+      }
+
+      show('Gửi mã tới máy chủ để đổi token...', '');
+
+      try {
+        // POST code -> your backend for secure code->token exchange
+        const resp = await fetch(BACKEND_TOKEN_EXCHANGE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, provider, state, redirect_uri: window.location.origin + window.location.pathname })
+        });
+
+        if (!resp.ok) {
+          const txt = await resp.text();
+          throw new Error('Server trả lỗi: ' + resp.status + ' ' + txt);
+        }
+
+        const data = await resp.json();
+        if (data && data.success) {
+          show('Xác thực thành công. Đang đóng cửa sổ...', 'ok');
+          // send token/user to opener (postMessage). Do NOT expose tokens to third-party origins.
+          try {
+            if (window.opener && !window.opener.closed) {
+              window.opener.postMessage({
+                type: 'oauth_callback',
+                success: true,
+                provider: data.provider || provider,
+                access_token: data.access_token,
+                id_token: data.id_token,
+                user: data.user || null,
+                state: state
+              }, window.location.origin);
+            }
+          } catch (e) {
+            // ignore
+          }
+          // close popup after short delay
+          setTimeout(() => { window.close(); }, 900);
+        } else {
+          const errMsg = (data && data.error) ? data.error : 'Không lấy được token từ server.';
+          show('Lỗi: ' + errMsg, 'err');
+          try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success:false, error: errMsg, provider, state }, window.location.origin); } catch(e) {}
+        }
+
+      } catch (err) {
+        show('Lỗi xử lý: ' + (err.message || err), 'err');
+        try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success:false, error: err.message || String(err), provider, state }, window.location.origin); } catch(e) {}
+      }
+    })();
+  </script>
+</body>
+</html>
