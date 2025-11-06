@@ -1164,148 +1164,106 @@ table.card tr:nth-child(even) td {
 
 /* Mobile / small screens adjustments for balanced layout */
 @media (max-width: 992px) {
-  .container {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+  /* Slightly larger base font for readability on medium phones */
+  body { font-size: 15px; line-height: 1.65; }
 
-  /* Header: stack and center */
+  /* Header: reduce size, center and keep compact */
   .header-content {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 0;
+    padding: 10px 0;
   }
-  nav {
-    width: 100%;
-    text-align: center;
-  }
-  nav a {
-    display: inline-block;
-    margin: 8px 10px;
-  }
+  .logo { font-size: 20px; }
+  nav { gap: 12px; }
 
-  /* Hero: reduce height and font sizes, center content */
+  /* Hero area: reduce min-height and bring content lower to avoid overlap with sticky header */
   .hero {
-    padding: 36px 0;
-    min-height: 320px;
+    padding: 28px 0;
+    min-height: 280px;
   }
-  .hero-content {
-    margin-top: 50px; /* keep content below header/logo */
-    text-align: center;
-  }
-  .hero-title {
-    font-size: 26px;
-    line-height: 1.2;
-  }
-  .hero-subtitle {
-    font-size: 15px;
-  }
+  .hero-content { margin-top: 30px; }
+  .hero-title { font-size: 28px; }
+  .hero-subtitle { font-size: 14px; }
 
-  /* Tracking box: full width and stacked controls */
+  /* Tracking box: edge-to-edge feel with comfortable padding */
   .tracking-box {
     max-width: 100%;
-    padding: 18px;
-    margin: 24px auto 0;
+    padding: 16px;
+    margin: 18px auto 0;
   }
-  .tracking-tabs {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .tracking-tabs .tab-btn {
-    flex: 1 1 auto;
-    min-width: 100px;
-    padding: 8px 10px;
-    font-size: 14px;
-  }
-  .tracking-form {
-    flex-direction: column;
-    gap: 8px;
-    align-items: stretch;
-  }
-  .tracking-input {
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .btn-track {
-    width: 100%;
-  }
+  .tracking-form { gap: 10px; }
+  .tracking-input { padding: 12px 14px; font-size: 15px; }
+  .btn-track { padding: 12px 18px; font-size: 15px; }
 
-  /* Services grid -> single column */
-  .services-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+  /* Services and cards: slightly reduced padding, clearer vertical rhythm */
+  .service-card { padding: 20px; }
+  .services-grid { gap: 18px; }
+  .service-card h3 { font-size: 18px; margin-bottom: 10px; }
+  .service-card p { font-size: 14px; }
+
+  /* Why/partner: stack with balanced spacing */
+  .why-grid, .why-partner-grid {
     gap: 18px;
   }
-  .service-card {
-    padding: 18px;
-  }
-  .service-icon {
-    width: 72px;
-    height: 72px;
-    margin-bottom: 12px;
+  .why-content h2, .why-partner-content h2 { font-size: 22px; margin-bottom: 12px; }
+  .why-content p, .why-partner-content p { font-size: 14px; }
+
+  /* Make action buttons large and easy to tap */
+  .btn-primary, .btn-secondary, .cta-link {
+    padding: 12px 14px;
+    font-size: 15px;
+    border-radius: 8px;
   }
 
-  /* Milk brand list center */
-  .milk-brand-list {
-    justify-content: center;
-  }
+  /* Contact: card padding reduced, grid rows spaced evenly */
+  .contact-card { padding: 18px; }
+  .contact-grid { gap: 18px; }
 
-  /* Why / partner areas: single column */
-  .why-grid,
-  .why-partner-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .why-image img,
-  .why-partner-image img {
-    max-width: 100%;
-    height: auto;
-  }
+  /* Map smaller on mobile to avoid very tall scroll */
+  .contact-map iframe { height: 240px; }
 
-  /* Buttons and links full-width for easy tapping */
-  .btn,
-  .btn-primary,
-  .btn-secondary,
-  .cta-link,
-  .service-link {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 12px;
-  }
+  /* Partner image: keep but limit height so section balances */
+  .why-partner-image img { max-height: 220px; object-fit: cover; }
 
-  /* Footer stack */
-  .site-footer-simple .footer-inner {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
+  /* Footer simplified: center + slightly larger tap targets */
+  .site-footer-simple .footer-inner { padding: 8px 0; }
+  .site-footer-simple .footer-links a { padding: 8px 10px; display: inline-block; }
+
+  /* Ensure lists have breathing room */
+  .why-list-cta li { padding: 14px 0; }
+
+  /* Adjust tracking tabs spacing for small widths */
+  .tracking-tabs { gap: 6px; }
+  .tracking-tabs .tab-btn { padding: 8px 10px; font-size: 14px; }
 }
 
 /* Extra small devices */
 @media (max-width: 480px) {
-  .hero-title {
-    font-size: 22px;
-  }
-  .hero-subtitle {
-    font-size: 14px;
-  }
-  .tracking-tabs .tab-btn {
-    font-size: 13px;
-    padding: 8px 6px;
-  }
-  .why-list-cta li {
-    font-size: 15px;
-  }
-  .service-icon {
-    width: 60px;
-    height: 60px;
-  }
-  .result-box {
-    font-size: 13px;
+  body { font-size: 14px; }
+
+  .header-content { padding: 8px 0; }
+  .logo { font-size: 18px; }
+
+  .hero { padding: 22px 0; min-height: 240px; }
+  .hero-title { font-size: 22px; }
+  .hero-subtitle { font-size: 13px; }
+
+  .tracking-box { padding: 12px; margin-top: 12px; border-radius: 10px; }
+  .tracking-input { padding: 10px; font-size: 14px; }
+  .btn-track { padding: 10px; font-size: 14px; }
+
+  .service-card { padding: 14px; }
+  .service-card h3 { font-size: 16px; }
+  .service-card p { font-size: 13px; }
+
+  .why-content h2, .why-partner-content h2 { font-size: 20px; }
+  .why-list-cta li { font-size: 14px; padding: 12px 0; }
+
+  .contact-map iframe { height: 200px; }
+
+  /* Ensure social/login buttons remain full-width but not too tall */
+  .social-btn { padding: 10px 12px; font-size: 15px; max-width: 100%; }
+
+  /* Reduce gaps sitewide for very small screens but keep comfortable touch targets */
+  .services-grid, .contact-grid, .mv-grid, .strengths-grid {
+    gap: 14px;
   }
 }
