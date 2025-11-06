@@ -1161,3 +1161,151 @@ table.card tr:nth-child(even) td {
 .social-btn.facebook { background: #1877f2; }
 
 .social-btn:hover { transform: translateY(-2px); }
+
+/* Mobile / small screens adjustments for balanced layout */
+@media (max-width: 992px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Header: stack and center */
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+  }
+  nav {
+    width: 100%;
+    text-align: center;
+  }
+  nav a {
+    display: inline-block;
+    margin: 8px 10px;
+  }
+
+  /* Hero: reduce height and font sizes, center content */
+  .hero {
+    padding: 36px 0;
+    min-height: 320px;
+  }
+  .hero-content {
+    margin-top: 50px; /* keep content below header/logo */
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 26px;
+    line-height: 1.2;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+  }
+
+  /* Tracking box: full width and stacked controls */
+  .tracking-box {
+    max-width: 100%;
+    padding: 18px;
+    margin: 24px auto 0;
+  }
+  .tracking-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tracking-tabs .tab-btn {
+    flex: 1 1 auto;
+    min-width: 100px;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  .tracking-form {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  .tracking-input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .btn-track {
+    width: 100%;
+  }
+
+  /* Services grid -> single column */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .service-card {
+    padding: 18px;
+  }
+  .service-icon {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 12px;
+  }
+
+  /* Milk brand list center */
+  .milk-brand-list {
+    justify-content: center;
+  }
+
+  /* Why / partner areas: single column */
+  .why-grid,
+  .why-partner-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .why-image img,
+  .why-partner-image img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Buttons and links full-width for easy tapping */
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .cta-link,
+  .service-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+
+  /* Footer stack */
+  .site-footer-simple .footer-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 22px;
+  }
+  .hero-subtitle {
+    font-size: 14px;
+  }
+  .tracking-tabs .tab-btn {
+    font-size: 13px;
+    padding: 8px 6px;
+  }
+  .why-list-cta li {
+    font-size: 15px;
+  }
+  .service-icon {
+    width: 60px;
+    height: 60px;
+  }
+  .result-box {
+    font-size: 13px;
+  }
+}
