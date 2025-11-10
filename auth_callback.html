@@ -20,7 +20,7 @@
 
   <script>
     // ----- CONFIG: set your backend token-exchange URL here -----
-    const BACKEND_TOKEN_EXCHANGE_URL = 'https://your-backend.example.com/auth/exchange';
+    const BACKEND_TOKEN_EXCHANGE_URL = 'https://your-backend.example.com/auth/exchange'; // <- REPLACE THIS
     // ------------------------------------------------------------
 
     function parseQuery() {
@@ -41,26 +41,32 @@
       const params = parseQuery();
       const code = params.code || null;
       const state = params.state || null;
-      // try to detect provider from params or referrer
-      const provider = params.provider || (document.referrer.includes('google') ? 'google' : (document.referrer.includes('facebook') ? 'facebook' : 'unknown'));
+      const providerGuess = params.provider || (document.referrer.includes('google') ? 'google' : (document.referrer.includes('facebook') ? 'facebook' : 'unknown'));
 
       if (!code) {
-        // if provider returned error in query
         const error = params.error || 'Không có mã xác thực (code).';
         show('Lỗi xác thực: ' + error, 'err');
-        // notify opener of error
-        try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success: false, error, provider, state }, window.location.origin); } catch(e) {}
+        try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success: false, error, provider: providerGuess, state }, window.location.origin); } catch(e) {}
+        return;
+      }
+
+      if (!BACKEND_TOKEN_EXCHANGE_URL || BACKEND_TOKEN_EXCHANGE_URL.indexOf('http') !== 0) {
+        show('BACKEND_TOKEN_EXCHANGE_URL chưa được cấu hình. Vui lòng đặt URL backend để trao đổi mã với nhà cung cấp OAuth.', 'err');
+        try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success:false, error:'backend_not_configured', provider: providerGuess, state }, window.location.origin); } catch(e) {}
         return;
       }
 
       show('Gửi mã tới máy chủ để đổi token...', '');
 
       try {
-        // POST code -> your backend for secure code->token exchange
+        // compute redirect_uri relative to current file location
+        const basePath = window.location.pathname.replace(/\/[^\/]*$/, '/');
+        const redirect_uri = window.location.origin + basePath + 'auth_callback.html';
+
         const resp = await fetch(BACKEND_TOKEN_EXCHANGE_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code, provider, state, redirect_uri: window.location.origin + window.location.pathname })
+          body: JSON.stringify({ code, provider: providerGuess, state, redirect_uri })
         });
 
         if (!resp.ok) {
@@ -71,33 +77,29 @@
         const data = await resp.json();
         if (data && data.success) {
           show('Xác thực thành công. Đang đóng cửa sổ...', 'ok');
-          // send token/user to opener (postMessage). Do NOT expose tokens to third-party origins.
           try {
             if (window.opener && !window.opener.closed) {
               window.opener.postMessage({
                 type: 'oauth_callback',
                 success: true,
-                provider: data.provider || provider,
+                provider: data.provider || providerGuess,
                 access_token: data.access_token,
                 id_token: data.id_token,
                 user: data.user || null,
                 state: state
               }, window.location.origin);
             }
-          } catch (e) {
-            // ignore
-          }
-          // close popup after short delay
+          } catch (e) {}
           setTimeout(() => { window.close(); }, 900);
         } else {
           const errMsg = (data && data.error) ? data.error : 'Không lấy được token từ server.';
           show('Lỗi: ' + errMsg, 'err');
-          try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success:false, error: errMsg, provider, state }, window.location.origin); } catch(e) {}
+          try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success:false, error: errMsg, provider: providerGuess, state }, window.location.origin); } catch(e) {}
         }
 
       } catch (err) {
         show('Lỗi xử lý: ' + (err.message || err), 'err');
-        try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success:false, error: err.message || String(err), provider, state }, window.location.origin); } catch(e) {}
+        try { if (window.opener && !window.opener.closed) window.opener.postMessage({ type:'oauth_callback', success:false, error: err.message || String(err), provider: providerGuess, state }, window.location.origin); } catch(e) {}
       }
     })();
   </script>
