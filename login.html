@@ -52,56 +52,63 @@
   </footer>
 
   <script>
-    // Replace these with your real app IDs
-    const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
-    const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID';
+	// Replace these with your real app IDs
+	const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
+	const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID';
 
-    const redirectUri = window.location.origin + '/auth_callback.html';
+	// compute redirect URI relative to current folder (works when site is under /vanchuyen/)
+	const basePath = window.location.pathname.replace(/\/[^\/]*$/, '/'); // keep trailing slash
+	const redirectUri = window.location.origin + basePath + 'auth_callback.html';
+	console.log('OAuth redirect URI (register this in Google/Facebook app):', redirectUri);
 
-    function randState() {
-      return Math.random().toString(36).slice(2);
-    }
+	function randState() {
+	  return Math.random().toString(36).slice(2);
+	}
 
-    function openOAuthPopup(url, name='oauth', w=600, h=700) {
-      const left = (screen.width/2)-(w/2);
-      const top = (screen.height/2)-(h/2);
-      return window.open(url, name, `width=${w},height=${h},top=${top},left=${left}`);
-    }
+	function openOAuthPopup(url, name='oauth', w=600, h=700) {
+	  const left = (screen.width/2)-(w/2);
+	  const top = (screen.height/2)-(h/2);
+	  return window.open(url, name, `width=${w},height=${h},top=${top},left=${left}`);
+	}
 
-    document.getElementById('google-login').addEventListener('click', () => {
-      if (!GOOGLE_CLIENT_ID) {
-        alert('Thêm GOOGLE_CLIENT_ID vào trang login.html trước khi sử dụng.');
-        return;
-      }
-      const state = randState();
-      const scope = encodeURIComponent('openid email profile');
-      const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scope}&state=${state}&prompt=select_account`;
-      const popup = openOAuthPopup(url, 'google_oauth');
-      // listen for message
-    });
+	document.getElementById('google-login').addEventListener('click', () => {
+	  if (!GOOGLE_CLIENT_ID) {
+	    alert('Thêm GOOGLE_CLIENT_ID vào trang login.html trước khi sử dụng.');
+	    return;
+	  }
+	  const state = randState();
+	  const scope = encodeURIComponent('openid email profile');
+	  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scope}&state=${state}&prompt=select_account`;
+	  openOAuthPopup(url, 'google_oauth');
+	});
 
-    document.getElementById('facebook-login').addEventListener('click', () => {
-      if (!FACEBOOK_APP_ID) {
-        alert('Thêm FACEBOOK_APP_ID vào trang login.html trước khi sử dụng.');
-        return;
-      }
-      const state = randState();
-      const scope = encodeURIComponent('email,public_profile');
-      const url = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${encodeURIComponent(FACEBOOK_APP_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&state=${state}&scope=${scope}`;
-      const popup = openOAuthPopup(url, 'facebook_oauth');
-    });
+	document.getElementById('facebook-login').addEventListener('click', () => {
+	  if (!FACEBOOK_APP_ID) {
+	    alert('Thêm FACEBOOK_APP_ID vào trang login.html trước khi sử dụng.');
+	    return;
+	  }
+	  const state = randState();
+	  const scope = encodeURIComponent('email,public_profile');
+	  const url = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${encodeURIComponent(FACEBOOK_APP_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&state=${state}&scope=${scope}`;
+	  openOAuthPopup(url, 'facebook_oauth');
+	});
 
-    // receive callback from auth_callback.html
-    window.addEventListener('message', (ev) => {
-      // For security, you may check ev.origin === window.location.origin
-      const data = ev.data || {};
-      if (data && data.type === 'oauth_callback') {
-        // data: { provider, code, state }
-        document.getElementById('login-msg').textContent = `Đăng nhập thành công (${data.provider}). Code: ${data.code || '—'}`;
-        // simulate logged-in state: redirect or fetch token from server
-        setTimeout(() => window.location.href = 'index.html', 900);
-      }
-    });
+	// receive callback from auth_callback.html
+	window.addEventListener('message', (ev) => {
+	  const data = ev.data || {};
+	  if (data && data.type === 'oauth_callback') {
+	    if (data.success) {
+	      // store user info in localStorage so other pages know user is logged in
+	      const user = data.user || { provider: data.provider || 'oauth', email: data.email || '', name: (data.user && data.user.name) || data.name || '' };
+	      try { localStorage.setItem('crd_user', JSON.stringify(user)); } catch (e) {}
+	      document.getElementById('login-msg').textContent = `Đăng nhập thành công (${data.provider}).`;
+	      setTimeout(() => window.location.href = 'index.html', 900);
+	    } else {
+	      document.getElementById('login-msg').textContent = `Lỗi đăng nhập: ${data.error || 'không xác định'}`;
+	      document.getElementById('login-msg').style.color = '#c62828';
+	    }
+	  }
+	});
   </script>
 </body>
 </html>
