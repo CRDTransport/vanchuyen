@@ -85,9 +85,30 @@ header {
 }
 
 .logo {
-  font-size: 24px;
-  color: var(--primary-color);
-  font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #00ca1b;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  line-height: 1;
+}
+
+.logo strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.logo .transport {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  position: relative;
+  top: 0;
+  margin-left: 0;
 }
 
 nav {
@@ -132,24 +153,40 @@ nav a.active::after {
   background: #1b5e20;
 }
 
-/* Hero Section - Center alignment */
+/* Hero Section - Fix overlapping text */
 .hero {
   position: relative;
   min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  overflow: hidden;
 }
 
 .hero-image {
   position: absolute;
-  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  pointer-events: none;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
 }
 
 .hero-content {
@@ -157,31 +194,38 @@ nav a.active::after {
   z-index: 2;
   max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
-}
-
-/* Tiêu đề trắng to rõ ràng */
-.hero-title {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  padding: 60px 20px;
   text-align: center;
 }
 
-/* Dòng phụ nhỏ hơn */
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+}
+
 .hero-subtitle {
   font-size: 1.25rem;
   margin-bottom: 40px;
-  text-align: center;
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+  line-height: 1.6;
 }
 
-/* Tracking Box - Center alignment */
+/* Tracking Box */
 .tracking-box {
   background: white;
   border-radius: 12px;
   padding: 30px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+  z-index: 3;
 }
 
 .tracking-tabs {
@@ -192,24 +236,109 @@ nav a.active::after {
   flex-wrap: wrap;
 }
 
-.tracking-form {
-  text-align: center;
+.tab-btn {
+  padding: 12px 24px;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  white-space: nowrap;
 }
 
-.track-lookup,
-.rate-calculator,
-.location-search {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
+.tab-btn.active {
+  background: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+.tab-btn:hover {
+  border-color: #4CAF50;
+  transform: translateY(-2px);
+}
+
+/* Tracking Form */
+.tracking-form {
+  text-align: center;
 }
 
 .tracking-input {
   width: 100%;
   max-width: 500px;
   padding: 12px 20px;
-  margin: 0 auto;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin: 0 auto 15px;
+  display: block;
+}
+
+.btn-track {
+  padding: 12px 40px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-track:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
+}
+
+.result-box:not(:empty) {
+  display: block;
+}
+
+/* Rate Calculator Fields */
+.rate-calculator .field {
+  margin-bottom: 15px;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rate-calculator .field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+.rate-calculator .field input,
+.rate-calculator .field select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.rate-calculator .field.dims {
+  display: flex;
+  gap: 10px;
+}
+
+.rate-calculator .field.dims input {
+  flex: 1;
 }
 
 /* Services Section */
@@ -904,136 +1033,94 @@ table.card tr:nth-child(even) td {
 }
 
 .site-footer-simple {
-  background: var(--primary-color); /* switched from purple to primary green */
-  color: #fff;
-  padding: 10px 0;
-  font-size: 14px;
+  background: var(--primary-color);
+  color: white;
+  padding: 30px 0;
+  text-align: center;
 }
-.site-footer-simple .footer-inner {
+
+.footer-inner {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-}
-.site-footer-simple .footer-inner p {
-  margin: 0;
-  opacity: 0.95;
-}
-.site-footer-simple .footer-links {
-  display: flex;
-  gap: 18px;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
-.site-footer-simple .footer-links a {
-  color: rgba(255,255,255,0.95);
+
+.footer-links {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.footer-links a {
+  color: white;
   text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.3s;
 }
-.site-footer-simple .footer-links a:hover {
-  color: #e8f5e9; /* lighter green for contrast on hover */
+
+.footer-links a:hover {
+  opacity: 1;
   text-decoration: underline;
 }
 
-/* Responsive: stack on small screens */
-@media (max-width: 600px) {
-  .site-footer-simple .footer-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-  .site-footer-simple .footer-links {
-    justify-content: center;
-  }
-}
-
-.social-btn {
-  display: inline-block;
+/* Rate Calculator - Balanced fields */
+.rate-calculator .field {
   width: 100%;
-  max-width: 320px;
-  padding: 12px 16px;
-  margin: 8px 0;
-  border-radius: 8px;
-  font-weight: 700;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  max-width: 500px;
+  margin: 0 auto 15px;
+  text-align: left;
 }
 
-.social-btn.google { background: #db4437; }
-.social-btn.facebook { background: #1877f2; }
+.rate-calculator .field.dims {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
 
-.social-btn:hover { transform: translateY(-2px); }
+.rate-calculator .field.dims input {
+  flex: 1;
+  min-width: 0;
+}
 
-/* Mobile / small screens adjustments for balanced layout */
-@media (max-width: 992px) {
-  /* Slightly larger base font for readability on medium phones */
-  body { font-size: 15px; line-height: 1.65; }
+.result-box {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  /* Header: reduce size, center and keep compact */
-  .header-content {
-    padding: 10px 0;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.3;
   }
-  .logo { font-size: 20px; }
-  nav { gap: 12px; }
-
-  /* Hero area: reduce min-height and bring content lower to avoid overlap with sticky header */
-  .hero {
-    padding: 28px 0;
-    min-height: 280px;
+  
+  .hero-subtitle {
+    font-size: 1rem;
   }
-  .hero-content { margin-top: 30px; }
-  .hero-title { font-size: 28px; }
-  .hero-subtitle { font-size: 14px; }
-
-  /* Tracking box: edge-to-edge feel with comfortable padding */
+  
   .tracking-box {
-    max-width: 100%;
-    padding: 16px;
-    margin: 18px auto 0;
+    padding: 20px;
   }
-  .tracking-form { gap: 10px; }
-  .tracking-input { padding: 12px 14px; font-size: 15px; }
-  .btn-track { padding: 12px 18px; font-size: 15px; }
-
-  /* Services and cards: slightly reduced padding, clearer vertical rhythm */
-  .service-card { padding: 20px; }
-  .services-grid { gap: 18px; }
-  .service-card h3 { font-size: 18px; margin-bottom: 10px; }
-  .service-card p { font-size: 14px; }
-
-  /* Why/partner: stack with balanced spacing */
-  .why-grid, .why-partner-grid {
-    gap: 18px;
+  
+  .tracking-tabs {
+    flex-direction: column;
   }
-  .why-content h2, .why-partner-content h2 { font-size: 22px; margin-bottom: 12px; }
-  .why-content p, .why-partner-content p { font-size: 14px; }
-
-  /* Make action buttons large and easy to tap */
-  .btn-primary, .btn-secondary, .cta-link {
-    padding: 12px 14px;
-    font-size: 15px;
-    border-radius: 8px;
+  
+  .tab-btn {
+    width: 100%;
   }
-
-  /* Contact: card padding reduced, grid rows spaced evenly */
-  .contact-card { padding: 18px; }
-  .contact-grid { gap: 18px; }
-
-  /* Map smaller on mobile to avoid very tall scroll */
-  .contact-map iframe { height: 240px; }
-
-  /* Partner image: keep but limit height so section balances */
-  .why-partner-image img { max-height: 220px; object-fit: cover; }
-
-  /* Footer simplified: center + slightly larger tap targets */
-  .site-footer-simple .footer-inner { padding: 8px 0; }
-  .site-footer-simple .footer-links a { padding: 8px 10px; display: inline-block; }
-
-  /* Ensure lists have breathing room */
-  .why-list-cta li { padding: 14px 0; }
-
-  /* Adjust tracking tabs spacing for small widths */
-  .tracking-tabs { gap: 6px; }
-  .tracking-tabs .tab-btn { padding: 8px 10px; font-size: 14px; }
+  
+  .rate-calculator .field.dims {
+    flex-direction: column;
+  }
 }
 
 /* Extra small devices */
@@ -1841,7 +1928,7 @@ table.card tr:nth-child(even) td {
 }
 
 .site-footer-simple {
-  background: #2c3e50;
+  background: var(--primary-color);
   color: white;
   padding: 30px 0;
   text-align: center;
@@ -1861,62 +1948,14 @@ table.card tr:nth-child(even) td {
   justify-content: center;
 }
 
-/* Rate Calculator - Balanced fields */
-.rate-calculator .field {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto 15px;
-  text-align: left;
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.3s;
 }
 
-.rate-calculator .field.dims {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-.rate-calculator .field.dims input {
-  flex: 1;
-  min-width: 0;
-}
-
-.result-box {
-  margin-top: 20px;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  text-align: left;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .why-grid,
-  .why-partner-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .tracking-tabs {
-    flex-direction: column;
-  }
-  
-  .rate-calculator .field.dims {
-    flex-direction: column;
-  }
+.footer-links a:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
