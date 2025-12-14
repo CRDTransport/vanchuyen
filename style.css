@@ -1095,64 +1095,441 @@ table.card tr:nth-child(even) td {
   margin-right: auto;
 }
 
-/* Responsive adjustments */
+/* =====================================================
+   RESPONSIVE DESIGN - Mobile & Tablet Optimization
+   ===================================================== */
+
+/* Container - Consistent padding */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Tablet - 768px to 1024px */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 30px;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .hero {
+    min-height: 500px;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.15rem;
+  }
+  
+  .why-grid,
+  .about-intro-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .why-partner-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile - 481px to 768px */
 @media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+  
+  /* Header */
+  .header-content {
+    padding: 12px 0;
+  }
+  
+  .logo {
+    font-size: 1.3rem;
+  }
+  
+  .logo .transport {
+    font-size: 1.3rem;
+  }
+  
+  nav {
+    gap: 12px;
+    font-size: 0.9rem;
+  }
+  
+  nav a {
+    padding: 6px 8px;
+  }
+  
+  /* Hero Section */
+  .hero {
+    min-height: 450px;
+  }
+  
+  .hero-content {
+    padding: 30px 15px;
+  }
+  
   .hero-title {
     font-size: 2rem;
     line-height: 1.3;
+    margin-bottom: 15px;
   }
   
   .hero-subtitle {
     font-size: 1rem;
+    margin-bottom: 30px;
   }
   
+  /* Tracking Box */
   .tracking-box {
     padding: 20px;
+    margin: 0 10px;
   }
   
   .tracking-tabs {
-    flex-direction: column;
+    gap: 8px;
   }
   
   .tab-btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    flex: 1;
+    min-width: 100px;
+  }
+  
+  .tracking-input {
+    padding: 10px 15px;
+    font-size: 0.95rem;
+  }
+  
+  .btn-track {
+    padding: 10px 30px;
+    font-size: 0.95rem;
+  }
+  
+  /* Rate Calculator */
+  .rate-calculator .field.dims {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .rate-calculator .field.dims input {
     width: 100%;
   }
   
-  .rate-calculator .field.dims {
+  /* Services Grid */
+  .services-section {
+    padding: 60px 0;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .service-card {
+    max-width: 100%;
+    padding: 25px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  /* Why Choose / Why Partner */
+  .why-choose,
+  .why-partner {
+    padding: 60px 0;
+  }
+  
+  .why-grid,
+  .why-partner-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .why-content h2,
+  .why-partner-content h2 {
+    font-size: 24px;
+  }
+  
+  .why-list li,
+  .why-list-cta li {
+    font-size: 0.95rem;
+    padding: 14px 0;
+  }
+  
+  /* Footer */
+  .footer-inner {
     flex-direction: column;
+    gap: 15px;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  /* Contact Grid */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .contact-map iframe {
+    height: 300px;
   }
 }
 
-/* Extra small devices */
+/* Mobile Small - 320px to 480px */
 @media (max-width: 480px) {
-  body { font-size: 14px; }
+  body {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+  
+  /* Header */
+  .header-content {
+    padding: 10px 0;
+  }
+  
+  .logo {
+    font-size: 1.1rem;
+  }
+  
+  .logo .transport {
+    font-size: 1.1rem;
+  }
+  
+  nav {
+    gap: 8px;
+    font-size: 0.85rem;
+  }
+  
+  nav a {
+    padding: 5px 6px;
+  }
+  
+  /* Hero Section */
+  .hero {
+    min-height: 400px;
+  }
+  
+  .hero-content {
+    padding: 25px 10px;
+  }
+  
+  .hero-title {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+  }
+  
+  /* Tracking Box */
+  .tracking-box {
+    padding: 15px;
+    margin: 0 5px;
+    border-radius: 10px;
+  }
+  
+  .tracking-tabs {
+    gap: 6px;
+  }
+  
+  .tab-btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    min-width: auto;
+  }
+  
+  .tracking-input {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .btn-track {
+    padding: 10px 25px;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .result-box {
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+  
+  /* Services */
+  .services-section {
+    padding: 40px 0;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .service-card {
+    padding: 20px;
+  }
+  
+  .service-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .service-card p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  
+  .service-icon img {
+    max-width: 120px;
+    margin: 0 auto;
+  }
+  
+  /* Why Choose / Why Partner */
+  .why-choose,
+  .why-partner {
+    padding: 40px 0;
+  }
+  
+  .why-content h2,
+  .why-partner-content h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .why-content p,
+  .why-partner-content p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  
+  .why-list li,
+  .why-list-cta li {
+    font-size: 0.9rem;
+    padding: 12px 0;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+  }
+  
+  /* Footer */
+  .site-footer-simple {
+    padding: 25px 0;
+    font-size: 0.9rem;
+  }
+  
+  .footer-inner {
+    gap: 12px;
+  }
+  
+  .footer-links {
+    gap: 12px;
+  }
+  
+  /* Contact */
+  .contact-card {
+    padding: 20px;
+  }
+  
+  .contact-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+  }
+  
+  .contact-map iframe {
+    height: 250px;
+  }
+  
+  /* Grids */
+  .services-grid,
+  .contact-grid,
+  .mv-grid,
+  .strengths-grid,
+  .stats-grid {
+    gap: 20px;
+  }
+  
+  /* About & Mission Vision */
+  .mv-card,
+  .commitment-card {
+    padding: 25px 20px;
+  }
+  
+  .mv-icon,
+  .commitment-icon {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .stat-number {
+    font-size: 36px;
+  }
+  
+  .stat-label {
+    font-size: 16px;
+  }
+}
 
-  .header-content { padding: 8px 0; }
-  .logo { font-size: 18px; }
-
-  .hero { padding: 22px 0; min-height: 240px; }
-  .hero-title { font-size: 22px; }
-  .hero-subtitle { font-size: 13px; }
-
-  .tracking-box { padding: 12px; margin-top: 12px; border-radius: 10px; }
-  .tracking-input { padding: 10px; font-size: 14px; }
-  .btn-track { padding: 10px; font-size: 14px; }
-
-  .service-card { padding: 14px; }
-  .service-card h3 { font-size: 16px; }
-  .service-card p { font-size: 13px; }
-
-  .why-content h2, .why-partner-content h2 { font-size: 20px; }
-  .why-list-cta li { font-size: 14px; padding: 12px 0; }
-
-  .contact-map iframe { height: 200px; }
-
-  /* Ensure social/login buttons remain full-width but not too tall */
-  .social-btn { padding: 10px 12px; font-size: 15px; max-width: 100%; }
-
-  /* Reduce gaps sitewide for very small screens but keep comfortable touch targets */
-  .services-grid, .contact-grid, .mv-grid, .strengths-grid {
-    gap: 14px;
+/* Very Small Mobile - below 360px */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 1.3rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .tracking-box {
+    padding: 12px;
+  }
+  
+  .tab-btn {
+    padding: 7px 10px;
+    font-size: 0.8rem;
+  }
+  
+  nav {
+    gap: 6px;
+    font-size: 0.8rem;
   }
 }
 
