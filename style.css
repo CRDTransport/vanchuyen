@@ -5,7 +5,7 @@
 }
 
 :root {
-  --primary-color: #147a00a8;
+  --primary-color: #006600;
   --secondary-color: #00d9ff;
   --text-color: #333;
   --light-bg: #f5f5f5;
@@ -87,7 +87,7 @@ header {
 .logo {
   font-size: 1.5rem;
   font-weight: 900;
-  color: #00ca1b;
+  color: #009900;
   display: inline-flex;
   align-items: center;
   gap: 0;
