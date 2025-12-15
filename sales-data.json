@@ -1,0 +1,138 @@
+{
+  "lastUpdated": "2025-01-15",
+  "sales": [
+    {
+      "brand": "Next",
+      "country": "UK",
+      "discount": 70,
+      "active": true,
+      "url": "https://www.next.co.uk/nextsale"
+    },
+    {
+      "brand": "Hobbs",
+      "country": "UK",
+      "discount": 50,
+      "active": true,
+      "url": "https://www.hobbs.com/sale/"
+    },
+    {
+      "brand": "Theory",
+      "country": "UK",
+      "discount": 60,
+      "active": true,
+      "url": "https://uk.theory.com/womens-sale-view-all/?lang=en_GB"
+    },
+    {
+      "brand": "New Look",
+      "country": "UK",
+      "discount": 70,
+      "active": true,
+      "url": "https://www.newlook.com/uk/sale"
+    },
+    {
+      "brand": "Boden",
+      "country": "UK",
+      "discount": 50,
+      "active": true,
+      "url": "https://www.boden.com/collections/womens-sale"
+    },
+    {
+      "brand": "Boohoo",
+      "country": "UK",
+      "discount": 80,
+      "active": true,
+      "url": "https://www.boohoo.com/categories/womens-sale"
+    },
+    {
+      "brand": "American Eagle",
+      "country": "US",
+      "discount": 60,
+      "active": true,
+      "url": "https://www.ae.com/us/en/x/clearance"
+    },
+    {
+      "brand": "Macy's",
+      "country": "US",
+      "discount": 70,
+      "active": true,
+      "url": "https://www.macys.com/shop/sale"
+    },
+    {
+      "brand": "Everlane",
+      "country": "US",
+      "discount": 50,
+      "active": true,
+      "url": "https://www.everlane.com/collections/womens-sale"
+    },
+    {
+      "brand": "White House Black Market",
+      "country": "US",
+      "discount": 60,
+      "active": true,
+      "url": "https://www.whitehouseblackmarket.com/"
+    },
+    {
+      "brand": "David Jones",
+      "country": "AU",
+      "discount": 70,
+      "active": true,
+      "url": "https://www.davidjones.com/sale"
+    },
+    {
+      "brand": "Myer",
+      "country": "AU",
+      "discount": 60,
+      "active": true,
+      "url": "https://www.myer.com.au/c/sale"
+    },
+    {
+      "brand": "Country Road",
+      "country": "AU",
+      "discount": 50,
+      "active": true,
+      "url": "https://www.countryroad.com.au/sale"
+    },
+    {
+      "brand": "Sportsgirl",
+      "country": "AU",
+      "discount": 70,
+      "active": true,
+      "url": "https://www.sportsgirl.com.au/sale"
+    },
+    {
+      "brand": "El Corte Inglés",
+      "country": "ES",
+      "discount": 50,
+      "active": true,
+      "url": "https://www.elcorteingles.es/ventas/"
+    },
+    {
+      "brand": "Zalando Lounge",
+      "country": "DE",
+      "discount": 75,
+      "active": true,
+      "url": "https://www.zalando-lounge.de/"
+    },
+    {
+      "brand": "Outlet46",
+      "country": "DE",
+      "discount": 80,
+      "active": true,
+      "url": "https://www.outlet46.de/en/"
+    },
+    {
+      "brand": "The Outnet",
+      "country": "DE",
+      "discount": 80,
+      "active": true,
+      "url": "https://www.theoutnet.com/en-de/"
+    },
+    {
+      "brand": "SportSpar",
+      "country": "DE",
+      "discount": 70,
+      "active": true,
+      "url": "https://www.sportspar.com/de/"
+    }
+  ]
+}

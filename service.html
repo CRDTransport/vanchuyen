@@ -6,6 +6,99 @@
   <title>Dịch vụ - CRD TRANSPORT</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <style>
+    .sale-badge {
+      display: inline-block;
+      background: #ff4444;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .btn-with-sale {
+      position: relative;
+      border: 2px solid #ff4444 !important;
+    }
+    .btn-sale-ended {
+      opacity: 0.6;
+      border: 2px solid #999 !important;
+    }
+    .sale-ended-badge {
+      background: #999;
+    }
+    .sale-highlight {
+      background: linear-gradient(135deg, #08f700 0%, #41a308 100%);
+      padding: 40px 20px;
+      margin: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .sale-highlight h2 {
+      color: white;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .sale-count {
+      color: white;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+    .sale-highlight-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .sale-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .sale-item {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .sale-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .sale-item a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .country-flag {
+      font-size: 20px;
+      margin-right: 6px;
+    }
+    .discount-badge {
+      background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 4px;
+    }
+    .no-sale-message {
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -28,46 +121,52 @@
       <!-- ảnh banner hiển thị -->
     </div>
   </section>
+  
+  <!-- Phần Đang Sale - Full Width -->
+  <section class="sale-highlight" data-aos="fade-up" id="saleSection">
+    <div class="sale-highlight-inner">
+      <h2>🎁 Các thương hiệu thời trang hiện tại đang Sale</h2>
+      <p class="sale-count" id="saleCount"></p>
+      <p class="sale-count" id="lastUpdate" style="font-size: 14px; opacity: 0.8;"></p>
+      <div class="sale-grid" id="saleGrid">
+        <!-- Sẽ được tạo tự động bằng JavaScript từ sales-data.json -->
+      </div>
+    </div>
+  </section>
+
   <main class="container">
+    <!-- Phần Dịch Vụ Chính -->
     <section class="section" data-aos="fade-up">
       <h1>Dịch vụ & Link mọi hãng thể thao , thời trang và dược phẩm (UK - US - JP)</h1>
       <p class="muted">Chúng tôi hỗ trợ mua hộ & gom hàng từ các website chính thức tại VƯƠNG QUỐC ANH (UK), HỢP CHỦNG QUỐC HOA KỲ (US) và NHẬT BẢN (JP).</p>
 
       <div class="card" data-aos="fade-up">
         <h2>UK (United Kingdom)</h2>
-        <div class="link-grid">
+        <div class="link-grid" id="linksUK">
           <a class="btn" href="https://www2.hm.com/en_gb/index.html" target="_blank" rel="noopener noreferrer">H&M (UK)</a>
           <a class="btn" href="https://www.zara.com/uk/" target="_blank" rel="noopener noreferrer">ZARA (UK)</a>
           <a class="btn" href="https://www.sportsdirect.com/" target="_blank" rel="noopener noreferrer">Sport Direct (UK)</a>
           <a class="btn" href="https://www.adidas.co.uk/" target="_blank" rel="noopener noreferrer">Adidas (UK)</a>
           <a class="btn" href="https://www.nike.com/gb/" target="_blank" rel="noopener noreferrer">Nike (UK)</a>
-          <a class="btn btn-primary" href="https://www.next.co.uk/nextsale" target="_blank">Next (UK)</a>
-          <a class="btn btn-primary" href="https://www.hobbs.com/sale/" target="_blank">Hobbs (UK)</a>
-          <a class="btn btn-primary" href="https://uk.theory.com/womens-sale-view-all/?lang=en_GB" target="_blank">Theory (UK)</a>
-          <a class="btn btn-primary" href="https://www.newlook.com/uk/sale" target="_blank">New Look (UK)</a>
-          <a class="btn btn-primary" href="https://www.boden.com/collections/womens-sale" target="_blank">Boden (UK)</a>
-          <a class="btn btn-primary" href="https://www.boohoo.com/categories/womens-sale" target="_blank">Boohoo (UK)</a>
+          <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
 
       <div class="card" data-aos="fade-up" data-aos-delay="100">
         <h2>US (United States)</h2>
-        <div class="link-grid">
+        <div class="link-grid" id="linksUS">
           <a class="btn" href="https://www.adidas.com/us" target="_blank" rel="noopener noreferrer">Adidas (US)</a>
           <a class="btn" href="https://www.nike.com/" target="_blank" rel="noopener noreferrer">Nike (US)</a>
           <a class="btn" href="https://www.amazon.com/" target="_blank" rel="noopener noreferrer">Amazon (US)</a>
           <a class="btn" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer">eBay (US)</a>
           <a class="btn" href="https://www.walmart.com/" target="_blank" rel="noopener noreferrer">Walmart (US)</a>
-          <a class="btn btn-primary" href="https://www.ae.com/us/en/x/clearance" target="_blank">American Eagle (US)</a>
-          <a class="btn btn-primary" href="https://www.macys.com/shop/sale" target="_blank">Macy’s (US)</a>
-          <a class="btn btn-primary" href="https://www.everlane.com/collections/womens-sale" target="_blank">Everlane (US)</a>
-          <a class="btn btn-primary" href="https://www.whitehouseblackmarket.com/" target="_blank">White House Black Market (US)</a>
+          <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
 
       <div class="card" data-aos="fade-up" data-aos-delay="200">
         <h2>JP (Japan)</h2>
-        <div class="link-grid">
+        <div class="link-grid" id="linksJP">
           <a class="btn" href="https://www.uniqlo.com/jp/" target="_blank" rel="noopener noreferrer">Uniqlo (JP)</a>
           <a class="btn" href="https://www.rakuten.co.jp/" target="_blank" rel="noopener noreferrer">Rakuten (JP)</a>
           <a class="btn" href="https://www.mercari.com/jp/" target="_blank" rel="noopener noreferrer">Mercari (JP)</a>
@@ -77,40 +176,34 @@
 
       <div class="card" data-aos="fade-up" data-aos-delay="200">
         <h2>AUSTRALIA</h2>
-        <div class="link-grid">
-          <a class="btn btn-primary" href="https://www.davidjones.com/sale" target="_blank">David Jones (AU)</a>
-          <a class="btn btn-primary" href="https://www.myer.com.au/c/sale" target="_blank">Myer (AU)</a>
-          <a class="btn btn-primary" href="https://www.countryroad.com.au/sale" target="_blank">Country Road (AU)</a>
-          <a class="btn btn-primary" href="https://www.sportsgirl.com.au/sale" target="_blank">Sportsgirl (AU)</a>
+        <div class="link-grid" id="linksAU">
+          <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
 
       <div class="card" data-aos="fade-up" data-aos-delay="250">
         <h2>ES (Tây Ban Nha)</h2>
-        <div class="link-grid">
+        <div class="link-grid" id="linksES">
           <a class="btn" href="https://www.zara.com/es/" target="_blank" rel="noopener">Zara (ES)</a>
           <a class="btn" href="https://www.pullandbear.com/es/" target="_blank" rel="noopener">Pull&Bear (ES)</a>
           <a class="btn" href="https://www.bershka.com/es/" target="_blank" rel="noopener">Bershka (ES)</a>
           <a class="btn" href="https://www.massimodutti.com/es/" target="_blank" rel="noopener">Massimo Dutti (ES)</a>
           <a class="btn" href="https://www.stradivarius.com/es/" target="_blank" rel="noopener">Stradivarius (ES)</a>
           <a class="btn" href="https://www.oysho.com/es/" target="_blank" rel="noopener">Oysho (ES)</a>
-          <a class="btn" href="https://www.lefties.com/es" target
-          <a class="btn btn-primary" href="https://www.elcorteingles.es/ventas/" target="_blank" rel="noopener">El Corte Inglés - Sale</a>
+          <a class="btn" href="https://www.lefties.com/es" target="_blank">Lefties (ES)</a>
           <a class="btn btn-primary" href="https://shop.mango.com/es" target="_blank" rel="noopener">Mango (ES)</a>
+          <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
 
       <div class="card" data-aos="fade-up" data-aos-delay="200">
         <h2>DE (Germany)</h2>
-        <div class="link-grid">
+        <div class="link-grid" id="linksDE">
           <a class="btn btn-primary" href="https://www.zalando.de/" target="_blank">Zalando (DE)</a>
-          <a class="btn btn-primary" href="https://www.zalando-lounge.de/" target="_blank">Zalando Lounge (Outlet, DE)</a>
-          <a class="btn btn-primary" href="https://www.outlet46.de/en/" target="_blank">Outlet46 (DE)</a>
           <a class="btn btn-primary" href="https://www.bonprix.de/" target="_blank">Bonprix (DE)</a>
-          <a class="btn btn-primary" href="https://www.theoutnet.com/en-de/" target="_blank">The Outnet Germany</a>
           <a class="btn btn-primary" href="https://www.puma.com/de/de/" target="_blank">PUMA (DE)</a>
           <a class="btn btn-primary" href="https://www.sportscheck.com/" target="_blank">SportScheck (DE)</a>
-          <a class="btn btn-primary" href="https://www.sportspar.com/de/" target="_blank">SportSpar (DE)</a>
+          <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
 
@@ -130,6 +223,79 @@
   </footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init();</script>
+  <script>
+    AOS.init();
+
+    // Load dữ liệu sale từ JSON và tự động cập nhật
+    document.addEventListener('DOMContentLoaded', function() {
+      const saleGrid = document.getElementById('saleGrid');
+      const saleCount = document.getElementById('saleCount');
+      const saleSection = document.getElementById('saleSection');
+      const lastUpdate = document.getElementById('lastUpdate');
+      
+      const countryFlags = {
+        'UK': '🇬🇧',
+        'US': '🇺🇸',
+        'JP': '🇯🇵',
+        'AU': '🇦🇺',
+        'ES': '🇪🇸',
+        'DE': '🇩🇪'
+      };
+
+      // Fetch dữ liệu từ JSON file
+      fetch('sales-data.json')
+        .then(response => response.json())
+        .then(data => {
+          const activeSales = data.sales.filter(sale => sale.active);
+          
+          // Cập nhật ngày update
+          lastUpdate.textContent = `Cập nhật lần cuối: ${data.lastUpdated}`;
+          
+          // Nếu không có sale nào
+          if (activeSales.length === 0) {
+            saleSection.style.display = 'none';
+          } else {
+            // Hiển thị số lượng
+            saleCount.textContent = `Hiện có ${activeSales.length} thương hiệu đang giảm giá`;
+            
+            // Tạo sale grid
+            activeSales.forEach(sale => {
+              const saleItem = document.createElement('div');
+              saleItem.className = 'sale-item';
+              saleItem.innerHTML = `
+                <span class="country-flag">${countryFlags[sale.country] || '🌍'}</span>
+                <a href="${sale.url}" target="_blank">${sale.brand}</a>
+                <div class="discount-badge">Giảm đến ${sale.discount}%</div>
+              `;
+              saleGrid.appendChild(saleItem);
+            });
+          }
+
+          // Thêm links vào từng country section
+          data.sales.forEach(sale => {
+            const container = document.getElementById(`links${sale.country}`);
+            if (container) {
+              const link = document.createElement('a');
+              link.className = sale.active ? 'btn btn-primary btn-with-sale' : 'btn btn-primary btn-sale-ended';
+              link.href = sale.url;
+              link.target = '_blank';
+              link.rel = 'noopener noreferrer';
+              
+              if (sale.active) {
+                link.innerHTML = `${sale.brand} (${sale.country}) <span class="sale-badge">SALE</span>`;
+              } else {
+                link.innerHTML = `${sale.brand} (${sale.country}) <span class="sale-badge sale-ended-badge">HẾT SALE</span>`;
+              }
+              
+              container.appendChild(link);
+            }
+          });
+        })
+        .catch(error => {
+          console.error('Lỗi khi load dữ liệu sale:', error);
+          saleSection.style.display = 'none';
+        });
+    });
+  </script>
 </body>
 </html>
