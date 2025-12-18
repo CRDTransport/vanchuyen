@@ -125,69 +125,245 @@
     }
     .feedback-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      max-width: 1200px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1400px;
       margin: 0 auto;
     }
     .feedback-card {
       background: white;
       border-radius: 12px;
-      padding: 24px;
+      padding: 0;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       transition: transform 0.3s, box-shadow 0.3s;
+      overflow: hidden;
+      cursor: pointer;
     }
     .feedback-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 4px 16px rgba(0,0,0,0.15);
     }
-    .feedback-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 16px;
-    }
     .feedback-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #08f700 0%, #41a308 100%);
+      width: 100%;
+      height: 350px;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #f0f0f0;
+      position: relative;
+    }
+    .feedback-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s;
+    }
+    .feedback-card:hover .feedback-avatar img {
+      transform: scale(1.05);
+    }
+    .feedback-avatar::after {
+      content: '🔍 Xem chi tiết';
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.7);
       color: white;
-      font-weight: bold;
-      font-size: 20px;
-      margin-right: 12px;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
     }
-    .feedback-info h3 {
-      margin: 0;
+    .feedback-card:hover .feedback-avatar::after {
+      opacity: 1;
+    }
+
+    /* Lightbox Styles */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox-content {
+      max-width: 95%;
+      max-height: 95%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 10px;
+      line-height: 1;
+      z-index: 10000;
+    }
+    .lightbox-close:hover {
+      color: #ff4444;
+    }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      padding: 15px;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .lightbox-nav:hover {
+      background: rgba(0,0,0,0.8);
+    }
+    .lightbox-prev {
+      left: 10px;
+    }
+    .lightbox-next {
+      right: 10px;
+    }
+    .lightbox-counter {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
       font-size: 16px;
-      color: #333;
+      white-space: nowrap;
     }
-    .feedback-date {
-      font-size: 12px;
-      color: #999;
-      margin-top: 2px;
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .feedback-section {
+        padding: 40px 15px;
+      }
+      .feedback-section h2 {
+        font-size: 24px;
+      }
+      .feedback-subtitle {
+        font-size: 14px;
+        margin-bottom: 30px;
+      }
+      .feedback-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0 10px;
+      }
+      .feedback-avatar {
+        height: 300px;
+      }
+      .feedback-avatar::after {
+        font-size: 11px;
+        padding: 6px 10px;
+      }
+
+      /* Lightbox Mobile */
+      .lightbox {
+        padding: 10px;
+      }
+      .lightbox-content {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      .lightbox-image {
+        max-height: 80vh;
+      }
+      .lightbox-close {
+        top: 10px;
+        right: 10px;
+        font-size: 35px;
+        background: rgba(0,0,0,0.7);
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .lightbox-nav {
+        font-size: 30px;
+        width: 45px;
+        height: 45px;
+        padding: 10px;
+      }
+      .lightbox-prev {
+        left: 5px;
+      }
+      .lightbox-next {
+        right: 5px;
+      }
+      .lightbox-counter {
+        bottom: 10px;
+        font-size: 14px;
+        background: rgba(0,0,0,0.7);
+        padding: 5px 15px;
+        border-radius: 20px;
+      }
     }
-    .feedback-rating {
-      color: #ffc107;
-      font-size: 18px;
-      margin-bottom: 12px;
+
+    @media (max-width: 480px) {
+      .feedback-section {
+        padding: 30px 10px;
+      }
+      .feedback-section h2 {
+        font-size: 20px;
+      }
+      .feedback-grid {
+        gap: 12px;
+      }
+      .feedback-avatar {
+        height: 250px;
+      }
+      .lightbox-image {
+        max-height: 75vh;
+      }
+      .lightbox-nav {
+        font-size: 25px;
+        width: 40px;
+        height: 40px;
+      }
     }
-    .feedback-text {
-      color: #555;
-      line-height: 1.6;
-      font-size: 14px;
-    }
-    .feedback-service {
-      display: inline-block;
-      background: #e3f2fd;
-      color: #1976d2;
-      padding: 4px 12px;
-      border-radius: 16px;
-      font-size: 12px;
-      margin-top: 12px;
-      font-weight: 500;
+
+    /* Tablet Portrait */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .feedback-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .feedback-avatar {
+        height: 320px;
+      }
     }
   </style>
 </head>
@@ -228,99 +404,62 @@
   <!-- Phần Feedback của Khách Hàng -->
   <section class="feedback-section" data-aos="fade-up">
     <h2>💬 Khách hàng nói gì về chúng tôi</h2>
-    <p class="feedback-subtitle">Những đánh giá chân thực từ khách hàng đã sử dụng dịch vụ</p>
+    <p class="feedback-subtitle">Bấm vào ảnh để xem rõ hơn</p>
     <div class="feedback-grid">
-      <div class="feedback-card" data-aos="fade-up" data-aos-delay="0">
-        <div class="feedback-header">
-          <div class="feedback-avatar">A</div>
-          <div class="feedback-info">
-            <h3>Anh Minh</h3>
-            <div class="feedback-date">15/12/2024</div>
-          </div>
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="0" onclick="openLightbox(0)">
+        <div class="feedback-avatar">
+          <img src="Feedback/Fback1.jpg" alt="Feedback khách hàng 1" loading="lazy">
         </div>
-        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
-        <p class="feedback-text">
-          Mình order giày Nike từ UK về, ship nhanh, đóng gói cẩn thận. Giá cả hợp lý, hỗ trợ nhiệt tình. Sẽ tiếp tục ủng hộ shop!
-        </p>
-        <span class="feedback-service">🇬🇧 Mua hộ UK</span>
       </div>
 
-      <div class="feedback-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="feedback-header">
-          <div class="feedback-avatar">T</div>
-          <div class="feedback-info">
-            <h3>Chị Trang</h3>
-            <div class="feedback-date">08/12/2024</div>
-          </div>
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox(1)">
+        <div class="feedback-avatar">
+          <img src="Feedback/Fback2.jpg" alt="Feedback khách hàng 2" loading="lazy">
         </div>
-        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
-        <p class="feedback-text">
-          Lần đầu order từ Nhật về, ban đầu lo lắng nhưng shop tư vấn rất kỹ. Hàng về đúng mô tả, chất lượng tốt. Rất hài lòng!
-        </p>
-        <span class="feedback-service">🇯🇵 Mua hộ JP</span>
       </div>
 
-      <div class="feedback-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="feedback-header">
-          <div class="feedback-avatar">H</div>
-          <div class="feedback-info">
-            <h3>Anh Hoàng</h3>
-            <div class="feedback-date">02/12/2024</div>
-          </div>
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox(2)">
+        <div class="feedback-avatar">
+          <img src="Feedback/Fback3.jpg" alt="Feedback khách hàng 3" loading="lazy">
         </div>
-        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
-        <p class="feedback-text">
-          Mua đồ từ Zara US mùa sale, được giảm giá khủng. Ship về Việt Nam chỉ mất 2 tuần. Giá dịch vụ rất OK, không phát sinh phí ẩn.
-        </p>
-        <span class="feedback-service">🇺🇸 Mua hộ US</span>
       </div>
 
-      <div class="feedback-card" data-aos="fade-up" data-aos-delay="300">
-        <div class="feedback-header">
-          <div class="feedback-avatar">L</div>
-          <div class="feedback-info">
-            <h3>Chị Linh</h3>
-            <div class="feedback-date">28/11/2024</div>
-          </div>
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="300" onclick="openLightbox(3)">
+        <div class="feedback-avatar">
+          <img src="Feedback/Fback4.jpg" alt="Feedback khách hàng 4" loading="lazy">
         </div>
-        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
-        <p class="feedback-text">
-          Gom hàng từ nhiều shop UK khác nhau, shop hỗ trợ gom hàng rất tốt. Tiết kiệm được khá nhiều tiền ship. Chuyên nghiệp!
-        </p>
-        <span class="feedback-service">🇬🇧 Gom hàng UK</span>
       </div>
 
-      <div class="feedback-card" data-aos="fade-up" data-aos-delay="400">
-        <div class="feedback-header">
-          <div class="feedback-avatar">D</div>
-          <div class="feedback-info">
-            <h3>Anh Dũng</h3>
-            <div class="feedback-date">20/11/2024</div>
-          </div>
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="400" onclick="openLightbox(4)">
+        <div class="feedback-avatar">
+          <img src="Feedback/Fback5.jpg" alt="Feedback khách hàng 5" loading="lazy">
         </div>
-        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
-        <p class="feedback-text">
-          Order Adidas từ Úc về, hàng chính hãng 100%. Shop báo giá rõ ràng từ đầu, không phát sinh. Đóng gói kỹ càng, giao hàng đúng hẹn.
-        </p>
-        <span class="feedback-service">🇦🇺 Mua hộ AU</span>
       </div>
 
-      <div class="feedback-card" data-aos="fade-up" data-aos-delay="500">
-        <div class="feedback-header">
-          <div class="feedback-avatar">N</div>
-          <div class="feedback-info">
-            <h3>Chị Nga</h3>
-            <div class="feedback-date">15/11/2024</div>
-          </div>
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="500" onclick="openLightbox(5)">
+        <div class="feedback-avatar">
+          <img src="Feedback/Fback6.jpg" alt="Feedback khách hàng 6" loading="lazy">
         </div>
-        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
-        <p class="feedback-text">
-          Dịch vụ tuyệt vời! Mình order mỹ phẩm từ Nhật, shop tư vấn rất chi tiết về sản phẩm. Hàng về đúng như mong đợi. Sẽ quay lại!
-        </p>
-        <span class="feedback-service">🇯🇵 Mua hộ JP</span>
+      </div>
+
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="600" onclick="openLightbox(6)">
+        <div class="feedback-avatar">
+          <img src="Feedback/Fback7.jpg" alt="Feedback khách hàng 7" loading="lazy">
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+      <button class="lightbox-nav lightbox-prev" onclick="changeLightboxImage(-1, event)" aria-label="Previous">‹</button>
+      <img src="" alt="Feedback" class="lightbox-image" id="lightboxImage">
+      <button class="lightbox-nav lightbox-next" onclick="changeLightboxImage(1, event)" aria-label="Next">›</button>
+      <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+  </div>
 
   <main class="container">
     <!-- Phần Dịch Vụ Chính -->
@@ -413,6 +552,93 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init();
+
+    // Lightbox functionality
+    const feedbackImages = [
+      'Feedback/Fback1.jpg',
+      'Feedback/Fback2.jpg',
+      'Feedback/Fback3.jpg',
+      'Feedback/Fback4.jpg',
+      'Feedback/Fback5.jpg',
+      'Feedback/Fback6.jpg',
+      'Feedback/Fback7.jpg'
+    ];
+    let currentImageIndex = 0;
+
+    function openLightbox(index) {
+      currentImageIndex = index;
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImage = document.getElementById('lightboxImage');
+      const lightboxCounter = document.getElementById('lightboxCounter');
+      
+      lightboxImage.src = feedbackImages[currentImageIndex];
+      lightboxCounter.textContent = `${currentImageIndex + 1} / ${feedbackImages.length}`;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(event) {
+      if (event.target.id === 'lightbox' || event.target.classList.contains('lightbox-close')) {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    function changeLightboxImage(direction, event) {
+      event.stopPropagation();
+      currentImageIndex += direction;
+      
+      if (currentImageIndex < 0) {
+        currentImageIndex = feedbackImages.length - 1;
+      } else if (currentImageIndex >= feedbackImages.length) {
+        currentImageIndex = 0;
+      }
+      
+      const lightboxImage = document.getElementById('lightboxImage');
+      const lightboxCounter = document.getElementById('lightboxCounter');
+      
+      lightboxImage.src = feedbackImages[currentImageIndex];
+      lightboxCounter.textContent = `${currentImageIndex + 1} / ${feedbackImages.length}`;
+    }
+
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.getElementById('lightbox').addEventListener('touchstart', function(event) {
+      touchStartX = event.changedTouches[0].screenX;
+    }, false);
+
+    document.getElementById('lightbox').addEventListener('touchend', function(event) {
+      touchEndX = event.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      if (touchEndX < touchStartX - swipeThreshold) {
+        changeLightboxImage(1, new Event('swipe'));
+      }
+      if (touchEndX > touchStartX + swipeThreshold) {
+        changeLightboxImage(-1, new Event('swipe'));
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+      const lightbox = document.getElementById('lightbox');
+      if (lightbox.classList.contains('active')) {
+        if (event.key === 'Escape') {
+          lightbox.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        } else if (event.key === 'ArrowLeft') {
+          changeLightboxImage(-1, event);
+        } else if (event.key === 'ArrowRight') {
+          changeLightboxImage(1, event);
+        }
+      }
+    });
 
     // Load dữ liệu sale từ JSON và tự động cập nhật
     document.addEventListener('DOMContentLoaded', function() {
