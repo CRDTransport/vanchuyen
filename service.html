@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Dịch vụ - CRD TRANSPORT</title>
+  <title>Dịch vụ - CRD TRANSPORT | Mua hộ UK, US, JP, AU</title>
+  <meta name="description" content="Link mua hộ từ hơn 100 thương hiệu UK, US, JP, AU. Hỗ trợ order từ Nike, Adidas, Zara, H&M, Amazon. Các thương hiệu đang Sale giảm 50-80%. Gom hàng uy tín, giá tốt.">
+  <meta name="keywords" content="mua hộ UK, mua hộ US, order hàng Nhật, Nike UK, Adidas US, sale thời trang, gom hàng UK">
+  <meta property="og:title" content="Dịch vụ mua hộ UK, US, JP - CRD TRANSPORT">
+  <meta property="og:description" content="Link mua hộ từ hơn 100 thương hiệu UK, US, JP, AU. Các thương hiệu đang Sale giảm 50-80%.">
+  <meta property="og:url" content="https://crdtransport.netlify.app/service">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <style>
@@ -98,6 +103,92 @@
       padding: 40px 20px;
       font-size: 18px;
     }
+    
+    /* Feedback Section Styles */
+    .feedback-section {
+      background: #f8f9fa;
+      padding: 60px 20px;
+      margin: 0;
+      width: 100%;
+    }
+    .feedback-section h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 32px;
+      color: #333;
+    }
+    .feedback-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .feedback-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .feedback-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .feedback-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #08f700 0%, #41a308 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      margin-right: 12px;
+    }
+    .feedback-info h3 {
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+    }
+    .feedback-date {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2px;
+    }
+    .feedback-rating {
+      color: #ffc107;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .feedback-text {
+      color: #555;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .feedback-service {
+      display: inline-block;
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+      margin-top: 12px;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
@@ -116,7 +207,7 @@
     </div>
   </header>
   <section class="page-hero" data-aos="fade-down">
-    <img src="Service.png" alt="Dịch vụ CRD" class="page-hero-image">
+    <img src="Img/Service.png" alt="Dịch vụ CRD" class="page-hero-image">
     <div class="container">
       <!-- ảnh banner hiển thị -->
     </div>
@@ -130,6 +221,103 @@
       <p class="sale-count" id="lastUpdate" style="font-size: 14px; opacity: 0.8;"></p>
       <div class="sale-grid" id="saleGrid">
         <!-- Sẽ được tạo tự động bằng JavaScript từ sales-data.json -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Phần Feedback của Khách Hàng -->
+  <section class="feedback-section" data-aos="fade-up">
+    <h2>💬 Khách hàng nói gì về chúng tôi</h2>
+    <p class="feedback-subtitle">Những đánh giá chân thực từ khách hàng đã sử dụng dịch vụ</p>
+    <div class="feedback-grid">
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="feedback-header">
+          <div class="feedback-avatar">A</div>
+          <div class="feedback-info">
+            <h3>Anh Minh</h3>
+            <div class="feedback-date">15/12/2024</div>
+          </div>
+        </div>
+        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+        <p class="feedback-text">
+          Mình order giày Nike từ UK về, ship nhanh, đóng gói cẩn thận. Giá cả hợp lý, hỗ trợ nhiệt tình. Sẽ tiếp tục ủng hộ shop!
+        </p>
+        <span class="feedback-service">🇬🇧 Mua hộ UK</span>
+      </div>
+
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="feedback-header">
+          <div class="feedback-avatar">T</div>
+          <div class="feedback-info">
+            <h3>Chị Trang</h3>
+            <div class="feedback-date">08/12/2024</div>
+          </div>
+        </div>
+        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+        <p class="feedback-text">
+          Lần đầu order từ Nhật về, ban đầu lo lắng nhưng shop tư vấn rất kỹ. Hàng về đúng mô tả, chất lượng tốt. Rất hài lòng!
+        </p>
+        <span class="feedback-service">🇯🇵 Mua hộ JP</span>
+      </div>
+
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="feedback-header">
+          <div class="feedback-avatar">H</div>
+          <div class="feedback-info">
+            <h3>Anh Hoàng</h3>
+            <div class="feedback-date">02/12/2024</div>
+          </div>
+        </div>
+        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+        <p class="feedback-text">
+          Mua đồ từ Zara US mùa sale, được giảm giá khủng. Ship về Việt Nam chỉ mất 2 tuần. Giá dịch vụ rất OK, không phát sinh phí ẩn.
+        </p>
+        <span class="feedback-service">🇺🇸 Mua hộ US</span>
+      </div>
+
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="feedback-header">
+          <div class="feedback-avatar">L</div>
+          <div class="feedback-info">
+            <h3>Chị Linh</h3>
+            <div class="feedback-date">28/11/2024</div>
+          </div>
+        </div>
+        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+        <p class="feedback-text">
+          Gom hàng từ nhiều shop UK khác nhau, shop hỗ trợ gom hàng rất tốt. Tiết kiệm được khá nhiều tiền ship. Chuyên nghiệp!
+        </p>
+        <span class="feedback-service">🇬🇧 Gom hàng UK</span>
+      </div>
+
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="feedback-header">
+          <div class="feedback-avatar">D</div>
+          <div class="feedback-info">
+            <h3>Anh Dũng</h3>
+            <div class="feedback-date">20/11/2024</div>
+          </div>
+        </div>
+        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+        <p class="feedback-text">
+          Order Adidas từ Úc về, hàng chính hãng 100%. Shop báo giá rõ ràng từ đầu, không phát sinh. Đóng gói kỹ càng, giao hàng đúng hẹn.
+        </p>
+        <span class="feedback-service">🇦🇺 Mua hộ AU</span>
+      </div>
+
+      <div class="feedback-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="feedback-header">
+          <div class="feedback-avatar">N</div>
+          <div class="feedback-info">
+            <h3>Chị Nga</h3>
+            <div class="feedback-date">15/11/2024</div>
+          </div>
+        </div>
+        <div class="feedback-rating">⭐⭐⭐⭐⭐</div>
+        <p class="feedback-text">
+          Dịch vụ tuyệt vời! Mình order mỹ phẩm từ Nhật, shop tư vấn rất chi tiết về sản phẩm. Hàng về đúng như mong đợi. Sẽ quay lại!
+        </p>
+        <span class="feedback-service">🇯🇵 Mua hộ JP</span>
       </div>
     </div>
   </section>

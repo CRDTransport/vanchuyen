@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Bảng giá chi tiết - CRD TRANSPORT</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    .excel-viewer {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .excel-viewer table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .excel-viewer th {
+      background: linear-gradient(135deg, #08f700 0%, #41a308 100%);
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      border: 1px solid #ddd;
+    }
+    .excel-viewer td {
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+    }
+    .excel-viewer tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+    .excel-viewer tr:hover {
+      background: #e9ecef;
+    }
+    .sheet-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .sheet-tab {
+      padding: 10px 20px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .sheet-tab.active {
+      background: linear-gradient(135deg, #08f700 0%, #41a308 100%);
+      color: white;
+    }
+    .sheet-tab:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+    .error {
+      text-align: center;
+      padding: 40px;
+      color: #dc3545;
+    }
+    .download-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      margin: 10px 5px;
+      transition: all 0.3s;
+    }
+    .download-btn:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><strong>CRD TRANSPORT</strong></div>
+        <nav>
+          <a href="index.html">Trang chủ</a>
+          <a href="about.html">Về chúng tôi</a>
+          <a href="pricing.html" class="active">Bảng giá</a>
+          <a href="service.html">Dịch vụ</a>
+          <a href="contact.html">Liên hệ</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" data-aos="fade-up">
+      <h1>Bảng giá chi tiết</h1>
+      <p class="muted">Xem và tải xuống bảng giá đầy đủ của CRD Transport</p>
+      
+      <div style="text-align: center; margin: 20px 0;">
+        <a href="pricing.html" class="download-btn">← Quay lại bảng giá tóm tắt</a>
+        <a href="#" id="downloadExcel" class="download-btn" style="display: none;">⬇️ Tải file Excel</a>
+      </div>
+
+      <div id="sheetTabs" class="sheet-tabs"></div>
+      
+      <div id="excelContent" class="excel-viewer">
+        <div class="loading">
+          <p>Đang tải bảng giá...</p>
+          <p style="font-size: 12px; margin-top: 10px;">Vui lòng đợi trong giây lát</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 8px;">
+        <h3 style="margin-top: 0;">📌 Lưu ý:</h3>
+        <ul style="margin-bottom: 0;">
+          <li>Giá có thể thay đổi tùy theo trọng lượng và loại hàng hóa</li>
+          <li>Phụ thu có thể phát sinh với hàng đặc biệt</li>
+          <li>Liên hệ để được báo giá chính xác nhất: <a href="tel:0912597313">0912 597 313</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer-simple">
+    <div class="container">
+      <div class="footer-inner">
+        <p>© 2025 CRD TRANSPORT</p>
+        <nav class="footer-links">
+          <a href="terms.html">Điều khoản sử dụng</a>
+          <a href="privacy.html">Chính sách quyền riêng tư</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Danh sách các đường dẫn có thể có - ưu tiên vị trí thực tế của file
+    const possiblePaths = [
+      'Img/GIA_DAI_LY_03_11_2025.xlsx',  // Ưu tiên đầu tiên - vị trí thực tế
+      'GIA_DAI_LY_03_11_2025.xlsx',
+      
+    ];
+
+    let workbook = null;
+    let currentFilePath = null;
+
+    // Load và hiển thị file Excel
+    async function loadExcel() {
+      const contentDiv = document.getElementById('excelContent');
+      const tabsDiv = document.getElementById('sheetTabs');
+      const downloadBtn = document.getElementById('downloadExcel');
+      
+      console.log('🔍 Bắt đầu tìm file Excel...');
+      
+      // Thử từng đường dẫn
+      for (const path of possiblePaths) {
+        try {
+          console.log(`⏳ Đang thử: ${path}`);
+          const response = await fetch(path);
+          if (response.ok) {
+            console.log(`✅ Tìm thấy file tại: ${path}`);
+            currentFilePath = path;
+            const data = await response.arrayBuffer();
+            workbook = XLSX.read(data, { type: 'array' });
+            
+            // Tạo tabs cho các sheet
+            tabsDiv.innerHTML = '';
+            workbook.SheetNames.forEach((sheetName, index) => {
+              const btn = document.createElement('button');
+              btn.className = 'sheet-tab' + (index === 0 ? ' active' : '');
+              btn.textContent = sheetName;
+              btn.onclick = () => displaySheet(sheetName);
+              tabsDiv.appendChild(btn);
+            });
+            
+            // Hiển thị sheet đầu tiên
+            if (workbook.SheetNames.length > 0) {
+              displaySheet(workbook.SheetNames[0]);
+            }
+            
+            // Hiện nút download với tên file đẹp hơn
+            downloadBtn.textContent = `⬇️ Tải bảng giá Excel`;
+            downloadBtn.style.display = 'inline-block';
+            
+            console.log('✅ Tải file Excel thành công!');
+            return; // Thành công, thoát function
+          }
+        } catch (error) {
+          console.log(`❌ Không tìm thấy: ${path}`, error.message);
+        }
+      }
+      
+      // Nếu không tìm thấy file nào
+      console.error('⚠️ Không tìm thấy file Excel nào!');
+      contentDiv.innerHTML = `
+        <div class="error">
+          <h3>⚠️ Không thể tải bảng giá Excel</h3>
+          <p>File <strong>"GIA_DAI_LY_03_11_2025.xlsx"</strong> không tìm thấy trong thư mục <code>Img/</code></p>
+          <p style="margin-top: 20px;">Vui lòng:</p>
+          <ul style="text-align: left; display: inline-block; margin: 10px 0;">
+            <li>Xem bảng giá tóm tắt bên dưới, hoặc</li>
+            <li>Liên hệ trực tiếp để được báo giá chi tiết</li>
+          </ul>
+          <div style="margin-top: 20px;">
+            <a href="pricing.html" class="download-btn">← Xem bảng giá tóm tắt</a>
+            <a href="contact.html" class="download-btn">📞 Liên hệ báo giá</a>
+          </div>
+          <p style="font-size: 12px; margin-top: 20px; color: #666; padding: 15px; background: #f8f9fa; border-radius: 6px; text-align: left;">
+            <strong>🔧 Kiểm tra cho admin:</strong><br><br>
+            1. File đã được đặt tại: <code>Img/GIA_DAI_LY_03_11_2025.xlsx</code>?<br>
+            2. Tên file có chính xác không? (phân biệt hoa/thường)<br>
+            3. File có bị lỗi/corrupt không?<br>
+            4. Kiểm tra Console (F12) để xem lỗi chi tiết<br><br>
+            <strong>Đường dẫn đầy đủ:</strong><br>
+            <code>c:\\Users\\Jang\\Downloads\\vanchuyen\\Img\\GIA_DAI_LY_03_11_2025.xlsx</code>
+          </p>
+        </div>
+      `;
+    }
+
+    // Hiển thị nội dung của một sheet
+    function displaySheet(sheetName) {
+      const contentDiv = document.getElementById('excelContent');
+      const sheet = workbook.Sheets[sheetName];
+      
+      // Chuyển sheet thành HTML table
+      const htmlTable = XLSX.utils.sheet_to_html(sheet, {
+        header: '',
+        editable: false
+      });
+      
+      contentDiv.innerHTML = htmlTable;
+      
+      // Cập nhật active tab
+      document.querySelectorAll('.sheet-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.textContent === sheetName);
+      });
+    }
+
+    // Xử lý nút download
+    document.getElementById('downloadExcel').addEventListener('click', function(e) {
+      e.preventDefault();
+      if (currentFilePath) {
+        const link = document.createElement('a');
+        link.href = currentFilePath;
+        link.download = 'CRD_Transport_Pricing.xlsx';
+        link.click();
+      }
+    });
+
+    // Load Excel khi trang được tải
+    loadExcel();
+  </script>
+</body>
+</html>
