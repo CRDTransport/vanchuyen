@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Dịch vụ - CRD TRANSPORT | Mua hộ UK, US, JP, AU</title>
-  <meta name="description" content="Link mua hộ từ hơn 100 thương hiệu UK, US, JP, AU. Hỗ trợ order từ Nike, Adidas, Zara, H&M, Amazon. Các thương hiệu đang Sale giảm 50-80%. Gom hàng uy tín, giá tốt.">
+  <meta name="description" content="Link mua hộ từ hơn 100 thương hiệu UK, US, JP, AU. Sale Noel 2025 giảm 50-90%. Hỗ trợ order từ Nike, Adidas, Zara, H&M, Amazon. Gom hàng uy tín, giá tốt.">
   <meta name="keywords" content="mua hộ UK, mua hộ US, order hàng Nhật, Nike UK, Adidas US, sale thời trang, gom hàng UK">
   <meta property="og:title" content="Dịch vụ mua hộ UK, US, JP - CRD TRANSPORT">
   <meta property="og:description" content="Link mua hộ từ hơn 100 thương hiệu UK, US, JP, AU. Các thương hiệu đang Sale giảm 50-80%.">
@@ -35,17 +35,36 @@
       background: #999;
     }
     .sale-highlight {
-      background: linear-gradient(135deg, #08f700 0%, #41a308 100%);
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
       padding: 40px 20px;
       margin: 0;
       width: 100%;
       box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+    .sale-highlight::before {
+      content: '🎄❄️';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 40px;
+      opacity: 0.3;
+    }
+    .sale-highlight::after {
+      content: '🎅🎁';
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 40px;
+      opacity: 0.3;
     }
     .sale-highlight h2 {
       color: white;
       text-align: center;
       margin-bottom: 20px;
-      font-size: 24px;
+      font-size: 28px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
     .sale-count {
       color: white;
@@ -392,7 +411,7 @@
   <!-- Phần Đang Sale - Full Width -->
   <section class="sale-highlight" data-aos="fade-up" id="saleSection">
     <div class="sale-highlight-inner">
-      <h2>🎁 Các thương hiệu thời trang hiện tại đang Sale</h2>
+      <h2>🎄 SALE NOEL 2025 - Giảm giá khủng đến 90% 🎅</h2>
       <p class="sale-count" id="saleCount"></p>
       <p class="sale-count" id="lastUpdate" style="font-size: 14px; opacity: 0.8;"></p>
       <div class="sale-grid" id="saleGrid">
@@ -464,8 +483,8 @@
   <main class="container">
     <!-- Phần Dịch Vụ Chính -->
     <section class="section" data-aos="fade-up">
-      <h1>Dịch vụ & Link mọi hãng thể thao , thời trang và dược phẩm (UK - US - JP)</h1>
-      <p class="muted">Chúng tôi hỗ trợ mua hộ & gom hàng từ các website chính thức tại VƯƠNG QUỐC ANH (UK), HỢP CHỦNG QUỐC HOA KỲ (US) và NHẬT BẢN (JP).</p>
+      <h1>Dịch vụ & Link mọi hãng thể thao, thời trang và dược phẩm (UK - US - JP - AU - ES - DE)</h1>
+      <p class="muted">Chúng tôi hỗ trợ mua hộ & gom hàng từ các website chính thức tại VƯƠNG QUỐC ANH (UK), HOA KỲ (US), NHẬT BẢN (JP), ÚC (AU), TÂY BAN NHA (ES) và ĐỨC (DE).</p>
 
       <div class="card" data-aos="fade-up">
         <h2>UK (United Kingdom)</h2>
@@ -475,6 +494,8 @@
           <a class="btn" href="https://www.sportsdirect.com/" target="_blank" rel="noopener noreferrer">Sport Direct (UK)</a>
           <a class="btn" href="https://www.adidas.co.uk/" target="_blank" rel="noopener noreferrer">Adidas (UK)</a>
           <a class="btn" href="https://www.nike.com/gb/" target="_blank" rel="noopener noreferrer">Nike (UK)</a>
+          <a class="btn" href="https://www.marksandspencer.com/" target="_blank" rel="noopener noreferrer">Marks & Spencer (UK)</a>
+          <a class="btn" href="https://www.riverisland.com/" target="_blank" rel="noopener noreferrer">River Island (UK)</a>
           <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
@@ -487,6 +508,9 @@
           <a class="btn" href="https://www.amazon.com/" target="_blank" rel="noopener noreferrer">Amazon (US)</a>
           <a class="btn" href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer">eBay (US)</a>
           <a class="btn" href="https://www.walmart.com/" target="_blank" rel="noopener noreferrer">Walmart (US)</a>
+          <a class="btn" href="https://www.gap.com/" target="_blank" rel="noopener noreferrer">Gap (US)</a>
+          <a class="btn" href="https://oldnavy.gap.com/" target="_blank" rel="noopener noreferrer">Old Navy (US)</a>
+          <a class="btn" href="https://bananarepublic.gap.com/" target="_blank" rel="noopener noreferrer">Banana Republic (US)</a>
           <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
@@ -502,8 +526,9 @@
       </div>
 
       <div class="card" data-aos="fade-up" data-aos-delay="200">
-        <h2>AUSTRALIA</h2>
+        <h2>AU (AUSTRALIA)</h2>
         <div class="link-grid" id="linksAU">
+          <a class="btn" href="https://cottonon.com/AU/" target="_blank" rel="noopener noreferrer">Cotton On (AU)</a>
           <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
@@ -518,7 +543,6 @@
           <a class="btn" href="https://www.stradivarius.com/es/" target="_blank" rel="noopener">Stradivarius (ES)</a>
           <a class="btn" href="https://www.oysho.com/es/" target="_blank" rel="noopener">Oysho (ES)</a>
           <a class="btn" href="https://www.lefties.com/es" target="_blank">Lefties (ES)</a>
-          <a class="btn btn-primary" href="https://shop.mango.com/es" target="_blank" rel="noopener">Mango (ES)</a>
           <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
@@ -526,15 +550,14 @@
       <div class="card" data-aos="fade-up" data-aos-delay="200">
         <h2>DE (Germany)</h2>
         <div class="link-grid" id="linksDE">
-          <a class="btn btn-primary" href="https://www.zalando.de/" target="_blank">Zalando (DE)</a>
-          <a class="btn btn-primary" href="https://www.bonprix.de/" target="_blank">Bonprix (DE)</a>
-          <a class="btn btn-primary" href="https://www.puma.com/de/de/" target="_blank">PUMA (DE)</a>
-          <a class="btn btn-primary" href="https://www.sportscheck.com/" target="_blank">SportScheck (DE)</a>
+          <a class="btn" href="https://www.bonprix.de/" target="_blank">Bonprix (DE)</a>
+          <a class="btn" href="https://www.puma.com/de/de/" target="_blank">PUMA (DE)</a>
+          <a class="btn" href="https://www.sportscheck.com/" target="_blank">SportScheck (DE)</a>
           <!-- Links sale sẽ được thêm tự động -->
         </div>
       </div>
 
-      <p class="muted" style="margin-top:14px">Nếu bạn muốn thêm link của quốc gia/region khác (EU, AU, CA...), báo mình biết để mình bổ sung.</p>
+      <p class="muted" style="margin-top:14px">🎄 Đặc biệt: Sale Noel 2025 với mức giảm giá lên đến 90% từ các thương hiệu hàng đầu!</p>
     </section>
   </main>
   <footer class="site-footer-simple">
@@ -663,14 +686,15 @@
           const activeSales = data.sales.filter(sale => sale.active);
           
           // Cập nhật ngày update
-          lastUpdate.textContent = `Cập nhật lần cuối: ${data.lastUpdated}`;
+          const updateDate = new Date(data.lastUpdated);
+          lastUpdate.textContent = `🎅 Cập nhật chiến dịch Noel: ${updateDate.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
           
           // Nếu không có sale nào
           if (activeSales.length === 0) {
             saleSection.style.display = 'none';
           } else {
             // Hiển thị số lượng
-            saleCount.textContent = `Hiện có ${activeSales.length} thương hiệu đang giảm giá`;
+            saleCount.textContent = `🎁 ${activeSales.length} thương hiệu đang có chương trình giảm giá đặc biệt`;
             
             // Tạo sale grid
             activeSales.forEach(sale => {
@@ -678,8 +702,8 @@
               saleItem.className = 'sale-item';
               saleItem.innerHTML = `
                 <span class="country-flag">${countryFlags[sale.country] || '🌍'}</span>
-                <a href="${sale.url}" target="_blank">${sale.brand}</a>
-                <div class="discount-badge">Giảm đến ${sale.discount}%</div>
+                <a href="${sale.url}" target="_blank" rel="noopener noreferrer">${sale.brand}</a>
+                <div class="discount-badge">🎄 Giảm đến ${sale.discount}%</div>
               `;
               saleGrid.appendChild(saleItem);
             });
@@ -696,7 +720,7 @@
               link.rel = 'noopener noreferrer';
               
               if (sale.active) {
-                link.innerHTML = `${sale.brand} (${sale.country}) <span class="sale-badge">SALE</span>`;
+                link.innerHTML = `${sale.brand} (${sale.country}) <span class="sale-badge">🎄 SALE</span>`;
               } else {
                 link.innerHTML = `${sale.brand} (${sale.country}) <span class="sale-badge sale-ended-badge">HẾT SALE</span>`;
               }
