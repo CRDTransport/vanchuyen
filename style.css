@@ -94,6 +94,12 @@ header {
   line-height: 1;
 }
 
+.logo-image {
+  height: 70px;
+  width: auto;
+  display: block;
+}
+
 .logo strong {
   display: inline-flex;
   align-items: center;
@@ -1436,346 +1442,6 @@ table.card tr:nth-child(even) td {
 /* Mobile Small - 320px to 480px */
 @media (max-width: 480px) {
   body {
-    font-size: 14px;
-  }
-  
-  .container {
-    padding: 0 15px;
-  }
-  
-  /* Header */
-  .header-content {
-    padding: 10px 0;
-  }
-  
-  .logo {
-    font-size: 1.15rem;
-  }
-  
-  .logo .transport {
-    font-size: 1.15rem;
-  }
-  
-  nav {
-    gap: 8px;
-    font-size: 0.85rem;
-  }
-  
-  nav a {
-    padding: 5px 6px;
-  }
-  
-  /* Hero Section */
-  .hero {
-    min-height: 400px;
-  }
-  
-  .hero-content {
-    padding: 25px 10px;
-  }
-  
-  .hero-title {
-    font-size: 1.6rem;
-    line-height: 1.4;
-    margin-bottom: 12px;
-  }
-  
-  .hero-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 25px;
-    line-height: 1.5;
-  }
-  
-  /* Page Hero */
-  .page-hero {
-    min-height: 180px;
-    padding: 50px 0;
-  }
-  
-  /* Tracking Box */
-  .tracking-box {
-    padding: 15px;
-    margin: 0 5px;
-    border-radius: 10px;
-  }
-  
-  .tracking-tabs {
-    gap: 6px;
-    flex-direction: column;
-  }
-  
-  .tab-btn {
-    padding: 10px 12px;
-    font-size: 0.85rem;
-    width: 100%;
-  }
-  
-  .tracking-input {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-  
-  .btn-track {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    width: 100%;
-  }
-  
-  .result-box {
-    padding: 12px;
-    font-size: 0.85rem;
-  }
-  
-  /* Services */
-  .services-section,
-  .why-choose,
-  .why-partner,
-  .cta-section {
-    padding: 40px 0;
-  }
-  
-  .section-title {
-    font-size: 24px;
-    margin-bottom: 25px;
-  }
-  
-  .service-card {
-    padding: 20px;
-  }
-  
-  .service-card h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .service-card p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-  
-  .service-icon img {
-    max-width: 120px;
-    margin: 0 auto;
-  }
-  
-  .milk-brand-list {
-    gap: 8px;
-  }
-  
-  .milk-brand {
-    padding: 5px 12px;
-    font-size: 12px;
-  }
-  
-  /* Why Choose / Why Partner */
-  .why-content h2,
-  .why-partner-content h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
-  }
-  
-  .why-content p,
-  .why-partner-content p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-  
-  .why-list li,
-  .why-list-cta li {
-    font-size: 0.85rem;
-    padding: 12px 0;
-    padding-left: 15px;
-  }
-  
-  .why-list li i {
-    font-size: 16px;
-  }
-  
-  /* CTA Section */
-  .cta-content h2 {
-    font-size: 22px;
-  }
-  
-  .cta-content p {
-    font-size: 15px;
-  }
-  
-  /* About Sections */
-  .about-intro,
-  .mission-vision,
-  .our-strengths,
-  .statistics,
-  .commitment {
-    padding: 40px 0;
-  }
-  
-  .about-intro-content h2 {
-    font-size: 22px;
-  }
-  
-  .about-intro-content p {
-    font-size: 0.9rem;
-  }
-  
-  .mv-card,
-  .commitment-card,
-  .strength-item {
-    padding: 25px 15px;
-  }
-  
-  .mv-card h3,
-  .strength-item h3 {
-    font-size: 18px;
-  }
-  
-  .mv-card p,
-  .strength-item p {
-    font-size: 0.85rem;
-  }
-  
-  .mv-icon,
-  .commitment-icon {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .mv-banner img {
-    height: 180px;
-  }
-  
-  .strength-number {
-    font-size: 36px;
-  }
-  
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-  
-  .stat-number {
-    font-size: 36px;
-  }
-  
-  .stat-label {
-    font-size: 16px;
-  }
-  
-  /* Pricing Table */
-  table.card {
-    font-size: 0.85rem;
-  }
-  
-  table.card th,
-  table.card td {
-    padding: 10px 8px;
-  }
-  
-  table.card th {
-    font-size: 12px;
-  }
-  
-  /* Service Links */
-  .link-grid .btn {
-    padding: 8px 14px;
-    font-size: 0.85rem;
-  }
-  
-  /* Card */
-  .card {
-    padding: 18px;
-  }
-  
-  .card h2 {
-    font-size: 20px;
-  }
-  
-  /* Contact */
-  .contact-section {
-    padding: 40px 0;
-  }
-  
-  .contact-card {
-    padding: 20px;
-  }
-  
-  .contact-card h3 {
-    font-size: 18px;
-  }
-  
-  .contact-card p {
-    font-size: 0.9rem;
-  }
-  
-  .contact-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 22px;
-  }
-  
-  .contact-map iframe {
-    height: 250px;
-  }
-  
-  /* Footer */
-  .footer {
-    padding: 40px 0 15px;
-  }
-  
-  .footer-col h4 {
-    font-size: 16px;
-  }
-  
-  .footer-col p,
-  .footer-col a {
-    font-size: 0.9rem;
-  }
-  
-  .site-footer-simple {
-    padding: 20px 0;
-    font-size: 0.85rem;
-  }
-  
-  .footer-links {
-    gap: 12px;
-  }
-  
-  /* Modal */
-  .modal-content {
-    padding: 25px 15px;
-    width: 95%;
-  }
-  
-  .modal-content h2 {
-    font-size: 22px;
-  }
-  
-  .social-btn {
-    padding: 10px 15px;
-    font-size: 14px;
-  }
-  
-  /* Buttons */
-  .btn-primary,
-  .btn-secondary,
-  .btn {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-  }
-  
-  .btn-header {
-    padding: 8px 15px;
-    font-size: 0.85rem;
-  }
-  
-  .btn-login {
-    padding: 8px 16px;
-    font-size: 0.9rem;
-  }
-}
-
-/* Very Small Mobile - below 360px */
-@media (max-width: 360px) {
-  body {
     font-size: 13px;
   }
   
@@ -1819,6 +1485,17 @@ table.card tr:nth-child(even) td {
   table.card td {
     padding: 8px 6px;
     font-size: 0.8rem;
+  }
+}
+
+/* Very Small Mobile - below 360px */
+@media (max-width: 360px) {
+  body {
+    font-size: 13px;
+  }
+  
+  .logo-image {
+    height: 45px;
   }
 }
 
