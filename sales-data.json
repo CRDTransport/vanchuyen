@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-22",
+  "lastUpdated": "2025-12-27",
   "sales": [
     {
       "brand": "Next",
@@ -58,6 +58,27 @@
       "url": "https://www.riverisland.com/sale"
     },
     {
+      "brand": "ASOS",
+      "country": "UK",
+      "discount": 80,
+      "active": true,
+      "url": "https://www.asos.com/women/sale/cat/?cid=7046"
+    },
+    {
+      "brand": "Topshop",
+      "country": "UK",
+      "discount": 70,
+      "active": true,
+      "url": "https://www.topshop.com/en/tsuk/category/sale-6923953"
+    },
+    {
+      "brand": "Debenhams",
+      "country": "UK",
+      "discount": 75,
+      "active": true,
+      "url": "https://www.debenhams.com/sale"
+    },
+    {
       "brand": "American Eagle",
       "country": "US",
       "discount": 70,
@@ -107,6 +128,41 @@
       "url": "https://bananarepublic.gap.com/browse/division.do?cid=5643"
     },
     {
+      "brand": "Target",
+      "country": "US",
+      "discount": 50,
+      "active": true,
+      "url": "https://www.target.com/c/clearance/-/N-5q0f2"
+    },
+    {
+      "brand": "Nordstrom Rack",
+      "country": "US",
+      "discount": 85,
+      "active": true,
+      "url": "https://www.nordstromrack.com/clearance"
+    },
+    {
+      "brand": "Saks OFF 5TH",
+      "country": "US",
+      "discount": 80,
+      "active": true,
+      "url": "https://www.saksoff5th.com/c/clearance"
+    },
+    {
+      "brand": "Uniqlo",
+      "country": "JP",
+      "discount": 50,
+      "active": true,
+      "url": "https://www.uniqlo.com/jp/ja/spl/sale"
+    },
+    {
+      "brand": "GU",
+      "country": "JP",
+      "discount": 60,
+      "active": true,
+      "url": "https://www.gu-global.com/jp/ja/sale"
+    },
+    {
       "brand": "David Jones",
       "country": "AU",
       "discount": 80,
@@ -142,6 +198,13 @@
       "url": "https://cottonon.com/AU/sale/"
     },
     {
+      "brand": "The Iconic",
+      "country": "AU",
+      "discount": 75,
+      "active": true,
+      "url": "https://www.theiconic.com.au/sale/"
+    },
+    {
       "brand": "El Corte Inglés",
       "country": "ES",
       "discount": 60,
@@ -154,6 +217,13 @@
       "discount": 50,
       "active": true,
       "url": "https://shop.mango.com/es/rebajas"
+    },
+    {
+      "brand": "Desigual",
+      "country": "ES",
+      "discount": 70,
+      "active": true,
+      "url": "https://www.desigual.com/es/es/sale"
     },
     {
       "brand": "Zalando Lounge",
@@ -189,6 +259,13 @@
       "discount": 70,
       "active": true,
       "url": "https://www.zalando.de/sale-damen/"
+    },
+    {
+      "brand": "About You",
+      "country": "DE",
+      "discount": 60,
+      "active": true,
+      "url": "https://www.aboutyou.de/sale"
     }
   ]
 }
