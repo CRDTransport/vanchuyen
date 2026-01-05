@@ -414,18 +414,6 @@
     </div>
   </section>
   
-  <!-- Phần Đang Sale - Full Width -->
-  <section class="sale-highlight" data-aos="fade-up" id="saleSection">
-    <div class="sale-highlight-inner">
-      <h2>🎁 BOXING DAY & CUỐI NĂM 2025 - Giảm giá khủng đến 90% 🎉</h2>
-      <p class="sale-count" id="saleCount"></p>
-      <p class="sale-count" id="lastUpdate" style="font-size: 14px; opacity: 0.8;"></p>
-      <div class="sale-grid" id="saleGrid">
-        <!-- Sẽ được tạo tự động bằng JavaScript từ sales-data.json -->
-      </div>
-    </div>
-  </section>
-
   <!-- Phần Feedback của Khách Hàng -->
   <section class="feedback-section" data-aos="fade-up">
     <h2>💬 Khách hàng nói gì về chúng tôi</h2>
@@ -585,8 +573,7 @@
         </div>
       </div>
 
-      <p class="muted" style="margin-top:14px">🎉 Đặc biệt: Boxing Day & Sale Cuối Năm 2025 với mức giảm giá lên đến 90% từ các thương hiệu hàng đầu!</p>
-    </section>
+     
   </main>
   <footer class="site-footer-simple">
     <div class="container">
@@ -689,78 +676,6 @@
           changeLightboxImage(1, event);
         }
       }
-    });
-
-    // Load dữ liệu sale từ JSON và tự động cập nhật
-    document.addEventListener('DOMContentLoaded', function() {
-      const saleGrid = document.getElementById('saleGrid');
-      const saleCount = document.getElementById('saleCount');
-      const saleSection = document.getElementById('saleSection');
-      const lastUpdate = document.getElementById('lastUpdate');
-      
-      const countryFlags = {
-        'UK': '🇬🇧',
-        'US': '🇺🇸',
-        'JP': '🇯🇵',
-        'AU': '🇦🇺',
-        'ES': '🇪🇸',
-        'DE': '🇩🇪'
-      };
-
-      // Fetch dữ liệu từ JSON file
-      fetch('sales-data.json')
-        .then(response => response.json())
-        .then(data => {
-          const activeSales = data.sales.filter(sale => sale.active);
-          
-          // Cập nhật ngày update
-          const updateDate = new Date(data.lastUpdated);
-          lastUpdate.textContent = `🎁 Cập nhật chiến dịch Boxing Day & Cuối Năm: ${updateDate.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
-          
-          // Nếu không có sale nào
-          if (activeSales.length === 0) {
-            saleSection.style.display = 'none';
-          } else {
-            // Hiển thị số lượng
-            saleCount.textContent = `🎁 ${activeSales.length} thương hiệu đang có chương trình giảm giá đặc biệt`;
-            
-            // Tạo sale grid
-            activeSales.forEach(sale => {
-              const saleItem = document.createElement('div');
-              saleItem.className = 'sale-item';
-              saleItem.innerHTML = `
-                <span class="country-flag">${countryFlags[sale.country] || '🌍'}</span>
-                <a href="${sale.url}" target="_blank" rel="noopener noreferrer">${sale.brand}</a>
-                <div class="discount-badge">🎁 Giảm đến ${sale.discount}%</div>
-              `;
-              saleGrid.appendChild(saleItem);
-            });
-          }
-
-          // Thêm links vào từng country section
-          data.sales.forEach(sale => {
-            const container = document.getElementById(`links${sale.country}`);
-            if (container) {
-              const link = document.createElement('a');
-              link.className = sale.active ? 'btn btn-primary btn-with-sale' : 'btn btn-primary btn-sale-ended';
-              link.href = sale.url;
-              link.target = '_blank';
-              link.rel = 'noopener noreferrer';
-              
-              if (sale.active) {
-                link.innerHTML = `${sale.brand} (${sale.country}) <span class="sale-badge">🎁 SALE</span>`;
-              } else {
-                link.innerHTML = `${sale.brand} (${sale.country}) <span class="sale-badge sale-ended-badge">HẾT SALE</span>`;
-              }
-              
-              container.appendChild(link);
-            }
-          });
-        })
-        .catch(error => {
-          console.error('Lỗi khi load dữ liệu sale:', error);
-          saleSection.style.display = 'none';
-        });
     });
   </script>
 </body>
