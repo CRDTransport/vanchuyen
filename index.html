@@ -32,7 +32,11 @@
           <a href="service.html">Dịch vụ</a>
           <a href="contact.html">Liên hệ</a>
         </nav>
-        <!-- Removed header-actions div containing login button -->
+        <div class="header-actions" id="auth-btn">
+          <a href="login.html" class="btn-login">
+            <i class="fas fa-user"></i> Đăng nhập
+          </a>
+        </div>
       </div>
     </div>
   </header>
@@ -313,5 +317,8 @@
     // initial
     setActiveTab(0);
   </script>
+
+  <!-- Firebase SDK - ES Modules -->
+  <script type="module" src="firebase-config.js"></script>
 </body>
 </html>

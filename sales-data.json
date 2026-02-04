@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-27",
+  "lastUpdated": "2025-01-05",
   "sales": [
     {
       "brand": "Next",
@@ -72,13 +72,6 @@
       "url": "https://www.topshop.com/en/tsuk/category/sale-6923953"
     },
     {
-      "brand": "Debenhams",
-      "country": "UK",
-      "discount": 75,
-      "active": true,
-      "url": "https://www.debenhams.com/sale"
-    },
-    {
       "brand": "American Eagle",
       "country": "US",
       "discount": 70,
@@ -98,13 +91,6 @@
       "discount": 60,
       "active": true,
       "url": "https://www.everlane.com/collections/womens-sale"
-    },
-    {
-      "brand": "White House Black Market",
-      "country": "US",
-      "discount": 70,
-      "active": true,
-      "url": "https://www.whitehouseblackmarket.com/"
     },
     {
       "brand": "Gap",

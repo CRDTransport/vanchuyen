@@ -30,6 +30,11 @@
           <a href="service.html">Dịch vụ</a>
           <a href="contact.html">Liên hệ</a>
         </nav>
+        <div class="header-actions" id="auth-btn">
+          <a href="login.html" class="btn-login">
+            <i class="fas fa-user"></i> Đăng nhập
+          </a>
+        </div>
       </div>
     </div>
   </header>
@@ -83,23 +88,6 @@
         <tr><td>Rượu (SL ít)</td><td>Chai</td><td>£10 / KG + phụ thu £8/chai</td></tr>
         <tr><td>Nước hoa</td><td>Chai</td><td>£7.2 / KG + phụ thu £5/chai (&lt;50ml), £10/chai (&gt;50ml)</td></tr>
       </table>
-
-      <!-- Úc (Australia) -->
-      <h2 data-aos="fade-right">Úc (Australia) ➝ Việt Nam</h2>
-      <table class="card" data-aos="zoom-in">
-        <tr><th>Sản phẩm</th><th>Đơn vị tính</th><th>Cước vận chuyển</th></tr>
-        <tr><td>Hàng thường &lt; 5kg</td><td>KG</td><td>A$12 / KG</td></tr>
-        <tr><td>Hàng thường 5kg – 15kg</td><td>KG</td><td>A$11 / KG</td></tr>
-        <tr><td>Hàng thường &gt; 15kg</td><td>KG</td><td>A$10 / KG</td></tr>
-        <tr><td>Hàng giá trị cao &gt; A$300</td><td>Đơn/Chiếc</td><td>A$13 / KG + phụ thu ≥ 2%</td></tr>
-        <tr><td>Đồ điện tử</td><td>Chiếc</td><td>A$13 / KG + phụ thu (50 – 80A$/chiếc)</td></tr>
-        <tr><td>Rượu (SL ít)</td><td>Chai</td><td>A$15 / KG + phụ thu A$12/chai</td></tr>
-        <tr><td>Nước hoa</td><td>Chai</td><td>A$12 / KG + phụ thu A$8/chai</td></tr>
-      </table>
-      
-      <div style="text-align: center; margin-top: 30px;" data-aos="fade-up">
-        <p class="muted">Xem bảng giá chi tiết Úc-Việt Nam: <a href="Img/CRD AU-VN.xlsx" download style="color: var(--primary-color); text-decoration: underline;">📥 Tải xuống CRD AU-VN.xlsx</a></p>
-      </div>
     </section>
   </main>
   <footer class="site-footer-simple">
@@ -115,6 +103,11 @@
   </footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>AOS.init();</script>
+  <script>
+    AOS.init();
+  </script>
+
+  <!-- Firebase SDK - ES Modules -->
+  <script type="module" src="firebase-config.js"></script>
 </body>
 </html>

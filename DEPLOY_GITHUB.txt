@@ -1,0 +1,110 @@
+=====================================================
+  HƯỚNG DẪN DEPLOY WEBSITE LÊN GITHUB PAGES
+=====================================================
+
+BƯỚC 1: CÀI ĐẶT GIT (nếu chưa có)
+----------------------------------
+- Tải Git: https://git-scm.com/download/win
+- Cài đặt với các tùy chọn mặc định
+
+
+BƯỚC 2: TẠO REPOSITORY TRÊN GITHUB
+----------------------------------
+1. Vào https://github.com và đăng nhập
+2. Click nút "+" góc trên phải → "New repository"
+3. Đặt tên: vanchuyen (hoặc tên khác)
+4. Chọn "Public"
+5. KHÔNG tick "Add a README file"
+6. Click "Create repository"
+
+
+BƯỚC 3: UPLOAD CODE (Chạy trong PowerShell/Terminal)
+-----------------------------------------------------
+Mở PowerShell, chạy từng lệnh:
+
+cd "c:\Users\Jang\Downloads\vanchuyen"
+
+git init
+
+git add .
+
+git commit -m "Deploy CRD Transport website"
+
+git branch -M main
+
+git remote add origin https://github.com/YOUR_USERNAME/vanchuyen.git
+
+git push -u origin main
+
+*** QUAN TRỌNG: Thay YOUR_USERNAME bằng tên GitHub của bạn ***
+
+
+BƯỚC 4: BẬT GITHUB PAGES
+------------------------
+1. Vào repository trên GitHub
+2. Click "Settings" (tab trên cùng)
+3. Menu bên trái → "Pages"
+4. Source: chọn "Deploy from a branch"
+5. Branch: chọn "main" và "/ (root)"
+6. Click "Save"
+7. Đợi 2-3 phút
+
+
+BƯỚC 5: CẤU HÌNH FIREBASE (QUAN TRỌNG!)
+---------------------------------------
+1. Vào https://console.firebase.google.com
+2. Chọn project: crd-transport-a0638
+3. Authentication → Settings → Authorized domains
+4. Click "Add domain"
+5. Thêm: YOUR_USERNAME.github.io
+6. Click "Add"
+
+*** Nếu không làm bước này, đăng nhập sẽ bị lỗi! ***
+
+
+BƯỚC 6: TRUY CẬP WEBSITE
+------------------------
+URL website của bạn sẽ là:
+https://YOUR_USERNAME.github.io/vanchuyen/
+
+(Thay YOUR_USERNAME bằng tên GitHub của bạn)
+
+
+=====================================================
+  CẬP NHẬT WEBSITE SAU NÀY
+=====================================================
+Khi muốn cập nhật, chạy các lệnh:
+
+cd "c:\Users\Jang\Downloads\vanchuyen"
+git add .
+git commit -m "Update website"
+git push
+
+
+=====================================================
+  XỬ LÝ LỖI THƯỜNG GẶP
+=====================================================
+
+LỖI 1: "remote origin already exists"
+→ Chạy: git remote remove origin
+→ Rồi chạy lại: git remote add origin ...
+
+LỖI 2: "failed to push some refs"
+→ Chạy: git pull origin main --allow-unrelated-histories
+→ Rồi: git push -u origin main
+
+LỖI 3: Đăng nhập Firebase không hoạt động
+→ Kiểm tra đã thêm domain vào Firebase Authorized domains chưa
+
+LỖI 4: Trang 404
+→ Đợi 5-10 phút để GitHub Pages build xong
+→ Kiểm tra Settings → Pages đã bật chưa
+
+
+=====================================================
+  LIÊN KẾT HỮU ÍCH
+=====================================================
+- GitHub: https://github.com
+- Firebase Console: https://console.firebase.google.com
+- Git Download: https://git-scm.com/download/win
+

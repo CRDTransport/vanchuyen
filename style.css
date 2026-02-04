@@ -5,12 +5,17 @@
 }
 
 :root {
-  --primary-color: #006600;
-  --secondary-color: #00d9ff;
+  --primary-color: #2e7d32;
+  --primary-dark: #1b5e20;
+  --primary-light: #4caf50;
+  --secondary-color: #ff6b35;
   --text-color: #333;
-  --light-bg: #f5f5f5;
+  --text-light: #666;
+  --light-bg: #f8f9fa;
   --white: #ffffff;
   --border-color: #e0e0e0;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 body {
@@ -22,6 +27,12 @@ body {
 img {
   max-width: 100%;
   display: block;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 main {
@@ -48,24 +59,27 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 22px;
-  border-radius: 6px;
+  padding: 12px 28px;
+  border-radius: 8px;
   background: var(--primary-color);
   color: #fff;
   text-decoration: none;
   font-weight: 600;
-  transition: background 0.3s, transform 0.3s;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
 }
 
 .btn:hover {
-  background: #1b5e20;
+  background: var(--primary-dark);
   transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
 }
 
-/* Header */
+/* ===== HEADER ===== */
 header {
   background: var(--white);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -75,7 +89,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0;
+  padding: 12px 0;
+  gap: 30px;
 }
 
 .header-actions {
@@ -85,19 +100,16 @@ header {
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: #009900;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0;
-  line-height: 1;
+  text-decoration: none;
 }
 
 .logo-image {
-  height: 70px;
+  height: 55px;
   width: auto;
   display: block;
+}
 }
 
 .logo strong {
@@ -117,68 +129,79 @@ header {
   margin-left: 0;
 }
 
+/* ===== NAVIGATION ===== */
 nav {
   display: flex;
-  gap: 30px;
+  align-items: center;
+  gap: 8px;
 }
 
 nav a {
   text-decoration: none;
   color: var(--text-color);
   font-weight: 500;
-  transition: color 0.3s;
-  padding: 8px 0;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  padding: 10px 16px;
+  border-radius: 8px;
   position: relative;
 }
 
-nav a:hover,
-nav a.active {
+nav a:hover {
   color: var(--primary-color);
+  background: rgba(46, 125, 50, 0.08);
 }
 
-nav a.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary-color);
+nav a.active {
+  color: var(--primary-color);
+  background: rgba(46, 125, 50, 0.1);
+  font-weight: 600;
 }
 
 .btn-header {
-  padding: 8px 20px;
+  padding: 10px 24px;
   background: var(--primary-color);
   color: white;
   text-decoration: none;
-  border-radius: 5px;
-  transition: background 0.3s;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .btn-header:hover {
-  background: #1b5e20;
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
 }
 
+/* Auth Button */
 .btn-login {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: white !important;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
 }
 
 .btn-login:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 20px rgba(46, 125, 50, 0.4);
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
 }
 
-/* Hero Section - Fix overlapping text */
+.btn-login i {
+  font-size: 1rem;
+}
+
+/* ===== HERO SECTION ===== */
 .hero {
   position: relative;
   min-height: 600px;
@@ -186,6 +209,7 @@ nav a.active::after {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
 }
 
 .hero-image {
@@ -196,6 +220,7 @@ nav a.active::after {
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  opacity: 0.7;
 }
 
 .hero::before {
@@ -205,7 +230,7 @@ nav a.active::after {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.85) 0%, rgba(27, 94, 32, 0.9) 100%);
   z-index: 1;
 }
 
@@ -263,23 +288,26 @@ nav a.active::after {
 
 .tab-btn {
   padding: 12px 24px;
-  border: 2px solid #ddd;
+  border: 2px solid #e0e0e0;
   background: white;
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.95rem;
+  font-weight: 500;
   transition: all 0.3s;
   white-space: nowrap;
+  color: var(--text-color);
 }
 
 .tab-btn.active {
-  background: #4CAF50;
+  background: var(--primary-color);
   color: white;
-  border-color: #4CAF50;
+  border-color: var(--primary-color);
 }
 
-.tab-btn:hover {
-  border-color: #4CAF50;
+.tab-btn:hover:not(.active) {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
   transform: translateY(-2px);
 }
 
@@ -300,20 +328,21 @@ nav a.active::after {
 }
 
 .btn-track {
-  padding: 12px 40px;
-  background: #4CAF50;
+  padding: 14px 40px;
+  background: var(--primary-color);
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .btn-track:hover {
-  background: #45a049;
+  background: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
 }
 
 .result-box {
@@ -389,19 +418,58 @@ nav a.active::after {
 
 .service-card {
   background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
+  border-radius: 16px;
+  padding: 35px 30px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
   width: 100%;
   max-width: 350px;
   text-align: center;
+  border: 1px solid transparent;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--primary-light);
+}
+
+.service-card h3 {
+  color: var(--primary-dark);
+  margin-bottom: 15px;
+  font-size: 1.25rem;
+}
+
+.service-card p {
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+.service-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.service-link:hover {
+  color: var(--primary-dark);
+  transform: translateX(5px);
 }
 
 .service-icon {
   margin: 0 auto 20px;
   display: flex;
   justify-content: center;
+}
+
+.service-icon img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
 /* Why Choose Us */
@@ -1550,5 +1618,185 @@ table.card tr:nth-child(even) td {
   input[type="number"],
   select {
     font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* ===== FIREBASE AUTHENTICATION STYLES ===== */
+
+/* Nút đăng nhập header - đã được định nghĩa ở trên */
+
+/* User dropdown khi đã đăng nhập */
+.user-dropdown {
+  position: relative;
+}
+
+.btn-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.btn-user:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(46, 125, 50, 0.4);
+}
+
+.btn-user i.fa-user-circle {
+  font-size: 1.2rem;
+}
+
+.btn-user i.fa-chevron-down {
+  font-size: 0.7rem;
+  transition: transform 0.3s;
+}
+
+.user-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.user-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.user-menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.user-menu a:hover {
+  background: rgba(46, 125, 50, 0.08);
+  color: var(--primary-color);
+}
+
+.user-menu a i {
+  width: 20px;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+/* Firebase notification */
+.firebase-notification {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10000;
+  animation: notificationSlideIn 0.3s ease;
+  max-width: 350px;
+}
+
+.firebase-notification.success {
+  border-left: 4px solid #28a745;
+}
+
+.firebase-notification.success i:first-child {
+  color: #28a745;
+}
+
+.firebase-notification.error {
+  border-left: 4px solid #dc3545;
+}
+
+.firebase-notification.error i:first-child {
+  color: #dc3545;
+}
+
+.firebase-notification.info {
+  border-left: 4px solid #17a2b8;
+}
+
+.firebase-notification.info i:first-child {
+  color: #17a2b8;
+}
+
+.firebase-notification span {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.firebase-notification button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  color: #999;
+  transition: color 0.3s;
+}
+
+.firebase-notification button:hover {
+  color: #333;
+}
+
+@keyframes notificationSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive cho auth */
+@media (max-width: 768px) {
+  .btn-login {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+  }
+  
+  .btn-user {
+    padding: 6px 12px;
+  }
+  
+  .btn-user span {
+    display: none;
+  }
+  
+  .user-menu {
+    right: -10px;
+    min-width: 180px;
+  }
+  
+  .firebase-notification {
+    left: 20px;
+    right: 20px;
+    max-width: none;
   }
 }
