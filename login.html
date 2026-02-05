@@ -267,14 +267,28 @@
     }
 
     .btn-social:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-social.google:hover {
       border-color: #2e7d32;
       background: #f3fff3;
-      transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
+    }
+
+    .btn-social.facebook:hover {
+      border-color: #4267B2;
+      background: #f0f5ff;
+      box-shadow: 0 5px 15px rgba(66, 103, 178, 0.2);
     }
 
     .btn-social.google i { 
       color: #2e7d32;
+      font-size: 1.2rem;
+    }
+
+    .btn-social.facebook i { 
+      color: #4267B2;
       font-size: 1.2rem;
     }
 
@@ -489,6 +503,9 @@
             <button class="btn-social google" type="button" onclick="signInWithGoogle()">
               <i class="fab fa-google"></i> Google
             </button>
+            <button class="btn-social facebook" type="button" onclick="signInWithFacebook()">
+              <i class="fab fa-facebook-f"></i> Facebook
+            </button>
           </div>
 
           <div class="form-footer">
@@ -575,7 +592,7 @@
   <!-- Firebase SDK - ES Modules -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, updateProfile, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, updateProfile, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
     // Firebase configuration
     const firebaseConfig = {
@@ -734,6 +751,19 @@
       } catch (error) {
         console.error(error);
         showNotification('Không thể đăng nhập với Google. Vui lòng thử lại.', 'error');
+      }
+    }
+
+    // Facebook Sign In
+    window.signInWithFacebook = async function() {
+      const provider = new FacebookAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+        showNotification('Đăng nhập với Facebook thành công!', 'success');
+        setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+      } catch (error) {
+        console.error(error);
+        showNotification('Không thể đăng nhập với Facebook. Vui lòng thử lại.', 'error');
       }
     }
   </script>
