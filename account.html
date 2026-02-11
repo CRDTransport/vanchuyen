@@ -127,8 +127,8 @@
 
     .sidebar-menu a:hover,
     .sidebar-menu a.active {
-      background: rgba(46, 125, 50, 0.08);
-      color: #2e7d32;
+      background: rgba(13, 59, 26, 0.08);
+      color: #1a5c2a;
     }
 
     .sidebar-menu a i {
@@ -200,8 +200,8 @@
 
     .form-group input:focus {
       outline: none;
-      border-color: #2e7d32;
-      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+      border-color: #1a5c2a;
+      box-shadow: 0 0 0 3px rgba(13, 59, 26, 0.1);
     }
 
     .form-group input:disabled {
@@ -211,19 +211,19 @@
 
     .btn-save {
       padding: 15px 40px;
-      background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+      background: linear-gradient(135deg, #0d3b1a 0%, #1a5c2a 100%);
       color: white;
       border: none;
       border-radius: 10px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .btn-save:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(46, 125, 50, 0.3);
+      box-shadow: 0 10px 30px rgba(13, 59, 26, 0.35);
     }
 
     /* Orders */
@@ -241,8 +241,8 @@
     }
 
     .order-card:hover {
-      border-color: #2e7d32;
-      box-shadow: 0 5px 20px rgba(46, 125, 50, 0.1);
+      border-color: #1a5c2a;
+      box-shadow: 0 5px 20px rgba(13, 59, 26, 0.1);
     }
 
     .order-header {
@@ -254,7 +254,7 @@
 
     .order-id {
       font-weight: 700;
-      color: #2e7d32;
+      color: #1a5c2a;
     }
 
     .order-status {
@@ -341,8 +341,8 @@
 
     .btn-outline {
       padding: 10px 25px;
-      border: 2px solid #2e7d32;
-      color: #2e7d32;
+      border: 2px solid #1a5c2a;
+      color: #1a5c2a;
       background: white;
       border-radius: 8px;
       font-weight: 500;
@@ -351,7 +351,7 @@
     }
 
     .btn-outline:hover {
-      background: #2e7d32;
+      background: #1a5c2a;
       color: white;
     }
 
@@ -405,7 +405,7 @@
     }
 
     .toggle-switch input:checked + .toggle-slider {
-      background-color: #2e7d32;
+      background-color: #1a5c2a;
     }
 
     .toggle-switch input:checked + .toggle-slider:before {
@@ -425,8 +425,14 @@
       .sidebar-menu {
         display: flex;
         overflow-x: auto;
-        gap: 10px;
+        gap: 8px;
         padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .sidebar-menu::-webkit-scrollbar {
+        display: none;
       }
 
       .sidebar-menu li {
@@ -435,7 +441,8 @@
 
       .sidebar-menu a {
         white-space: nowrap;
-        padding: 12px 20px;
+        padding: 10px 18px;
+        font-size: 0.88rem;
       }
     }
 
@@ -443,18 +450,122 @@
       .account-header {
         flex-direction: column;
         text-align: center;
+        padding: 25px 18px;
+      }
+
+      .account-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+      }
+
+      .account-info h1 {
+        font-size: 1.3rem;
+      }
+
+      .account-info p {
+        font-size: 0.88rem;
       }
 
       .account-stats {
         justify-content: center;
+        gap: 15px;
+      }
+
+      .stat-item {
+        padding: 10px;
+      }
+
+      .account-content {
+        padding: 24px 18px;
+        border-radius: 14px;
+      }
+
+      .section-title {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
       }
 
       .form-row {
         grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .form-group input {
+        padding: 13px 16px;
+        font-size: 16px;
+      }
+
+      .btn-save {
+        padding: 13px 30px;
+        width: 100%;
+        font-size: 0.95rem;
+      }
+
+      .order-card {
+        padding: 18px;
+        border-radius: 12px;
+      }
+
+      .order-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
       }
 
       .order-info {
         grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .security-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 20px;
+        border-radius: 12px;
+      }
+
+      .btn-outline {
+        width: 100%;
+        text-align: center;
+      }
+
+      .notification-item {
+        padding: 15px 0;
+        gap: 10px;
+      }
+
+      .notification-item .notification-info h4 {
+        font-size: 0.95rem;
+      }
+
+      .notification-item .notification-info p {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .account-page {
+        padding: 15px 0;
+      }
+
+      .account-container {
+        padding: 0 10px;
+      }
+
+      .account-header {
+        padding: 20px 14px;
+        border-radius: 12px;
+      }
+
+      .account-content {
+        padding: 20px 14px;
+      }
+
+      .sidebar-menu a {
+        padding: 8px 14px;
+        font-size: 0.82rem;
       }
     }
   </style>
