@@ -6,20 +6,16 @@ class PWAHandler {
   }
 
   init() {
-    // Listen for the beforeinstallprompt event
+    // Listen for the beforeinstallprompt event - but don't show prompt
     window.addEventListener('beforeinstallprompt', (e) => {
-      // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
-      // Stash the event so it can be triggered later
       this.deferredPrompt = e;
-      // Show the install prompt
-      this.showInstallPrompt();
+      // Don't show install prompt - user can manually install via browser menu
     });
 
     // Listen for successful installation
     window.addEventListener('appinstalled', (evt) => {
       console.log('PWA was installed successfully');
-      this.hideInstallPrompt();
     });
 
     // Check if already installed
@@ -27,54 +23,26 @@ class PWAHandler {
       console.log('PWA is running in standalone mode');
     }
 
-    // Offline detection
+    // Offline detection - only show when actually offline
     this.setupOfflineDetection();
   }
 
-  showInstallPrompt() {
-    const prompt = document.createElement('div');
-    prompt.className = 'pwa-install-prompt show';
-    prompt.innerHTML = `
-      <div>
-        <strong>Cài đặt CRD Transport</strong><br>
-        <small>Thêm vào màn hình chính để trải nghiệm tốt hơn</small>
-      </div>
-      <button class="install-btn" onclick="pwaHandler.installApp()">Cài đặt</button>
-      <button class="close-btn" onclick="pwaHandler.hideInstallPrompt()">×</button>
-    `;
-
-    document.body.appendChild(prompt);
-
-    // Auto-hide after 10 seconds
-    setTimeout(() => {
-      this.hideInstallPrompt();
-    }, 10000);
+  showSubtleInstallPrompt() {
+    // This method is disabled - users can install manually via browser menu
+    console.log('Install prompt disabled - users can install via browser menu');
   }
 
   hideInstallPrompt() {
-    const prompt = document.querySelector('.pwa-install-prompt');
-    if (prompt) {
-      prompt.classList.remove('show');
-      setTimeout(() => {
-        prompt.remove();
-      }, 300);
-    }
+    // No prompt to hide since it's disabled
   }
 
   async installApp() {
+    // Manual installation via browser menu
     if (!this.deferredPrompt) return;
 
-    // Show the install prompt
     this.deferredPrompt.prompt();
-
-    // Wait for the user to respond to the prompt
     const { outcome } = await this.deferredPrompt.userChoice;
-
-    // Reset the deferred prompt
     this.deferredPrompt = null;
-
-    // Hide the install prompt
-    this.hideInstallPrompt();
 
     if (outcome === 'accepted') {
       console.log('User accepted the install prompt');
@@ -84,10 +52,10 @@ class PWAHandler {
   }
 
   setupOfflineDetection() {
-    // Create offline indicator
+    // Create offline indicator - only show when actually offline
     const offlineIndicator = document.createElement('div');
     offlineIndicator.className = 'offline-indicator';
-    offlineIndicator.textContent = 'Không có kết nối internet';
+    offlineIndicator.innerHTML = '<i class="fas fa-wifi-slash"></i> Offline';
     document.body.appendChild(offlineIndicator);
 
     // Listen for online/offline events
