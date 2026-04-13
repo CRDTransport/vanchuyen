@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>CRD TRANSPORT - Vận chuyển quốc tế uy tín | Mua hộ UK, US, JP</title>
+  <title>CRD TRANSPORT </title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="Img/LOGO.png">
@@ -13,6 +13,13 @@
   <meta name="description" content="CRD Transport - Dịch vụ vận chuyển quốc tế, mua hộ và gom hàng từ UK, US, JP, AU. Giá tốt, uy tín, nhanh chóng. Hỗ trợ mua hàng từ hơn 100 thương hiệu thời trang, thể thao, mỹ phẩm.">
   <meta name="keywords" content="vận chuyển quốc tế, mua hộ UK, mua hộ US, mua hộ Nhật, gom hàng, ship hàng nước ngoài, CRD Transport, order hàng UK, order hàng Mỹ">
   <meta name="author" content="CRD Transport">
+  
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a5c2a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="CRD Transport">
   
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
@@ -303,6 +310,9 @@
     // initial
     setActiveTab(0);
   </script>
+
+  <!-- PWA Handler -->
+  <script src="pwa.js"></script>
 
   <!-- Firebase SDK - ES Modules -->
   <script type="module" src="firebase-config.js"></script>

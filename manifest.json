@@ -1,0 +1,35 @@
+{
+  "name": "CRD Transport",
+  "short_name": "CRD Transport",
+  "description": "Dịch vụ vận chuyển quốc tế nhanh chóng, an toàn",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a5c2a",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "vi",
+  "icons": [
+    {
+      "src": "Img/LOGO.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "Img/LOGO.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "screenshots": [
+    {
+      "src": "Img/crd.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}
