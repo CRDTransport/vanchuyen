@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -26,25 +26,49 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+
+  <!-- Top Utility Bar (FedEx/DHL style) -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="topbar-left">
+          <a href="tel:0912597313"><i class="fas fa-phone"></i> Hotline: 0912 597 313</a>
+          <div class="topbar-divider"></div>
+          <a href="mailto:crdtransport2023@gmail.com"><i class="fas fa-envelope"></i> crdtransport2023@gmail.com</a>
+        </div>
+        <div class="topbar-right">
+          <a href="contact.html"><i class="fas fa-map-marker-alt"></i> Tìm địa điểm</a>
+          <div class="topbar-divider"></div>
+          <a href="account.html"><i class="fas fa-box"></i> Theo dõi đơn hàng</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <header>
     <div class="container">
       <div class="header-content">
-        <div class="logo">
-          <img src="Img/LOGO.png" alt="CRD Transport Logo" class="logo-image">
+          <div class="header-top-row">
+            <div class="logo">
+              <img src="Img/LOGO.png" alt="CRD Transport Logo" class="logo-image">
+            </div>
+            <button class="hamburger-btn" id="menu-toggle" aria-label="Menu">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+          <nav id="main-nav">
+            <a href="index.html" class="active">Trang chủ</a>
+            <a href="about.html">Về chúng tôi</a>
+            <a href="pricing.html">Bảng giá</a>
+            <a href="service.html">Dịch vụ</a>
+            <a href="contact.html">Liên hệ</a>
+          </nav>
+          <div class="header-actions" id="auth-btn">
+            <a href="login.html" class="btn-login">
+              <i class="fas fa-user"></i> Đăng nhập
+            </a>
+          </div>
         </div>
-        <nav>
-          <a href="index.html" class="active">Trang chủ</a>
-          <a href="about.html">Về chúng tôi</a>
-          <a href="pricing.html">Bảng giá</a>
-          <a href="service.html">Dịch vụ</a>
-          <a href="contact.html">Liên hệ</a>
-        </nav>
-        <div class="header-actions" id="auth-btn">
-          <a href="login.html" class="btn-login">
-            <i class="fas fa-user"></i> Đăng nhập
-          </a>
-        </div>
-      </div>
     </div>
   </header>
 
@@ -53,8 +77,9 @@
     <img src="Img/crd.png" alt="CRD Transport banner" class="hero-image">
     <div class="container">
       <div class="hero-content">
-        <h1 class="hero-title">Vận chuyển quốc tế nhanh chóng, an toàn</h1>
-        <p class="hero-subtitle">Kết nối Việt Nam với thế giới - Dịch vụ vận chuyển hàng đầu</p>
+        <div class="hero-eyebrow"><i class="fas fa-globe"></i> Kết nối toàn cầu</div>
+        <h1 class="hero-title">Vận chuyển quốc tế <span>nhanh chóng</span>, an toàn</h1>
+        <p class="hero-subtitle">Kết nối Việt Nam với thế giới — Dịch vụ logistics hàng đầu từ UK, US, EU, AU, JP</p>
         <div class="tracking-box" data-aos="fade-up" data-aos-delay="200">
           <div class="tracking-tabs">
             <button class="tab-btn active">Tra cứu vận đơn</button>
@@ -70,10 +95,45 @@
     </div>
   </section>
 
+  <!-- Quick Services Band -->
+  <section class="quick-services">
+    <div class="quick-services-grid">
+      <a href="service.html" class="quick-service-item">
+        <i class="fas fa-plane"></i>
+        <div>
+          <strong>Vận chuyển quốc tế</strong>
+          <span>Giao hàng toàn cầu nhanh chóng</span>
+        </div>
+      </a>
+      <a href="service.html" class="quick-service-item">
+        <i class="fas fa-shopping-cart"></i>
+        <div>
+          <strong>Mua hộ &amp; Đấu giá</strong>
+          <span>Amazon, eBay, Uniqlo &amp; nhiều hơn</span>
+        </div>
+      </a>
+      <a href="pricing.html" class="quick-service-item">
+        <i class="fas fa-calculator"></i>
+        <div>
+          <strong>Tính cước phí</strong>
+          <span>Báo giá nhanh, minh bạch</span>
+        </div>
+      </a>
+      <a href="contact.html" class="quick-service-item">
+        <i class="fas fa-headset"></i>
+        <div>
+          <strong>Hỗ trợ 24/7</strong>
+          <span>Đội ngũ chuyên nghiệp luôn sẵn sàng</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <!-- Services Section -->
   <section class="services-section">
     <div class="container">
       <h2 class="section-title" data-aos="fade-up">Dịch vụ của chúng tôi</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="50">Giải pháp logistics toàn diện — từ mua hộ đến vận chuyển cửa đến cửa</p>
       <div class="services-grid">
         <div class="service-card" data-aos="fade-up" data-aos-delay="100">
           <div class="service-icon">
@@ -100,6 +160,30 @@
           <h3>Chính sách bảo hiểm</h3>
           <p>Chính sách bảo hiểm và đền bù hàng hoá</p>
           <a href="Baohiemhanghoa.html" class="service-link">Tìm hiểu thêm →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Band -->
+  <section class="stats-band" data-aos="fade-up">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Năm kinh nghiệm</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">50K+</div>
+          <div class="stat-label">Đơn hàng thành công</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Quốc gia phục vụ</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">98%</div>
+          <div class="stat-label">Khách hàng hài lòng</div>
         </div>
       </div>
     </div>
@@ -173,15 +257,26 @@
     </div>
   </section>
 
-  <!-- replace footer with simple bar -->
-  <footer class="site-footer-simple">
+  <!-- Footer -->
+  <footer class="site-footer">
     <div class="container">
-      <div class="footer-inner">
-        <p>© 2025 CRD TRANSPORT</p>
-        <nav class="footer-links">
-          <a href="terms.html">Điều khoản sử dụng</a>
-          <a href="privacy.html">Chính sách quyền riêng tư</a>
-        </nav>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="Img/LOGO.png" alt="CRD Transport" class="logo-image">
+          <p>Dịch vụ vận chuyển quốc tế uy tín, kết nối Việt Nam với thế giới từ UK, US, EU, AU, JP.</p>
+          <div class="footer-socials">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://zalo.me/0912597313" aria-label="Zalo" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" style="width:14px;height:14px;filter:brightness(0)invert(1);vertical-align:middle"></a>
+            <a href="mailto:crdtransport2023@gmail.com" aria-label="Gmail"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 CRD TRANSPORT. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="terms.html">Điều khoản</a>
+          <a href="privacy.html">Quyền riêng tư</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -189,6 +284,18 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init({duration: 800, once: true});
+
+    // Mobile hamburger menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav = document.getElementById('main-nav');
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener('click', () => {
+        mainNav.classList.toggle('mobile-open');
+        const icon = menuToggle.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      });
+    }
 
     // initial render content for "Tra cứu vận đơn"
     const trackingArea = document.getElementById('tracking-area');

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
@@ -15,11 +15,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+  <div class="topbar"><div class="container"><div class="topbar-inner"><div class="topbar-left"><a href="tel:0912597313"><i class="fas fa-phone"></i> Hotline</a><div class="topbar-divider"></div><a href="mailto:crdtransport2023@gmail.com"><i class="fas fa-envelope"></i> crdtransport2023@gmail.com</a></div><div class="topbar-right"><a href="contact.html"><i class="fas fa-map-marker-alt"></i> Tìm địa điểm</a><div class="topbar-divider"></div><a href="account.html"><i class="fas fa-box"></i> Theo doi</a></div></div></div></div>
+
   <header>
     <div class="container">
       <div class="header-content">
-        <div class="logo"><img src="Img/LOGO.png" alt="CRD Transport Logo" class="logo-image"></div>
-        <nav>
+        <div class="header-top-row">
+          <div class="logo"><img src="Img/LOGO.png" alt="CRD Transport Logo" class="logo-image"></div>
+          <button class="hamburger-btn" id="menu-toggle" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        </div>
+        <nav id="main-nav">
           <a href="index.html">Trang chủ</a>
           <a href="about.html">Về chúng tôi</a>
           <a href="pricing.html">Bảng giá</a>
@@ -97,21 +102,12 @@
     </section>
   </main>
 
-  <footer class="site-footer-simple">
-    <div class="container">
-      <div class="footer-inner">
-        <p>© 2025 CRD TRANSPORT</p>
-        <nav class="footer-links">
-          <a href="terms.html">Điều khoản sử dụng</a>
-          <a href="privacy.html">Chính sách quyền riêng tư</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
+  <footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="Img/LOGO.png" alt="CRD Transport" class="logo-image"><p>Dịch vụ vận chuyển quốc tế uy tín, kết nối Việt Nam với thế giới từ UK, US, EU, AU, JP.</p><div class="footer-socials"><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="https://zalo.me/0912597313" aria-label="Zalo" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" style="width:14px;height:14px;filter:brightness(0)invert(1);vertical-align:middle"></a><a href="mailto:crdtransport2023@gmail.com" aria-label="Gmail"><i class="fas fa-envelope"></i></a></div></div></div><div class="footer-bottom"><p>&copy; 2025 CRD TRANSPORT. All rights reserved.</p><div class="footer-bottom-links"><a href="terms.html">Điều khoản</a><a href="privacy.html">Quyền riêng tư</a></div></div></div></footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init({duration:800, once:true});
+    const mt=document.getElementById("menu-toggle");const mn=document.getElementById("main-nav");if(mt&&mn){mt.addEventListener("click",function(){mn.classList.toggle("mobile-open");var ic=mt.querySelector("i");ic.classList.toggle("fa-bars");ic.classList.toggle("fa-times");});}
   </script>
 
   <!-- Firebase SDK -->
