@@ -168,6 +168,7 @@
         <button type="submit" class="btn-primary tuvan-submit" id="tuvan-submit-btn">
           <i class="fas fa-paper-plane"></i> Gửi yêu cầu tư vấn
         </button>
+        <p id="tuvan-email-status" style="display:none;margin-top:10px;font-weight:600" aria-live="polite"></p>
       </form>
     </section>
   </main>
@@ -233,9 +234,12 @@
     // 4. Vào Account > General > copy Public Key
     // 5. Thay các giá trị bên dưới:
     // ============================================================
-    const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // Thay bằng Public Key của bạn
-    const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // Thay bằng Service ID (vd: service_xxxxxx)
-    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // Thay bằng Template ID (vd: template_xxxxxx)
+    const EMAILJS_PUBLIC_KEY  = '-emfoJgkqc04VQPYG'; // Public Key EmailJS
+    const EMAILJS_SERVICE_ID  = 'service_zm7iyxd';   // Service ID EmailJS
+    const EMAILJS_TEMPLATE_ID = 'template_ncegfyy';  // Template ID EmailJS
+    const EMAIL_TIMEOUT_MS = 6000;
+    const FIRESTORE_TIMEOUT_MS = 7000;
+    const EMAIL_RETRY_COUNT = 1;
     // Mẫu Email Template (dán vào EmailJS):
     // Subject: [CRD Transport] Yêu cầu tư vấn mới từ {{from_name}}
     // Body:
@@ -250,10 +254,59 @@
     //   Thời gian gửi: {{time}}
     // ============================================================
 
-    // Khởi tạo EmailJS
-    if (typeof emailjs !== 'undefined') {
+    const hasEmailConfig =
+      EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' &&
+      EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' &&
+      EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID';
+
+    // Khởi tạo EmailJS khi đã cấu hình đầy đủ
+    if (typeof emailjs !== 'undefined' && hasEmailConfig) {
       emailjs.init(EMAILJS_PUBLIC_KEY);
     }
+
+    const withTimeout = (promise, timeoutMs, timeoutMessage) => {
+      let timer;
+      const timeoutPromise = new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error(timeoutMessage)), timeoutMs);
+      });
+
+      return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timer));
+    };
+
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    const isLikelyNetworkError = (err) => {
+      if (!err) return false;
+      const msg = String(err.message || '').toLowerCase();
+      return msg.includes('network') || msg.includes('timeout') || msg.includes('fetch');
+    };
+
+    const sendConsultationEmail = async (templateParams) => {
+      if (typeof emailjs === 'undefined' || !hasEmailConfig) {
+        return { skipped: true };
+      }
+
+      let lastError = null;
+
+      for (let attempt = 0; attempt <= EMAIL_RETRY_COUNT; attempt += 1) {
+        try {
+          await withTimeout(
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams),
+            EMAIL_TIMEOUT_MS,
+            'Gửi email quá thời gian chờ'
+          );
+          return { sent: true };
+        } catch (err) {
+          lastError = err;
+          if (!isLikelyNetworkError(err) || attempt === EMAIL_RETRY_COUNT) {
+            break;
+          }
+          await delay(500);
+        }
+      }
+
+      throw lastError;
+    };
 
     // Fallback notification to avoid runtime errors when global helper is unavailable
     const notify = (message, type = 'info') => {
@@ -262,6 +315,28 @@
       } else {
         console[type === 'error' ? 'error' : 'log'](message);
       }
+    };
+
+    const setEmailStatus = (message, type = 'info') => {
+      const statusEl = document.getElementById('tuvan-email-status');
+      if (!statusEl) return;
+
+      if (!message) {
+        statusEl.textContent = '';
+        statusEl.style.display = 'none';
+        return;
+      }
+
+      const colorMap = {
+        info: '#1a5c2a',
+        success: '#1d7a34',
+        warning: '#9a6700',
+        error: '#b42318'
+      };
+
+      statusEl.textContent = message;
+      statusEl.style.display = 'block';
+      statusEl.style.color = colorMap[type] || colorMap.info;
     };
 
     // Theo dõi trạng thái đăng nhập
@@ -308,34 +383,55 @@
         // Disable nút submit
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+        setEmailStatus('Đang xử lý yêu cầu của bạn...', 'info');
 
         try {
           const now = new Date();
           const timeStr = now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
 
-          // 1. Lưu vào Firestore
-          await addDoc(collection(db, 'consultations'), {
+          const consultationData = {
             name, email, phone,
             service: service || 'Chưa chọn',
             message,
             userId: auth.currentUser?.uid || '',
             createdAt: serverTimestamp()
-          });
+          };
 
-          // 2. Gửi email thông báo qua EmailJS
-          if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-              from_name : name,
-              from_email: email,
-              phone     : phone || 'Không cung cấp',
-              service   : service || 'Chưa chọn',
-              message,
-              time      : timeStr
+          // 1. Lưu vào Firestore (ưu tiên lưu dữ liệu trước để không mất yêu cầu)
+          await withTimeout(
+            addDoc(collection(db, 'consultations'), consultationData),
+            FIRESTORE_TIMEOUT_MS,
+            'Lưu yêu cầu quá thời gian chờ'
+          );
+
+          // 2. Gửi email thông báo (không chặn UI quá lâu)
+          const emailPayload = {
+            from_name : name,
+            from_email: email,
+            phone     : phone || 'Không cung cấp',
+            service   : service || 'Chưa chọn',
+            message,
+            time      : timeStr
+          };
+
+          sendConsultationEmail(emailPayload)
+            .then((emailResult) => {
+              if (emailResult?.sent) {
+                setEmailStatus('Đã lưu yêu cầu và gửi email thông báo thành công.', 'success');
+                return;
+              }
+
+              if (emailResult?.skipped) {
+                setEmailStatus('Đã lưu yêu cầu. Hệ thống email thông báo chưa được cấu hình đầy đủ.', 'warning');
+              }
+            })
+            .catch((emailErr) => {
+              console.warn('Không gửi được email thông báo tư vấn:', emailErr);
+              setEmailStatus('Đã lưu yêu cầu, nhưng gửi email thông báo thất bại. Nếu cần gấp, vui lòng gọi hotline 0912 597 313.', 'warning');
             });
-          }
 
           // Thông báo thành công
-          notify('Yêu cầu tư vấn của bạn đã được gửi thành công! Chúng tôi sẽ liên hệ trong vòng 24 giờ.', 'success');
+          notify('Đã ghi nhận yêu cầu tư vấn thành công! Chúng tôi sẽ liên hệ trong vòng 24 giờ.', 'success');
           form.reset();
           // Điền lại email và tên sau khi reset
           const user = auth.currentUser;
@@ -345,6 +441,7 @@
           }
         } catch (err) {
           console.error('Lỗi gửi yêu cầu tư vấn:', err);
+          setEmailStatus('Không thể gửi yêu cầu lúc này. Vui lòng thử lại sau hoặc liên hệ hotline.', 'error');
           notify('Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng thử lại hoặc liên hệ trực tiếp qua hotline.', 'error');
         } finally {
           submitBtn.disabled = false;
