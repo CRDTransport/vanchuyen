@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- EmailJS CDN -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
   <!-- Top Utility Bar -->
@@ -69,7 +71,7 @@
   </header>
 
   <section class="page-hero" data-aos="fade-down">
-    <img src="Img/contact.jpg" alt="Liên hệ CRD" class="page-hero-image">
+    <img src="Img/contact.jpg" alt="Liên hệ CRD" class="page-hero-image" fetchpriority="high">
     <div class="container">
       <!-- banner ảnh -->
     </div>
@@ -111,6 +113,63 @@
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.913247605208!2d105.81626877509487!3d21.037322387573317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab8cd540d119%3A0xea038ca6d1cb5ed1!2zSOG7kyBO4bq1aSBIw6BuIE5hbQ!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </section>
+
+    <!-- FORM TƯ VẤN -->
+    <section class="section tuvan-section" data-aos="fade-up">
+      <h2><i class="fas fa-headset"></i> Gửi yêu cầu tư vấn</h2>
+      <p class="muted">Điền thông tin bên dưới, đội ngũ CRD Transport sẽ liên hệ lại trong vòng 24 giờ.</p>
+
+      <!-- Chưa đăng nhập -->
+      <div id="tuvan-login-required" class="tuvan-login-notice" style="display:none">
+        <div class="tuvan-login-box">
+          <i class="fas fa-user-lock tuvan-lock-icon"></i>
+          <h3>Đăng nhập để gửi yêu cầu</h3>
+          <p>Bạn cần đăng nhập để sử dụng tính năng tư vấn trực tuyến.</p>
+          <a href="login.html" class="btn-primary"><i class="fas fa-sign-in-alt"></i> Đăng nhập ngay</a>
+        </div>
+      </div>
+
+      <!-- Đã đăng nhập -->
+      <form id="tuvan-form" class="tuvan-form" style="display:none" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tuvan-name"><i class="fas fa-user"></i> Họ và tên <span class="required">*</span></label>
+            <input type="text" id="tuvan-name" required placeholder="Nhập họ và tên của bạn">
+          </div>
+          <div class="form-group">
+            <label for="tuvan-email"><i class="fas fa-envelope"></i> Email <span class="required">*</span></label>
+            <input type="email" id="tuvan-email" required placeholder="Nhập địa chỉ email">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tuvan-phone"><i class="fas fa-phone"></i> Số điện thoại</label>
+            <input type="tel" id="tuvan-phone" placeholder="Nhập số điện thoại (Zalo)">
+          </div>
+          <div class="form-group">
+            <label for="tuvan-service"><i class="fas fa-box"></i> Dịch vụ quan tâm</label>
+            <select id="tuvan-service">
+              <option value="">-- Chọn dịch vụ --</option>
+              <option value="Vận chuyển UK">Vận chuyển UK (Anh)</option>
+              <option value="Vận chuyển US">Vận chuyển US (Mỹ)</option>
+              <option value="Vận chuyển EU">Vận chuyển EU (Châu Âu)</option>
+              <option value="Vận chuyển AU">Vận chuyển AU (Úc)</option>
+              <option value="Vận chuyển JP">Vận chuyển JP (Nhật)</option>
+              <option value="Mua hộ quốc tế">Mua hộ quốc tế</option>
+              <option value="Bảo hiểm hàng hóa">Bảo hiểm hàng hóa</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tuvan-message"><i class="fas fa-comment-alt"></i> Nội dung cần tư vấn <span class="required">*</span></label>
+          <textarea id="tuvan-message" rows="5" required placeholder="Mô tả chi tiết nhu cầu của bạn: loại hàng, trọng lượng ước tính, địa chỉ giao hàng..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary tuvan-submit" id="tuvan-submit-btn">
+          <i class="fas fa-paper-plane"></i> Gửi yêu cầu tư vấn
+        </button>
+      </form>
+    </section>
   </main>
 
     <footer class="site-footer">
@@ -121,6 +180,8 @@
           <p>Dịch vụ vận chuyển quốc tế uy tín, kết nối Việt Nam với thế giới từ UK, US, EU, AU, JP.</p>
           <div class="footer-socials">
             <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://zalo.me/0912597313" aria-label="Zalo" target="_blank" rel="noopener"><b style="font-size:13px;font-weight:900;font-family:Arial,sans-serif">Z</b></a>
+            <a href="mailto:crdtransport2023@gmail.com" aria-label="Gmail"><i class="fas fa-envelope"></i></a>
           </div>
         </div>
       </div>
@@ -156,6 +217,133 @@
 
   <!-- Firebase SDK - ES Modules -->
   <script type="module" src="firebase-config.js"></script>
+
+  <!-- Form Tư Vấn - Module Script -->
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
+    import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
+
+    // ============================================================
+    // CẤU HÌNH EMAILJS
+    // Hướng dẫn: https://www.emailjs.com/
+    // 1. Tạo tài khoản miễn phí tại emailjs.com
+    // 2. Vào Email Services > Add New Service > chọn Gmail > kết nối crdtransport2023@gmail.com
+    // 3. Vào Email Templates > Create New Template > dán nội dung mẫu bên dưới
+    // 4. Vào Account > General > copy Public Key
+    // 5. Thay các giá trị bên dưới:
+    // ============================================================
+    const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // Thay bằng Public Key của bạn
+    const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // Thay bằng Service ID (vd: service_xxxxxx)
+    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // Thay bằng Template ID (vd: template_xxxxxx)
+    // Mẫu Email Template (dán vào EmailJS):
+    // Subject: [CRD Transport] Yêu cầu tư vấn mới từ {{from_name}}
+    // Body:
+    //   Có yêu cầu tư vấn mới trên website CRD Transport!
+    //   -------------------------------------------------
+    //   Họ tên    : {{from_name}}
+    //   Email     : {{from_email}}
+    //   Điện thoại: {{phone}}
+    //   Dịch vụ   : {{service}}
+    //   Nội dung  : {{message}}
+    //   -------------------------------------------------
+    //   Thời gian gửi: {{time}}
+    // ============================================================
+
+    // Khởi tạo EmailJS
+    if (typeof emailjs !== 'undefined') {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+
+    // Theo dõi trạng thái đăng nhập
+    onAuthStateChanged(auth, (user) => {
+      const formEl      = document.getElementById('tuvan-form');
+      const loginNotice = document.getElementById('tuvan-login-required');
+      if (!formEl || !loginNotice) return;
+
+      if (user) {
+        // Đã đăng nhập: hiện form, ẩn thông báo
+        loginNotice.style.display = 'none';
+        formEl.style.display = 'block';
+        // Điền sẵn thông tin từ tài khoản
+        const nameInput  = document.getElementById('tuvan-name');
+        const emailInput = document.getElementById('tuvan-email');
+        if (nameInput && !nameInput.value)  nameInput.value  = user.displayName || '';
+        if (emailInput && !emailInput.value) emailInput.value = user.email || '';
+      } else {
+        // Chưa đăng nhập: ẩn form, hiện thông báo
+        loginNotice.style.display = 'flex';
+        formEl.style.display = 'none';
+      }
+    });
+
+    // Xử lý submit form
+    const form = document.getElementById('tuvan-form');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('tuvan-submit-btn');
+        const name    = document.getElementById('tuvan-name').value.trim();
+        const email   = document.getElementById('tuvan-email').value.trim();
+        const phone   = document.getElementById('tuvan-phone').value.trim();
+        const service = document.getElementById('tuvan-service').value;
+        const message = document.getElementById('tuvan-message').value.trim();
+
+        // Validate
+        if (!name || !email || !message) {
+          showNotification('Vui lòng điền đầy đủ các trường bắt buộc (*).', 'error');
+          return;
+        }
+
+        // Disable nút submit
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+
+        try {
+          const now = new Date();
+          const timeStr = now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+          // 1. Lưu vào Firestore
+          await addDoc(collection(db, 'consultations'), {
+            name, email, phone,
+            service: service || 'Chưa chọn',
+            message,
+            userId: auth.currentUser?.uid || '',
+            createdAt: serverTimestamp()
+          });
+
+          // 2. Gửi email thông báo qua EmailJS
+          if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+              from_name : name,
+              from_email: email,
+              phone     : phone || 'Không cung cấp',
+              service   : service || 'Chưa chọn',
+              message,
+              time      : timeStr
+            });
+          }
+
+          // Thông báo thành công
+          showNotification('Yêu cầu tư vấn của bạn đã được gửi thành công! Chúng tôi sẽ liên hệ trong vòng 24 giờ.', 'success');
+          form.reset();
+          // Điền lại email và tên sau khi reset
+          const user = auth.currentUser;
+          if (user) {
+            document.getElementById('tuvan-name').value  = user.displayName || '';
+            document.getElementById('tuvan-email').value = user.email || '';
+          }
+        } catch (err) {
+          console.error('Lỗi gửi yêu cầu tư vấn:', err);
+          showNotification('Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng thử lại hoặc liên hệ trực tiếp qua hotline.', 'error');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi yêu cầu tư vấn';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
 

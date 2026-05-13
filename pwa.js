@@ -23,8 +23,6 @@ class PWAHandler {
       console.log('PWA is running in standalone mode');
     }
 
-    // Offline detection - only show when actually offline
-    this.setupOfflineDetection();
   }
 
   showSubtleInstallPrompt() {
@@ -51,41 +49,6 @@ class PWAHandler {
     }
   }
 
-  setupOfflineDetection() {
-    // Create offline indicator - only show when actually offline
-    const offlineIndicator = document.createElement('div');
-    offlineIndicator.className = 'offline-indicator';
-    offlineIndicator.innerHTML = '<i class="fas fa-wifi-slash"></i> Offline';
-    document.body.appendChild(offlineIndicator);
-
-    // Listen for online/offline events
-    window.addEventListener('online', () => {
-      this.hideOfflineIndicator();
-    });
-
-    window.addEventListener('offline', () => {
-      this.showOfflineIndicator();
-    });
-
-    // Check initial state
-    if (!navigator.onLine) {
-      this.showOfflineIndicator();
-    }
-  }
-
-  showOfflineIndicator() {
-    const indicator = document.querySelector('.offline-indicator');
-    if (indicator) {
-      indicator.classList.add('show');
-    }
-  }
-
-  hideOfflineIndicator() {
-    const indicator = document.querySelector('.offline-indicator');
-    if (indicator) {
-      indicator.classList.remove('show');
-    }
-  }
 }
 
 // Initialize PWA handler when DOM is loaded

@@ -10,6 +10,7 @@
   <link rel="icon" href="favicon/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
   
+  <link rel="preload" as="image" href="Img/giaiphap2.jpg">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -41,7 +42,7 @@
   </header>
 
   <section class="page-hero" data-aos="fade-down">
-    <img src="Img/giaiphap2.jpg" alt="Giải pháp CRD cho doanh nghiệp" class="page-hero-image">
+    <img src="Img/giaiphap2.jpg" alt="Giải pháp CRD cho doanh nghiệp" class="page-hero-image" fetchpriority="high">
     <div class="container">
       <!-- hero image only -->
     </div>
@@ -54,28 +55,28 @@
 
       <div class="services-grid" style="margin-top:28px">
         <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="service-icon"><img src="Img/chuoicungung.jpg" alt="Chuỗi cung ứng"></div>
+          <div class="service-icon"><img src="Img/chuoicungung.jpg" alt="Chuỗi cung ứng" loading="lazy"></div>
           <h3>Chuỗi cung ứng & Quản lý</h3>
           <p>Thiết kế và quản lý chuỗi cung ứng từ nguồn đến khách hàng cuối, tối ưu tồn kho và thời gian luân chuyển.</p>
           
         </div>
 
         <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="service-icon"><img src="Img/quocte.jpg" alt="Vận chuyển quốc tế"></div>
+          <div class="service-icon"><img src="Img/quocte.jpg" alt="Vận chuyển quốc tế" loading="lazy"></div>
           <h3>Vận chuyển quốc tế</h3>
           <p>Tùy chọn đường biển, hàng không và đường bộ, dịch vụ door-to-door, theo dõi lộ trình trực tuyến.</p>
           
         </div>
 
         <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="service-icon"><img src="Img/khobai.jpg" alt="Kho bãi"></div>
+          <div class="service-icon"><img src="Img/khobai.jpg" alt="Kho bãi" loading="lazy"></div>
           <h3>Kho bãi & Fulfillment</h3>
           <p>Kho lưu trữ, xử lý đơn hàng, đóng gói và fulfillment cho thương mại điện tử với hệ thống quản lý kho.</p>
           
         </div>
 
         <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-          <div class="service-icon"><img src="Img/ruiro.webp" alt="Bảo hiểm"></div>
+          <div class="service-icon"><img src="Img/ruiro.webp" alt="Bảo hiểm" loading="lazy"></div>
           <h3>Giải pháp bảo hiểm & rủi ro</h3>
           <p>Cung cấp bảo hiểm hàng hóa và tư vấn giảm thiểu rủi ro cho từng loại hàng và tuyến vận chuyển.</p>
         </div>
@@ -85,7 +86,7 @@
     </section>
   </main>
 
-  <footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="Img/LOGO.png" alt="CRD Transport" class="logo-image"><p>Dịch vụ vận chuyển quốc tế uy tín, kết nối Việt Nam với thế giới từ UK, US, EU, AU, JP.</p><div class="footer-socials"><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="https://zalo.me/0912597313" aria-label="Zalo" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" style="width:14px;height:14px;filter:brightness(0)invert(1);vertical-align:middle"></a><a href="mailto:crdtransport2023@gmail.com" aria-label="Gmail"><i class="fas fa-envelope"></i></a></div></div></div><div class="footer-bottom"><p>&copy; 2025 CRD TRANSPORT. All rights reserved.</p><div class="footer-bottom-links"><a href="terms.html">Điều khoản</a><a href="privacy.html">Quyền riêng tư</a></div></div></div></footer>
+  <footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><img src="Img/LOGO.png" alt="CRD Transport" class="logo-image"><p>Dịch vụ vận chuyển quốc tế uy tín, kết nối Việt Nam với thế giới từ UK, US, EU, AU, JP.</p><div class="footer-socials"><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="https://zalo.me/0912597313" aria-label="Zalo" target="_blank" rel="noopener"><b style="font-size:13px;font-weight:900;font-family:Arial,sans-serif">Z</b></a><a href="mailto:crdtransport2023@gmail.com" aria-label="Gmail"><i class="fas fa-envelope"></i></a></div></div></div><div class="footer-bottom"><p>&copy; 2025 CRD TRANSPORT. All rights reserved.</p><div class="footer-bottom-links"><a href="terms.html">Điều khoản</a><a href="privacy.html">Quyền riêng tư</a></div></div></div></footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>

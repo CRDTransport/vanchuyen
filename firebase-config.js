@@ -1,6 +1,7 @@
 // Firebase Configuration for CRD Transport - ES Modules Version 12.8.0
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut as firebaseSignOut, onAuthStateChanged, sendPasswordResetEmail, updateProfile, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -15,6 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Auth state observer
 onAuthStateChanged(auth, (user) => {
@@ -236,5 +238,5 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Export auth for use in other modules
-export { auth, app };
+// Export auth and db for use in other modules
+export { auth, db, app };
