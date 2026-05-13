@@ -120,7 +120,7 @@
       <p class="muted">Điền thông tin bên dưới, đội ngũ CRD Transport sẽ liên hệ lại trong vòng 24 giờ.</p>
 
       <!-- Chưa đăng nhập -->
-      <div id="tuvan-login-required" class="tuvan-login-notice" style="display:none">
+      <div id="tuvan-login-required" class="tuvan-login-notice" style="display:flex">
         <div class="tuvan-login-box">
           <i class="fas fa-user-lock tuvan-lock-icon"></i>
           <h3>Đăng nhập để gửi yêu cầu</h3>
@@ -255,6 +255,15 @@
       emailjs.init(EMAILJS_PUBLIC_KEY);
     }
 
+    // Fallback notification to avoid runtime errors when global helper is unavailable
+    const notify = (message, type = 'info') => {
+      if (typeof window.showNotification === 'function') {
+        window.showNotification(message, type);
+      } else {
+        console[type === 'error' ? 'error' : 'log'](message);
+      }
+    };
+
     // Theo dõi trạng thái đăng nhập
     onAuthStateChanged(auth, (user) => {
       const formEl      = document.getElementById('tuvan-form');
@@ -292,7 +301,7 @@
 
         // Validate
         if (!name || !email || !message) {
-          showNotification('Vui lòng điền đầy đủ các trường bắt buộc (*).', 'error');
+          notify('Vui lòng điền đầy đủ các trường bắt buộc (*).', 'error');
           return;
         }
 
@@ -326,7 +335,7 @@
           }
 
           // Thông báo thành công
-          showNotification('Yêu cầu tư vấn của bạn đã được gửi thành công! Chúng tôi sẽ liên hệ trong vòng 24 giờ.', 'success');
+          notify('Yêu cầu tư vấn của bạn đã được gửi thành công! Chúng tôi sẽ liên hệ trong vòng 24 giờ.', 'success');
           form.reset();
           // Điền lại email và tên sau khi reset
           const user = auth.currentUser;
@@ -336,7 +345,7 @@
           }
         } catch (err) {
           console.error('Lỗi gửi yêu cầu tư vấn:', err);
-          showNotification('Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng thử lại hoặc liên hệ trực tiếp qua hotline.', 'error');
+          notify('Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng thử lại hoặc liên hệ trực tiếp qua hotline.', 'error');
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi yêu cầu tư vấn';
