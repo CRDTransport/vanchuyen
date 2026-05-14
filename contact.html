@@ -320,6 +320,13 @@
       const raw = `${statusText} ${message}`.trim();
       const normalized = raw.toLowerCase();
 
+      if (window.location.protocol === 'file:') {
+        return {
+          short: 'Trang đang chạy bằng file:// nên EmailJS có thể từ chối yêu cầu.',
+          hint: 'Hãy test trên domain thật (Firebase Hosting/Netlify) hoặc localhost qua server, không mở trực tiếp file contact.html.'
+        };
+      }
+
       if (normalized.includes('emailjs_not_configured')) {
         return {
           short: 'EmailJS chưa cấu hình đủ (public key, service id hoặc template id).',
@@ -327,10 +334,17 @@
         };
       }
 
+      if (normalized.includes('origin') || normalized.includes('domain') || normalized.includes('not allowed')) {
+        return {
+          short: 'Domain hiện tại chưa được EmailJS cho phép gửi.',
+          hint: `Vào EmailJS > Account > Security và thêm domain hiện tại (${window.location.origin}) vào allowlist.`
+        };
+      }
+
       if (normalized.includes('public key') || normalized.includes('user id') || normalized.includes('invalid grant')) {
         return {
-          short: 'Public Key EmailJS không hợp lệ.',
-          hint: 'Vào EmailJS > Account > General để copy lại Public Key.'
+          short: 'Public Key EmailJS không hợp lệ hoặc không dùng được trên domain hiện tại.',
+          hint: 'Kiểm tra lại Public Key trong EmailJS > Account > General, sau đó kiểm tra allowlist domain trong Security.'
         };
       }
 
@@ -345,13 +359,6 @@
         return {
           short: 'Template ID EmailJS không tồn tại hoặc sai.',
           hint: 'Vào EmailJS > Email Templates để lấy lại đúng Template ID.'
-        };
-      }
-
-      if (normalized.includes('origin') || normalized.includes('domain') || normalized.includes('not allowed')) {
-        return {
-          short: 'Domain hiện tại chưa được EmailJS cho phép gửi.',
-          hint: 'Vào EmailJS > Account > Security và thêm domain website vào allowlist.'
         };
       }
 
@@ -371,8 +378,15 @@
 
       return {
         short: 'EmailJS trả về lỗi không xác định.',
-        hint: `Chi tiết: ${raw}`
+        hint: `Chi tiết kỹ thuật: status=${status || 'n/a'}; message=${raw}`
       };
+    };
+
+    const extractEmailErrorDetails = (err) => {
+      const status = err?.status ?? 'n/a';
+      const statusText = String(err?.statusText || '').trim() || 'n/a';
+      const message = String(err?.text || err?.message || 'Unknown error').trim();
+      return `status=${status}; statusText=${statusText}; message=${message}`;
     };
 
     // Fallback notification to avoid runtime errors when global helper is unavailable
@@ -452,6 +466,14 @@
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
         setEmailStatus('Đang xử lý yêu cầu của bạn...', 'info');
 
+        if (window.location.protocol === 'file:') {
+          setEmailStatus('Không gửi được email từ file://. Hãy mở website qua domain thật hoặc localhost server.', 'error');
+          notify('Môi trường hiện tại không hỗ trợ gửi EmailJS. Vui lòng chạy qua hosting hoặc localhost.', 'error');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi yêu cầu tư vấn';
+          return;
+        }
+
         try {
           const now = new Date();
           const timeStr = now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
@@ -515,7 +537,8 @@
         } catch (err) {
           console.error('Lỗi gửi yêu cầu tư vấn:', err);
           const diagnosed = diagnoseEmailError(err);
-          setEmailStatus(`Không gửi được email tư vấn. ${diagnosed.short}`, 'error');
+          const errorDetails = extractEmailErrorDetails(err);
+          setEmailStatus(`Không gửi được email tư vấn. ${diagnosed.short} (${errorDetails})`, 'error');
           notify(diagnosed.hint, 'error');
         } finally {
           submitBtn.disabled = false;
