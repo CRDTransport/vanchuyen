@@ -308,6 +308,68 @@
       throw lastError;
     };
 
+    const diagnoseEmailError = (err) => {
+      const status = err?.status ?? '';
+      const statusText = String(err?.statusText || '');
+      const message = String(err?.text || err?.message || 'Unknown error');
+      const raw = `${statusText} ${message}`.trim();
+      const normalized = raw.toLowerCase();
+
+      if (normalized.includes('emailjs_not_configured')) {
+        return {
+          short: 'EmailJS chưa cấu hình đủ (public key, service id hoặc template id).',
+          hint: 'Kiểm tra EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID trong contact.html.'
+        };
+      }
+
+      if (normalized.includes('public key') || normalized.includes('user id') || normalized.includes('invalid grant')) {
+        return {
+          short: 'Public Key EmailJS không hợp lệ.',
+          hint: 'Vào EmailJS > Account > General để copy lại Public Key.'
+        };
+      }
+
+      if (normalized.includes('service') && normalized.includes('not found')) {
+        return {
+          short: 'Service ID EmailJS không tồn tại hoặc sai.',
+          hint: 'Vào EmailJS > Email Services để lấy lại đúng Service ID.'
+        };
+      }
+
+      if (normalized.includes('template') && normalized.includes('not found')) {
+        return {
+          short: 'Template ID EmailJS không tồn tại hoặc sai.',
+          hint: 'Vào EmailJS > Email Templates để lấy lại đúng Template ID.'
+        };
+      }
+
+      if (normalized.includes('origin') || normalized.includes('domain') || normalized.includes('not allowed')) {
+        return {
+          short: 'Domain hiện tại chưa được EmailJS cho phép gửi.',
+          hint: 'Vào EmailJS > Account > Security và thêm domain website vào allowlist.'
+        };
+      }
+
+      if (normalized.includes('quota') || normalized.includes('rate limit') || status === 429) {
+        return {
+          short: 'EmailJS vượt hạn mức gửi trong ngày hoặc bị rate limit.',
+          hint: 'Đợi reset hạn mức hoặc nâng gói EmailJS.'
+        };
+      }
+
+      if (normalized.includes('timeout') || normalized.includes('network') || normalized.includes('fetch')) {
+        return {
+          short: 'Lỗi mạng hoặc timeout khi gọi EmailJS.',
+          hint: 'Kiểm tra kết nối mạng và thử lại sau vài phút.'
+        };
+      }
+
+      return {
+        short: 'EmailJS trả về lỗi không xác định.',
+        hint: `Chi tiết: ${raw}`
+      };
+    };
+
     // Fallback notification to avoid runtime errors when global helper is unavailable
     const notify = (message, type = 'info') => {
       if (typeof window.showNotification === 'function') {
@@ -397,41 +459,47 @@
             createdAt: serverTimestamp()
           };
 
-          // 1. Lưu vào Firestore (ưu tiên lưu dữ liệu trước để không mất yêu cầu)
-          await withTimeout(
-            addDoc(collection(db, 'consultations'), consultationData),
-            FIRESTORE_TIMEOUT_MS,
-            'Lưu yêu cầu quá thời gian chờ'
-          );
-
-          // 2. Gửi email thông báo (không chặn UI quá lâu)
           const emailPayload = {
             from_name : name,
             from_email: email,
+            to_email  : 'crdtransport2023@gmail.com',
+            reply_to  : email,
             phone     : phone || 'Không cung cấp',
             service   : service || 'Chưa chọn',
             message,
-            time      : timeStr
+            time      : timeStr,
+            subject   : `[CRD Transport] Yêu cầu tư vấn mới từ ${name}`
           };
 
-          sendConsultationEmail(emailPayload)
-            .then((emailResult) => {
-              if (emailResult?.sent) {
-                setEmailStatus('Đã lưu yêu cầu và gửi email thông báo thành công.', 'success');
-                return;
-              }
+          // Email là kênh bắt buộc: chỉ thành công khi gửi mail thành công.
+          const emailResult = await sendConsultationEmail(emailPayload);
+          if (emailResult?.skipped) {
+            throw new Error('emailjs_not_configured');
+          }
+          if (!emailResult?.sent) {
+            throw new Error('Email chưa được gửi thành công');
+          }
 
-              if (emailResult?.skipped) {
-                setEmailStatus('Đã lưu yêu cầu. Hệ thống email thông báo chưa được cấu hình đầy đủ.', 'warning');
-              }
-            })
-            .catch((emailErr) => {
-              console.warn('Không gửi được email thông báo tư vấn:', emailErr);
-              setEmailStatus('Đã lưu yêu cầu, nhưng gửi email thông báo thất bại. Nếu cần gấp, vui lòng gọi hotline 0912 597 313.', 'warning');
-            });
+          // Firestore chỉ là lưu phụ trợ, lỗi Firestore không chặn kết quả gửi email.
+          let firestoreSaved = true;
+          try {
+            await withTimeout(
+              addDoc(collection(db, 'consultations'), consultationData),
+              FIRESTORE_TIMEOUT_MS,
+              'Lưu yêu cầu quá thời gian chờ'
+            );
+          } catch (firestoreErr) {
+            firestoreSaved = false;
+            console.warn('Đã gửi email nhưng không lưu được yêu cầu lên Firestore:', firestoreErr);
+          }
 
-          // Thông báo thành công
           notify('Đã ghi nhận yêu cầu tư vấn thành công! Chúng tôi sẽ liên hệ trong vòng 24 giờ.', 'success');
+          if (firestoreSaved) {
+            setEmailStatus('Đã gửi email tư vấn thành công tới CRD Transport.', 'success');
+          } else {
+            setEmailStatus('Đã gửi email tư vấn thành công tới CRD Transport (lưu dữ liệu nội bộ tạm thời lỗi).', 'warning');
+          }
+
           form.reset();
           // Điền lại email và tên sau khi reset
           const user = auth.currentUser;
@@ -441,8 +509,9 @@
           }
         } catch (err) {
           console.error('Lỗi gửi yêu cầu tư vấn:', err);
-          setEmailStatus('Không thể gửi yêu cầu lúc này. Vui lòng thử lại sau hoặc liên hệ hotline.', 'error');
-          notify('Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng thử lại hoặc liên hệ trực tiếp qua hotline.', 'error');
+          const diagnosed = diagnoseEmailError(err);
+          setEmailStatus(`Không gửi được email tư vấn. ${diagnosed.short}`, 'error');
+          notify(diagnosed.hint, 'error');
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi yêu cầu tư vấn';
