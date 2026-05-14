@@ -234,7 +234,7 @@
     // 4. Vào Account > General > copy Public Key
     // 5. Thay các giá trị bên dưới:
     // ============================================================
-    const EMAILJS_PUBLIC_KEY  = '-emfoJgkqc04VQPYG'; // Public Key EmailJS
+    const EMAILJS_PUBLIC_KEY  = '-emfoJgkqc04VQPYG'.trim(); // Public Key EmailJS
     const EMAILJS_SERVICE_ID  = 'service_zm7iyxd';   // Service ID EmailJS
     const EMAILJS_TEMPLATE_ID = 'template_ncegfyy';  // Template ID EmailJS
     const EMAIL_TIMEOUT_MS = 6000;
@@ -261,7 +261,7 @@
 
     // Khởi tạo EmailJS khi đã cấu hình đầy đủ
     if (typeof emailjs !== 'undefined' && hasEmailConfig) {
-      emailjs.init(EMAILJS_PUBLIC_KEY);
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
     }
 
     const withTimeout = (promise, timeoutMs, timeoutMessage) => {
@@ -291,7 +291,12 @@
       for (let attempt = 0; attempt <= EMAIL_RETRY_COUNT; attempt += 1) {
         try {
           await withTimeout(
-            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams),
+            emailjs.send(
+              EMAILJS_SERVICE_ID,
+              EMAILJS_TEMPLATE_ID,
+              templateParams,
+              { publicKey: EMAILJS_PUBLIC_KEY }
+            ),
             EMAIL_TIMEOUT_MS,
             'Gửi email quá thời gian chờ'
           );
