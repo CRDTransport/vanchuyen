@@ -42,7 +42,7 @@
         <div class="topbar-right">
           <a href="contact.html"><i class="fas fa-map-marker-alt"></i> Tìm địa điểm</a>
           <div class="topbar-divider"></div>
-          <a href="account.html"><i class="fas fa-box"></i> Theo dõi đơn hàng</a>
+          <a href="tracking.html"><i class="fas fa-box"></i> Theo dõi đơn hàng</a>
         </div>
       </div>
     </div>
@@ -59,6 +59,7 @@
           <a href="about.html">Về chúng tôi</a>
           <a href="pricing.html">Bảng giá</a>
           <a href="service.html">Dịch vụ</a>
+          <a href="tracking.html">Theo dõi đơn</a>
           <a href="contact.html" class="active">Liên hệ</a>
         </nav>
         <div class="header-actions" id="auth-btn">
@@ -240,6 +241,8 @@
     const EMAIL_TIMEOUT_MS = 6000;
     const FIRESTORE_TIMEOUT_MS = 7000;
     const EMAIL_RETRY_COUNT = 1;
+    const SUBMIT_COOLDOWN_MS = 60000;
+    const LAST_SUBMIT_STORAGE_KEY = 'crd_tuvan_last_submit_ms';
     // Mẫu Email Template (dán vào EmailJS):
     // Subject: [CRD Transport] Yêu cầu tư vấn mới từ {{from_name}}
     // Body:
@@ -382,11 +385,23 @@
       };
     };
 
-    const extractEmailErrorDetails = (err) => {
-      const status = err?.status ?? 'n/a';
-      const statusText = String(err?.statusText || '').trim() || 'n/a';
-      const message = String(err?.text || err?.message || 'Unknown error').trim();
-      return `status=${status}; statusText=${statusText}; message=${message}`;
+    const getRemainingCooldownMs = () => {
+      try {
+        const lastSubmit = Number(localStorage.getItem(LAST_SUBMIT_STORAGE_KEY) || 0);
+        if (!Number.isFinite(lastSubmit) || lastSubmit <= 0) return 0;
+        const elapsed = Date.now() - lastSubmit;
+        return Math.max(0, SUBMIT_COOLDOWN_MS - elapsed);
+      } catch (_) {
+        return 0;
+      }
+    };
+
+    const markSubmitTime = () => {
+      try {
+        localStorage.setItem(LAST_SUBMIT_STORAGE_KEY, String(Date.now()));
+      } catch (_) {
+        // Ignore storage errors (private mode/quota) and continue normally.
+      }
     };
 
     // Fallback notification to avoid runtime errors when global helper is unavailable
@@ -461,6 +476,13 @@
           return;
         }
 
+        const remainingCooldownMs = getRemainingCooldownMs();
+        if (remainingCooldownMs > 0) {
+          const remainingSeconds = Math.ceil(remainingCooldownMs / 1000);
+          setEmailStatus(`Bạn vừa gửi yêu cầu. Vui lòng chờ ${remainingSeconds} giây để gửi lại.`, 'warning');
+          return;
+        }
+
         // Disable nút submit
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
@@ -507,8 +529,7 @@
             throw new Error('Email chưa được gửi thành công');
           }
 
-          // Firestore chỉ là lưu phụ trợ, lỗi Firestore không chặn kết quả gửi email.
-          let firestoreSaved = true;
+          // Firestore là kênh lưu phụ trợ, lỗi tại đây không ảnh hưởng kết quả gửi email.
           try {
             await withTimeout(
               addDoc(collection(db, 'consultations'), consultationData),
@@ -516,16 +537,12 @@
               'Lưu yêu cầu quá thời gian chờ'
             );
           } catch (firestoreErr) {
-            firestoreSaved = false;
             console.warn('Đã gửi email nhưng không lưu được yêu cầu lên Firestore:', firestoreErr);
           }
 
           notify('Đã ghi nhận yêu cầu tư vấn thành công! Chúng tôi sẽ liên hệ trong vòng 24 giờ.', 'success');
-          if (firestoreSaved) {
-            setEmailStatus('Đã gửi email tư vấn thành công tới CRD Transport.', 'success');
-          } else {
-            setEmailStatus('Đã gửi email tư vấn thành công tới CRD Transport.', 'success');
-          }
+          setEmailStatus('Đã gửi email tư vấn thành công tới CRD Transport.', 'success');
+          markSubmitTime();
 
           form.reset();
           // Điền lại email và tên sau khi reset
@@ -535,11 +552,10 @@
             document.getElementById('tuvan-email').value = user.email || '';
           }
         } catch (err) {
-          console.error('Lỗi gửi yêu cầu tư vấn:', err);
           const diagnosed = diagnoseEmailError(err);
-          const errorDetails = extractEmailErrorDetails(err);
-          setEmailStatus(`Không gửi được email tư vấn. ${diagnosed.short} (${errorDetails})`, 'error');
-          notify(diagnosed.hint, 'error');
+          console.error('Lỗi gửi yêu cầu tư vấn:', diagnosed, err);
+          setEmailStatus('Không thể gửi yêu cầu lúc này. Vui lòng thử lại sau hoặc liên hệ hotline 0912 597 313.', 'error');
+          notify('Không thể gửi yêu cầu lúc này. Vui lòng thử lại sau hoặc liên hệ hotline 0912 597 313.', 'error');
         } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi yêu cầu tư vấn';

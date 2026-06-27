@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Theo dõi đơn hàng - CRD TRANSPORT</title>
+
+  <link rel="icon" href="favicon/favicon.ico">
+  <link rel="icon" href="favicon/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+
+  <meta name="description" content="Theo dõi trạng thái thanh toán và vận chuyển đơn hàng CRD Transport.">
+  <meta name="keywords" content="theo dõi đơn hàng CRD Transport, tracking CRD, tra cứu vận đơn">
+  <meta property="og:title" content="Theo dõi đơn hàng - CRD TRANSPORT">
+  <meta property="og:description" content="Tra cứu trạng thái thanh toán và vận chuyển đơn hàng CRD Transport.">
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a5c2a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="CRD Transport">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="topbar-left">
+          <a href="tel:0912597313"><i class="fas fa-phone"></i> Hotline: 0912 597 313</a>
+          <div class="topbar-divider"></div>
+          <a href="mailto:crdtransport2023@gmail.com"><i class="fas fa-envelope"></i> crdtransport2023@gmail.com</a>
+        </div>
+        <div class="topbar-right">
+          <a href="contact.html"><i class="fas fa-map-marker-alt"></i> Tìm địa điểm</a>
+          <div class="topbar-divider"></div>
+          <a href="tracking.html"><i class="fas fa-box"></i> Theo dõi đơn hàng</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="header-top-row">
+          <div class="logo"><img src="Img/LOGO.png" alt="CRD Transport Logo" class="logo-image"></div>
+          <button class="hamburger-btn" id="menu-toggle" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        </div>
+        <nav id="main-nav">
+          <a href="index.html">Trang chủ</a>
+          <a href="about.html">Về chúng tôi</a>
+          <a href="pricing.html">Bảng giá</a>
+          <a href="service.html">Dịch vụ</a>
+          <a href="tracking.html" class="active">Theo dõi đơn</a>
+          <a href="contact.html">Liên hệ</a>
+        </nav>
+        <div class="header-actions" id="auth-btn">
+          <a href="login.html" class="btn-login">
+            <i class="fas fa-user"></i> Đăng nhập
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="tracking-hero" data-aos="fade-in">
+    <img src="Img/Port.png" alt="Theo dõi vận chuyển CRD" class="tracking-hero-image" fetchpriority="high">
+    <div class="container">
+      <div class="tracking-hero-content">
+        <div class="hero-eyebrow"><i class="fas fa-location-dot"></i> Tracking CRD</div>
+        <h1>Theo dõi đơn hàng</h1>
+        <p>Nhập mã vận đơn, mã đơn hàng, số điện thoại hoặc email để xem tiến độ.</p>
+
+        <form class="tracking-search-panel" id="tracking-form" autocomplete="off">
+          <div class="tracking-search-row">
+            <input id="tracking-query" type="search" placeholder="VD: CRD123456, số điện thoại, email..." aria-label="Nhập thông tin tra cứu">
+            <button type="submit" class="btn-track"><i class="fas fa-search"></i> Tra cứu</button>
+          </div>
+          <div class="tracking-load-status" id="sheet-status" aria-live="polite" hidden></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <main class="tracking-main">
+    <section class="container">
+      <div class="tracking-toolbar" data-aos="fade-up">
+        <div>
+          <h2>Kết quả tra cứu</h2>
+          <p id="tracking-hint">Dữ liệu sẽ hiển thị sau khi bạn nhập thông tin cần tìm.</p>
+        </div>
+      </div>
+
+      <div class="tracking-state" id="tracking-empty" data-aos="fade-up">
+        <i class="fas fa-box-open"></i>
+        <h3>Chưa có kết quả</h3>
+        <p>Nhập thông tin tra cứu ở phía trên để kiểm tra đơn hàng.</p>
+      </div>
+
+      <div class="tracking-results" id="tracking-results" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="Img/LOGO.png" alt="CRD Transport" class="logo-image">
+          <p>Dịch vụ vận chuyển quốc tế uy tín, kết nối Việt Nam với thế giới từ UK, US, EU, AU, JP.</p>
+          <div class="footer-socials">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://zalo.me/0912597313" aria-label="Zalo" target="_blank" rel="noopener"><b style="font-size:13px;font-weight:900;font-family:Arial,sans-serif">Z</b></a>
+            <a href="mailto:crdtransport2023@gmail.com" aria-label="Gmail"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 CRD TRANSPORT. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="terms.html">Điều khoản</a>
+          <a href="privacy.html">Quyền riêng tư</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav = document.getElementById('main-nav');
+    if (menuToggle && mainNav) {
+      menuToggle.addEventListener('click', () => {
+        mainNav.classList.toggle('mobile-open');
+        const icon = menuToggle.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      });
+    }
+
+    const SHEET_ID = '1yot6OmpUeGux8m6irryFnaexsb7eiAGFexAqmJdR778';
+    const SHEET_GID = '2024611656';
+    const CALLBACK_NAME = '__crdTrackingSheetLoaded';
+    const LOAD_TIMEOUT_MS = 10000;
+
+    const state = {
+      loaded: false,
+      rows: [],
+      headers: [],
+      booleanHeaders: []
+    };
+
+    const form = document.getElementById('tracking-form');
+    const queryInput = document.getElementById('tracking-query');
+    const statusEl = document.getElementById('sheet-status');
+    const hintEl = document.getElementById('tracking-hint');
+    const emptyEl = document.getElementById('tracking-empty');
+    const resultsEl = document.getElementById('tracking-results');
+
+    const normalize = (value) => String(value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
+      .toLowerCase()
+      .trim();
+
+    const normalizeSearch = (value) => normalize(value).replace(/[\s\-_.]/g, '');
+
+    const escapeHtml = (value) => String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+
+    const cellText = (cell) => {
+      if (!cell) return '';
+      if (typeof cell.v === 'boolean') return cell.v ? 'TRUE' : 'FALSE';
+      if (cell.f !== undefined && cell.f !== null) return String(cell.f);
+      if (cell.v !== undefined && cell.v !== null) return String(cell.v);
+      return '';
+    };
+
+    const cellRaw = (cell) => {
+      if (!cell) return '';
+      return cell.v !== undefined && cell.v !== null ? cell.v : cellText(cell);
+    };
+
+    const isTruthyCheckbox = (value) => {
+      if (value === true) return true;
+      return ['true', 'yes', 'x', 'checked', 'done', '1', 'da', 'da xong', 'hoan tat']
+        .includes(normalize(value));
+    };
+
+    const isFalsyCheckbox = (value) => {
+      if (value === false) return true;
+      return ['false', 'no', '0', 'chua', 'chua xong', 'pending', '']
+        .includes(normalize(value));
+    };
+
+    const isCheckboxValue = (value) => {
+      if (typeof value === 'boolean') return true;
+      const normalized = normalize(value);
+      return ['true', 'false', 'yes', 'no', 'x', 'checked', 'done', '1', '0', 'da', 'chua', ''].includes(normalized);
+    };
+
+    const findHeader = (aliases) => {
+      const normalizedAliases = aliases.map(normalize);
+      return state.headers.find((header) => {
+        const normalizedHeader = normalize(header);
+        return normalizedAliases.some((alias) => normalizedHeader.includes(alias));
+      });
+    };
+
+    const getPrimaryCode = (row) => {
+      const header = findHeader(['ma van don', 'ma don hang', 'ma don', 'tracking', 'awb', 'bill', 'order code', 'code']);
+      if (header && row.values[header]) return row.values[header];
+      return row.searchableValues.find((value) => /[a-z]/i.test(value) && /\d/.test(value)) || row.searchableValues[0] || 'Đơn hàng';
+    };
+
+    const getDisplayField = (row, aliases) => {
+      const header = findHeader(aliases);
+      return header ? row.values[header] : '';
+    };
+
+    const describeCheckbox = (header, value) => {
+      const normalizedHeader = normalize(header);
+      const checked = isTruthyCheckbox(value);
+      const pendingPayment = normalizedHeader.includes('thanh toan') || normalizedHeader.includes('payment') || normalizedHeader.includes('paid') || normalizedHeader.includes('ck');
+      const pendingShipping = normalizedHeader.includes('van chuyen') || normalizedHeader.includes('shipping') || normalizedHeader.includes('ship') || normalizedHeader.includes('giao') || normalizedHeader.includes('nhan hang');
+
+      if (pendingPayment) {
+        return {
+          label: header,
+          text: checked ? 'Đã thanh toán' : 'Chờ thanh toán',
+          icon: checked ? 'fa-circle-check' : 'fa-clock',
+          className: checked ? 'done' : 'pending'
+        };
+      }
+
+      if (pendingShipping) {
+        return {
+          label: header,
+          text: checked ? 'Đã hoàn tất vận chuyển' : 'Đang vận chuyển',
+          icon: checked ? 'fa-circle-check' : 'fa-truck-fast',
+          className: checked ? 'done' : 'shipping'
+        };
+      }
+
+      return {
+        label: header,
+        text: checked ? 'Hoàn tất' : 'Chờ thanh toán / vận chuyển',
+        icon: checked ? 'fa-circle-check' : 'fa-clock',
+        className: checked ? 'done' : 'pending'
+      };
+    };
+
+    const getOverallStatus = (row) => {
+      const checklist = state.booleanHeaders.map((header) => describeCheckbox(header, row.rawValues[header]));
+      const waitingPayment = checklist.find((item) => item.className === 'pending' && normalize(item.text).includes('thanh toan'));
+      if (waitingPayment) return { text: 'Chờ thanh toán', className: 'pending' };
+
+      const shipping = checklist.find((item) => item.className === 'shipping');
+      if (shipping) return { text: 'Đang vận chuyển', className: 'shipping' };
+
+      const pending = checklist.find((item) => item.className === 'pending');
+      if (pending) return { text: 'Đang xử lý', className: 'pending' };
+
+      if (checklist.length) return { text: 'Hoàn tất', className: 'done' };
+      return { text: 'Đang cập nhật', className: 'neutral' };
+    };
+
+    const parseSheet = (response) => {
+      if (!response || response.status === 'error') {
+        throw new Error('Không đọc được dữ liệu tracking');
+      }
+
+      const table = response.table || {};
+      const headers = (table.cols || []).map((col, index) => (col.label || `Cot ${index + 1}`).trim() || `Cot ${index + 1}`);
+      const rows = (table.rows || []).map((row) => {
+        const values = {};
+        const rawValues = {};
+        const searchableValues = [];
+
+        headers.forEach((header, index) => {
+          const cell = row.c ? row.c[index] : null;
+          const text = cellText(cell).trim();
+          const raw = cellRaw(cell);
+          values[header] = text;
+          rawValues[header] = raw;
+          if (text) searchableValues.push(text);
+        });
+
+        return {
+          values,
+          rawValues,
+          searchableValues,
+          searchText: searchableValues.map(normalizeSearch).join(' ')
+        };
+      }).filter((row) => row.searchableValues.length > 0);
+
+      const booleanHeaders = headers.filter((header) => {
+        const samples = rows
+          .map((row) => row.rawValues[header])
+          .filter((value) => value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === ''));
+        return samples.length > 0 && samples.every(isCheckboxValue) && samples.some((value) => isTruthyCheckbox(value) || isFalsyCheckbox(value));
+      });
+
+      state.headers = headers;
+      state.rows = rows;
+      state.booleanHeaders = booleanHeaders;
+      state.loaded = true;
+    };
+
+    const setStatus = (message, type = 'info', icon = 'fa-circle-info') => {
+      if (type === 'error') {
+        console.warn(message);
+        statusEl.hidden = true;
+        statusEl.textContent = '';
+        return;
+      }
+
+      if (type === 'success') {
+        statusEl.hidden = true;
+        statusEl.textContent = '';
+        return;
+      }
+
+      if (!message) {
+        statusEl.hidden = true;
+        statusEl.textContent = '';
+        return;
+      }
+
+      statusEl.className = `tracking-load-status ${type}`;
+      statusEl.innerHTML = `<i class="fas ${icon}"></i> ${escapeHtml(message)}`;
+      statusEl.hidden = false;
+    };
+
+    const clearResults = () => {
+      resultsEl.innerHTML = '';
+      emptyEl.style.display = 'block';
+    };
+
+    const renderMatches = (matches, query) => {
+      resultsEl.innerHTML = '';
+
+      if (!query) {
+        hintEl.textContent = 'Dữ liệu sẽ hiển thị sau khi bạn nhập thông tin cần tìm.';
+        clearResults();
+        return;
+      }
+
+      if (!matches.length) {
+        hintEl.textContent = `Không tìm thấy đơn hàng phù hợp với "${query}".`;
+        emptyEl.style.display = 'block';
+        emptyEl.querySelector('h3').textContent = 'Không tìm thấy đơn hàng';
+        emptyEl.querySelector('p').textContent = 'Kiểm tra lại mã vận đơn, số điện thoại hoặc email.';
+        return;
+      }
+
+      emptyEl.style.display = 'none';
+      hintEl.textContent = `Tìm thấy ${matches.length} kết quả phù hợp.`;
+
+      resultsEl.innerHTML = matches.map((row) => {
+        const code = getPrimaryCode(row);
+        const customer = getDisplayField(row, ['khach hang', 'ten khach', 'ho ten', 'name']);
+        const phone = getDisplayField(row, ['dien thoai', 'phone', 'sdt']);
+        const email = getDisplayField(row, ['email', 'mail']);
+        const updatedAt = getDisplayField(row, ['cap nhat', 'ngay cap nhat', 'update', 'date', 'ngay']);
+        const note = getDisplayField(row, ['ghi chu', 'note', 'mo ta', 'noi dung']);
+        const overall = getOverallStatus(row);
+        const checklist = state.booleanHeaders.map((header) => describeCheckbox(header, row.rawValues[header]));
+        const hiddenHeaders = new Set(state.booleanHeaders);
+
+        const detailRows = state.headers
+          .filter((header) => !hiddenHeaders.has(header) && row.values[header])
+          .slice(0, 12)
+          .map((header) => `
+            <div class="tracking-detail-item">
+              <span>${escapeHtml(header)}</span>
+              <strong>${escapeHtml(row.values[header])}</strong>
+            </div>
+          `).join('');
+
+        const checklistMarkup = checklist.length ? `
+          <div class="tracking-checklist">
+            ${checklist.map((item) => `
+              <div class="tracking-check ${item.className}">
+                <i class="fas ${item.icon}"></i>
+                <span>${escapeHtml(item.label)}</span>
+                <strong>${escapeHtml(item.text)}</strong>
+              </div>
+            `).join('')}
+          </div>
+        ` : '';
+
+        return `
+          <article class="tracking-result-card">
+            <div class="tracking-result-header">
+              <div>
+                <span class="tracking-code-label">Mã đơn hàng</span>
+                <h3>${escapeHtml(code)}</h3>
+              </div>
+              <span class="tracking-status ${overall.className}">${escapeHtml(overall.text)}</span>
+            </div>
+
+            <div class="tracking-meta">
+              ${customer ? `<span><i class="fas fa-user"></i> ${escapeHtml(customer)}</span>` : ''}
+              ${phone ? `<span><i class="fas fa-phone"></i> ${escapeHtml(phone)}</span>` : ''}
+              ${email ? `<span><i class="fas fa-envelope"></i> ${escapeHtml(email)}</span>` : ''}
+              ${updatedAt ? `<span><i class="fas fa-calendar-day"></i> ${escapeHtml(updatedAt)}</span>` : ''}
+            </div>
+
+            ${checklistMarkup}
+
+            ${detailRows ? `<div class="tracking-details">${detailRows}</div>` : ''}
+
+            ${note ? `<p class="tracking-note"><i class="fas fa-note-sticky"></i> ${escapeHtml(note)}</p>` : ''}
+          </article>
+        `;
+      }).join('');
+    };
+
+    const searchOrders = () => {
+      const query = queryInput.value.trim();
+      if (!state.loaded) {
+        if (query) {
+          renderMatches([], query);
+        }
+        return;
+      }
+
+      const normalizedQuery = normalize(query);
+      if (!normalizedQuery) {
+        clearResults();
+        hintEl.textContent = 'Dữ liệu sẽ hiển thị sau khi bạn nhập thông tin cần tìm.';
+        return;
+      }
+
+      const matches = state.rows.filter((row) => {
+        return row.searchText.includes(normalizeSearch(query));
+      });
+
+      renderMatches(matches, query);
+    };
+
+    const loadSheet = () => {
+      const script = document.createElement('script');
+      const tqx = encodeURIComponent(`out:json;responseHandler:${CALLBACK_NAME}`);
+      script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}&headers=1&tqx=${tqx}&cacheBust=${Date.now()}`;
+      script.async = true;
+
+      let done = false;
+      const timer = window.setTimeout(() => {
+        if (done) return;
+        done = true;
+        setStatus('Không đọc được nguồn dữ liệu tracking.', 'error', 'fa-triangle-exclamation');
+      }, LOAD_TIMEOUT_MS);
+
+      window[CALLBACK_NAME] = (response) => {
+        if (done) return;
+        done = true;
+        window.clearTimeout(timer);
+
+        try {
+          parseSheet(response);
+          setStatus(`Đã tải ${state.rows.length} đơn hàng từ nguồn dữ liệu.`, 'success', 'fa-circle-check');
+          const params = new URLSearchParams(window.location.search);
+          const initialQuery = params.get('code') || params.get('ma') || params.get('tracking') || '';
+          if (initialQuery) {
+            queryInput.value = initialQuery;
+            searchOrders();
+          }
+        } catch (error) {
+          setStatus(error.message || 'Không đọc được dữ liệu tracking.', 'error', 'fa-triangle-exclamation');
+        }
+      };
+
+      window.google = window.google || {};
+      window.google.visualization = window.google.visualization || {};
+      window.google.visualization.Query = window.google.visualization.Query || {};
+      window.google.visualization.Query.setResponse = window[CALLBACK_NAME];
+
+      script.onerror = () => {
+        if (done) return;
+        done = true;
+        window.clearTimeout(timer);
+        setStatus('Không đọc được nguồn dữ liệu tracking.', 'error', 'fa-triangle-exclamation');
+      };
+
+      document.head.appendChild(script);
+    };
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      searchOrders();
+    });
+
+    queryInput.addEventListener('input', () => {
+      if (!queryInput.value.trim()) clearResults();
+    });
+
+    loadSheet();
+  </script>
+
+  <script src="pwa.js"></script>
+</body>
+</html>
