@@ -40,7 +40,7 @@
         <div class="topbar-right">
           <a href="contact.html"><i class="fas fa-map-marker-alt"></i> Tìm địa điểm</a>
           <div class="topbar-divider"></div>
-          <a href="account.html"><i class="fas fa-box"></i> Theo dõi đơn hàng</a>
+          <a href="tracking.html"><i class="fas fa-box"></i> Theo dõi đơn hàng</a>
         </div>
       </div>
     </div>
@@ -62,6 +62,7 @@
             <a href="about.html">Về chúng tôi</a>
             <a href="pricing.html">Bảng giá</a>
             <a href="service.html">Dịch vụ</a>
+            <a href="tracking.html">Theo dõi đơn</a>
             <a href="contact.html">Liên hệ</a>
           </nav>
           <div class="header-actions" id="auth-btn">
@@ -321,21 +322,8 @@
         const awb = document.getElementById('awb-input').value.trim();
         const box = document.getElementById('awb-result');
         if (!awb) { box.textContent = 'Vui lòng nhập mã vận đơn.'; return; }
-        // Simulated lookup - replace with real API call if available
-        box.innerHTML = '<em>Đang tra cứu...</em>';
-        setTimeout(() => {
-          // simple mock: status based on last digit
-          const last = awb.slice(-1);
-          let status = 'Đã nhận hàng tại kho nguồn';
-          if (/[0-3]$/.test(last)) status = 'Đã lên chuyến bay';
-          else if (/[4-6]$/.test(last)) status = 'Đang vận chuyển';
-          else if (/[7-9]$/.test(last)) status = 'Giao thành công';
-          box.innerHTML = `
-            <strong>Mã vận đơn:</strong> ${awb}<br>
-            <strong>Trạng thái:</strong> ${status}<br>
-            <strong>Cập nhật cuối:</strong> ${new Date().toLocaleString()}
-          `;
-        }, 700);
+        box.innerHTML = '<em>Đang mở trang theo dõi...</em>';
+        window.location.href = 'tracking.html?code=' + encodeURIComponent(awb);
       });
     }
 
